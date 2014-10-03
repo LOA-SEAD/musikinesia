@@ -36,8 +36,6 @@ function Update () {
 		Teclas.etapaPuzzle = 7;
 		AvancarOK = true;
 		}
-	else
-		print("Ainda fora");
 	
 	if(chamaFuncao)
 		{

@@ -11,7 +11,7 @@ function Update () {
 	var myMesh = GetComponent(TextMesh);
 	renderer.material.color = Color.black;
 	
-	if(!Pontuacao.treino)
+	if(!Pontuacao.treino && Pontuacao.puzzle == 0)
 		{
 		if(Pontuacao.combo < 37) //37 eh o numero do combo maximo
 			myMesh.text = Pontuacao.combo.ToString() + "/" + Pontuacao.comboRestante.ToString();

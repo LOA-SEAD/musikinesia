@@ -153,7 +153,7 @@ function Start () {
 	if(!treino)
 		{
 		if(numMusica == 0)		
-			numMusica = 4;
+			puzzle = 1;
 		}
 		else
 			{
@@ -380,9 +380,9 @@ function Update () {
 function OnGUI() {
 
 //botoes de escolha da musica para o treino
-if(!isPause && !derrota && animacaoIn > 0 && treino)
+if(!isPause && !derrota && animacaoIn > 0)
 	{	
-	if(numMusica == 0 && puzzle == 0)
+	if(numMusica == 0 && puzzle == 0 && treino)
 		{		
 		GUI.skin = btMusicas; //musica do Roger2(); - PRIMEIRA
 		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.2, Screen.width*0.06, Screen.height*0.12), ""))

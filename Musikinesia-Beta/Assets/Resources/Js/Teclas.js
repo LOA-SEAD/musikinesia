@@ -61,6 +61,9 @@ function Update () {
 		
 		if(ChecaPuzzle.quadroOK)
 			etapaPuzzle = 7;
+			
+		if(teclaPuzzle == -1)
+			renderer.material.color = Color(0.2, 0.2, 0.2, 1);
 		 
 		if(relog <= 0) //derrota
 			{

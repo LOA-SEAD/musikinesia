@@ -11,7 +11,7 @@ function Update () {
 	var myMesh = GetComponent(TextMesh);
 	renderer.material.color = Color.black;
 	
-	if(!Pontuacao.treino)
+	if(!Pontuacao.treino && Pontuacao.puzzle == 0)
 		myMesh.text = Pontuacao.pontuacao.ToString();
 		else
 			myMesh.text = "--";
