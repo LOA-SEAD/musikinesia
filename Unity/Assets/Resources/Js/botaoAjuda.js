@@ -19,7 +19,6 @@ function Start () {
 }
 
 function Update () {
-
 					
 }
 
@@ -29,11 +28,7 @@ function OnMouseDown() {
 	
 	if(transform.position.y > -9)
 		{
-		if(Pontuacao.puzzle == 0)
-			ajuda[0].renderer.enabled = !ajuda[0].renderer.enabled; //liga ou desliga a imagem das notas
-			else
-				ajuda[2].renderer.enabled = !ajuda[2].renderer.enabled; //liga ou desliga a imagem das notas do puzzle
-				
+		ajuda[0].renderer.enabled = !ajuda[0].renderer.enabled; //liga ou desliga a imagem das notas	
 		ajuda[1].renderer.enabled = false; //desliga a imagem das teclas
 		GetComponent(SpriteRenderer).sprite = imagem[1];
 		}

@@ -12,6 +12,8 @@ var logo : GameObject; //logo do musikinesia
 var cenario : GameObject[]; //cenarios da introducao
 var planoPreto : GameObject; //plano preto 70%
 
+var spritesP : Sprite; //sprite do Isaac com a mao levantada
+
 var sons : AudioClip[];
 var volume : float;
 var pausar : boolean;
@@ -29,6 +31,7 @@ var fadeOut : boolean;
 
 function Start () {
 	
+	baseTexto.GetComponent(Animator).enabled = true;
 	Animacao();
 	
 }
@@ -69,10 +72,10 @@ function Update () {
 	if(proximo == 0 || proximo == 2)
 		{
 		if(personagem[0].renderer.material.color.a != 1)
-			personagem[0].renderer.material.color.a += 0.4*Time.deltaTime;
+			personagem[0].renderer.material.color.a += 0.03;
 		
 		if(cenario[4].renderer.material.color.a != 1)
-			cenario[4].renderer.material.color.a += 0.4*Time.deltaTime;
+			cenario[4].renderer.material.color.a += 0.03;
 		}
 /*	
 	if(proximo == 1 || proximo == 4)
@@ -173,7 +176,7 @@ function Animacao() {
 		}
 	
 	if(proximo == 2)
-		{	
+		{				
 		posicao = Vector3(0, -3.22, 0);
 		Instantiate(baseTexto, posicao, Quaternion.identity);
 		
@@ -189,6 +192,7 @@ function Animacao() {
 	
 	if(proximo == 3)
 		{
+		personagem[0].GetComponent(SpriteRenderer).sprite = spritesP;
 		btProximo = false;
 	
 		posicao = Vector3(0.045, 0.32, 0);
@@ -274,7 +278,7 @@ function Animacao() {
 	
 		personagem[1].renderer.enabled = false;
 		cenario[2].renderer.enabled = true;
-		cenario[1].transform.position.y = 6.9;
+		cenario[1].transform.position.y = 4.022;
 		cenario[1].transform.localScale.x = 5;
 		cenario[1].transform.localScale.y = 5;
 	

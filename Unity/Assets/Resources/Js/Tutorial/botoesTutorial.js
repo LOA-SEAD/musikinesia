@@ -10,6 +10,9 @@ function Start () {
 
 function Update () {
 
+	if(Input.GetKeyDown("space"))
+		Acao();
+
 }
 
 function OnMouseEnter() {
@@ -43,6 +46,13 @@ function OnMouseDown () {
 		Tutorial.chamarVoltar = true;
 	
 	if(transform.position.y < -10) //botao avançar
+		Acao();
+	
+}
+
+function Acao() {
+
+	if(transform.position.y < -10 && transform.position.y > -12) //botao avançar
 		{
 		Tutorial.proximo++;
 		Tutorial.chamarAnimacao = true;

@@ -1,6 +1,13 @@
 fileFormatVersion: 2
 guid: 275c3cab99a56d247896b3fcf5a90f35
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: botoes_gui_0
+    21300002: botoes_gui_1
+    21300004: botoes_gui_2
+    21300006: botoes_gui_3
+    21300008: botoes_gui_4
+    21300010: botoes_gui_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

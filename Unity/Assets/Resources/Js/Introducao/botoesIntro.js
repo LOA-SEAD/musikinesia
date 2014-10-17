@@ -9,6 +9,10 @@ function Start () {
 
 function Update () {
 
+	if(Input.GetKeyDown("space"))
+		if(transform.position.y > -6 && transform.position.y < 0)
+			Acao();
+
 }
 
 function OnMouseEnter() {
@@ -40,10 +44,14 @@ function OnMouseDown () {
 			Application.LoadLevel("Suburbio");
 		}
 	
-	if(transform.position.y < 0)
-		{
-		Introducao.proximo++;
-		Introducao.chamaAnimacao = true;
-		}
+	if(transform.position.y > -6 && transform.position.y < 0)
+		Acao();
 	
+}
+
+function Acao() {
+
+	Introducao.proximo++;
+	Introducao.chamaAnimacao = true;
+
 }

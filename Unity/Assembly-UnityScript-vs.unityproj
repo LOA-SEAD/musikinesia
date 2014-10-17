@@ -70,6 +70,7 @@
      <Compile Include="Assets\Resources\Js\Ranking\RMesh3.js" />
      <Compile Include="Assets\Resources\Js\Ranking\btLimpar.js" />
      <Compile Include="Assets\Resources\Js\Ranking\btVoltar.js" />
+     <Compile Include="Assets\Resources\Js\Suburbio\DestruirTextoSub.js" />
      <Compile Include="Assets\Resources\Js\Suburbio\Instanciar.js" />
      <Compile Include="Assets\Resources\Js\Suburbio\Texto.js" />
      <Compile Include="Assets\Resources\Js\Suburbio\btJogarSuburbio.js" />
@@ -82,6 +83,7 @@
      <Compile Include="Assets\Resources\Js\Tutorial\mudaCor.js" />
      <Compile Include="Assets\Resources\Js\Tutorial\mudaTexto.js" />
      <Compile Include="Assets\Resources\Js\Tutorial\mudaVoltar.js" />
+     <Compile Include="Assets\Resources\Js\Tutorial\teclasTutorial.js" />
      <Compile Include="Assets\Resources\Js\VelPrefab.js" />
      <Compile Include="Assets\Resources\Js\botaoAjuda.js" />
      <Compile Include="Assets\Resources\Js\botaoAvancar.js" />

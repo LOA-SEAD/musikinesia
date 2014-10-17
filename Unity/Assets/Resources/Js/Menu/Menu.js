@@ -14,7 +14,9 @@ function Start () {
 
 	//zerar variaveis static
 	Pontuacao.pontuacao = 0;
+	Pontuacao.numMusica = 0;
 	Pontuacao.numMusica2 = 0;
+	Pontuacao.puzzle = 0;
 	Pontuacao.multiplicador = 0;
 	Pontuacao.combo = 0;
 	Pontuacao.comboRestante = 0;
@@ -35,6 +37,8 @@ function Start () {
 	PosMusicas.proximo = 0;
 	Instanciar.jogar = false;
 	planoPreto.renderer.enabled = false;
+	ChecaPuzzle.proximo = 0;
+	ChecaPuzzle.chamaFuncao = false;
 	ChecaPuzzle.quadroOK = false;
 	
 	//pause

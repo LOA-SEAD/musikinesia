@@ -10,7 +10,7 @@ var btVoltar : GameObject; //botao Voltar
 
 var btProximo : GameObject; //botao de proximo
 var btProximoON : boolean; //ativa o botao de proximo
-static var proximo : int; //acessada em mudaTextoPos.js; define o andamento da animacao
+static var proximo : int; //acessada em mudaTextoPos.js e em Pontuacao.js; define o andamento da animacao
 static var chamaAnimacao : boolean; //acessada em mudaTextoPos.js; chama a funcao Animacao();
 
 var posicao : Vector3; //posicao de instantiate
@@ -19,6 +19,8 @@ var personagem : GameObject[];
 //personagem[0] = pai
 //personagem[1] = Tom
 //personagem[2] = pernas pai
+//personagem[3] = senhora
+//personagem[4] = caras da banda
 
 var spritesP : Sprite[];
 //spritesP[0] = pai normal
@@ -28,35 +30,87 @@ var spritesP : Sprite[];
 //spritesP[4] = tom normal
 //spritesP[5] = tom braços cruzados
 //spritesP[6] = tom assustado
+//spritesP[7] = tom pensativo
+//spritesP[8] = senhora normal
+//spritesP[9] = senhora sorrindo
+//spritesP[10] = tom feliz
 
 var objetos : GameObject[];
 //objetos[0] = bau do teclado
 //objetos[1] = bilhete
 
+var cenario : GameObject[];
+
+var spritesC : Sprite[];
+//cenarios[0] = sotao
+//cenarios[1] = fachada da casa
+//cenarios[2] = garagem
+//cenarios[3] = backstage
+//cenarios[4] = fachada da casa a noite
+
 var efeitoSonoro : AudioClip[]; //efeitos sonoros
+var musicas : AudioClip[]; //musicas
+//musicas[0] = Ordinary Morning
+//musicas[1] = Its only rock n roll
+//musicas[2] = Its only rock n roll com publico
+//musicas[3] = suspense
+
+var continua : GameObject; //texto de continua
 
 function Start () {
+	
+	//para teste
+	//if(proximo < 19)
+		//proximo = 48;
 
+	
 	logo.renderer.material.color.a = 0;
 	planoPreto.renderer.material.color.a = 0;
 	btVoltar.renderer.enabled = false;
+	personagem[3].renderer.enabled = false;
+	baseTexto.GetComponent(Animator).enabled = true;
 	
-	posicao = Vector3(0, -3.7, 0);
+	posicao = Vector3(0, -3.556, 0);
 	Instantiate(baseTexto, posicao, Quaternion.identity);
 	
-	yield WaitForSeconds(1);
+	if(proximo == 0)
+		{		
+		yield WaitForSeconds(1);
 	
-	posicao = Vector3(0.07, 0.24, 0);
-	Instantiate(texto[0], posicao, Quaternion.identity);
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[0], posicao, Quaternion.identity);
 	
-	yield WaitForSeconds(1);
+		yield WaitForSeconds(1);
 	
-	btProximoON = true;
+		btProximoON = true;
+		}
+		
+	else
+		{
+		objetos[0].GetComponent(Animator).enabled = false; //para de rodar a animacao do bau flutuando
+		objetos[1].GetComponent(Animator).enabled = false; //para de rodar a animacao do bilhete flutuando
+		objetos[0].renderer.enabled = false;
+		objetos[1].renderer.enabled = false;
+		personagem[0].GetComponent(Animator).enabled = false; //para de rodar a animacao do pai flutuando
+		personagem[0].transform.Rotate (0, 180, -180);
+		}
+	
+	if(proximo < 37)
+		{
+		audio.clip = musicas[0];
+		audio.Play();
+		audio.loop = true;
+		}
+	
 	Animacao();
+		
 
 }
 
 function Update () {
+
+	if(Input.GetKeyDown("p"))
+		print(proximo);
 
 	if(btProximoON)
 		btProximo.transform.position.y = -4.5; //na tela
@@ -67,27 +121,46 @@ function Update () {
 	if(chamaAnimacao)
 		{
 		btProximoON = false;
-		chamaAnimacao = false;
+		chamaAnimacao = false;			
 			
-		if(proximo < 18)
+		if(proximo == 18)
+			{
+			Pontuacao.escolhaOK = false;
+			Pontuacao.puzzle = 1;
+			Pontuacao.numMusica = -1;
+			Application.LoadLevel("Teclados_teste");
+			}
+		
+		else if(proximo == 33)
+			{
+			Pontuacao.escolhaOK = false;
+			Pontuacao.puzzle = 0;
+			Pontuacao.numMusica = 3;
+			Application.LoadLevel("Teclados_teste");
+			}
+		
+		else if(proximo == 47)
+			{
+			Pontuacao.escolhaOK = false;
+			Pontuacao.numMusica = 6;
+			Application.LoadLevel("Teclados_teste");
+			}
+		
+		else if(proximo == 55)
+			{
+			Pontuacao.escolhaOK = false;
+			Pontuacao.numMusica = 5;
+			Application.LoadLevel("Teclados_teste");
+			}
+			
+		else
 			Animacao();
-			
-			else
-				{
-				Pontuacao.escolhaOK = true;
-				Pontuacao.puzzle = 1;
-				Application.LoadLevel("Teclados_teste");
-				}
 		}
 	
 	
 //animaçoes
-
-	
-
 	if(proximo == 8)
 		{
-		
 		if(personagem[0].transform.position.y >= -4.59)
 			personagem[0].transform.position.y -= 0.5;
 		
@@ -102,17 +175,35 @@ function Update () {
 		}
 		
 	
-
-	/*
-	if(proximo == 2)
+	if(proximo == 23)
 		{
-		if(planoPreto.renderer.material.color.a != 1)
-			planoPreto.renderer.material.color.a += 0.5 * Time.deltaTime;
+		if(personagem[0].transform.position.x >= 6)
+			personagem[0].transform.position.x -= 0.5;
 		
-		if(logo.renderer.material.color.a != 1)
-			logo.renderer.material.color.a += 0.4 * Time.deltaTime;
-		}*/
-
+		if(personagem[1].transform.position.x >= 2.45)
+			personagem[1].transform.position.x -= 0.5;
+		}
+	
+	if(proximo == 37)
+		if(personagem[1].transform.position.x >= -3)
+			personagem[1].transform.position.x -= 0.1;
+	
+	if(proximo == 38)		
+		if(personagem[4].transform.position.x >= 4.3)
+			personagem[4].transform.position.x -= 0.2;
+	
+	if(proximo == 52)
+		{
+		if(personagem[1].transform.position.x >= -2)
+			personagem[1].transform.position.x -= 0.1;
+			
+		if(personagem[4].transform.position.x >= 4.3)
+			personagem[4].transform.position.x -= 0.2;
+		}
+	
+	if(proximo == 63)
+		if(planoPreto.renderer.material.color.a != 1)
+			planoPreto.renderer.material.color.a += 0.3;
 }
 
 function Animacao () {
@@ -162,22 +253,279 @@ function Animacao () {
 		
 		btProximoON = true;
 		}
-		
 	
+	if(proximo == 19)
+		personagem[0].transform.position = Vector2(6.24, -0.44);
+	
+	if(proximo == 20)
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[7];
+		
+	if(proximo == 21)
+		{
+		audio.PlayOneShot(efeitoSonoro[2]);
+		personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[2];
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[6];
+		}
+		
+	if(proximo == 23)
+		{
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[1];
+		//cenario[0].transform.localScale = Vector2(5.6, 5.6);
+		personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[0];
+		personagem[0].transform.position = Vector2(16, -0.44);
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
+		personagem[1].transform.position.x = 13;
+		personagem[1].transform.Rotate (0, 180, 0);
+		personagem[3].renderer.enabled = true;
+		}
+	
+	if(proximo == 28)
+		{
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[5];
+		personagem[1].transform.Rotate (0, -180, 0);
+		}
+	
+	if(proximo == 31)
+		personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[2];
+	
+	if(proximo == 34)
+		{
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[1];
+		//cenario[0].transform.localScale = Vector2(5.6, 5.6);
+		audio.PlayOneShot(efeitoSonoro[3]);
+		personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[0];
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
+		personagem[3].GetComponent(SpriteRenderer).sprite = spritesP[9];
+		personagem[3].renderer.enabled = true;
+		personagem[0].transform.position.x = 6;
+		personagem[0].transform.position.y = -0.43;
+		personagem[1].transform.position.x = 2.45;
+		personagem[1].transform.Rotate (0, 180, 0);
+		}
+		
+	if(proximo == 35)
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[5];
+	
+	if(proximo == 36)
+		{
+		audio.PlayOneShot(efeitoSonoro[3]);
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
+		}
+	
+	if(proximo == 37)
+		{
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[2];
+		//cenario[0].transform.localScale = Vector2(2.8, 2.8);
+		personagem[0].renderer.enabled = false;
+		personagem[1].transform.position.x = 13;
+		personagem[3].renderer.enabled = false;
+		
+		audio.Stop();
+		
+		yield WaitForSeconds (0.1);
+		
+		audio.clip = musicas[1];
+		audio.Play();
+		audio.loop = true;
+		}
+	
+	if(proximo == 40)
+		{
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[6];
+		personagem[1].transform.Rotate (0, -180, 0);
+		}
+	
+	if(proximo == 42)
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
+	
+	if(proximo == 45)
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[5];
+	
+	if(proximo == 48)
+		{
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[2];
+		//cenario[0].transform.localScale = Vector2(2.8, 2.8);
+		personagem[0].renderer.enabled = false;
+		personagem[1].transform.position.x = -3;
+		personagem[3].renderer.enabled = false;
+		personagem[4].transform.position.x = 4.3;
+		
+		audio.Stop();
+		
+		yield WaitForSeconds (0.1);
+		
+		audio.clip = musicas[1];
+		audio.Play();
+		audio.loop = true;
+		
+		}
+	
+	if(proximo == 52)
+		{
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[3];
+		//cenario[0].transform.localScale = Vector2(2.8, 2.8);
+		personagem[1].transform.position.x = 13;
+		personagem[1].transform.rotation.y = 180;
+		personagem[4].transform.position.x = 20;
+		
+		audio.Stop();
+		
+		yield WaitForSeconds (0.1);
+		
+		audio.clip = musicas[2];
+		audio.Play();
+		audio.loop = true;
+		}
+		
+	if(proximo == 53)
+		{
+		personagem[1].transform.rotation.y = 0;
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[10];
+		}
+		
+	if(proximo == 54)
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
+		
+	if(proximo == 56)
+		{
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[3];
+		personagem[0].renderer.enabled = false;
+		personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[10];
+		personagem[4].transform.position.x = 4.3;
+		
+		audio.Stop();
+		
+		yield WaitForSeconds (0.1);
+		
+		audio.clip = musicas[2];
+		audio.Play();
+		audio.loop = true;
+		}
+		
+	if(proximo == 59)
+		{	
+		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[4];
+		personagem[1].renderer.enabled = false;
+		personagem[4].transform.position.x = 20; //sai da tela
+		
+		audio.Stop();
+		
+		yield WaitForSeconds (0.1);
+		
+		audio.clip = musicas[3];
+		audio.Play();
+		audio.loop = true;
+		
+		yield WaitForSeconds (1.5);
+		
+		audio.PlayOneShot(efeitoSonoro[4]); //carro chegando
+		
+		yield WaitForSeconds(2);
+		
+		proximo = 60;
+		}
+	
+	if(proximo == 62)
+		audio.PlayOneShot(efeitoSonoro[5]); //carro saindo
+		
+	if(proximo == 63)
+		{
+		btProximoON = false;
+		posicao = Vector3(0.13, 0.30, 0);
+		Instantiate(continua, posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(4);
+		
+		Application.LoadLevel("Menu");
+		}
+		
+		
+	//entre primeira musica e puzzle
 	if(proximo != 0 && proximo < 15)
 		{
-		posicao = Vector3(0.07, 0.24, 0);
+		posicao = Vector3(0.037, 0.256, 0);
 		Instantiate(texto[proximo], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		if(PosMusicas.proximo == 8) //espera pra terminar o movimento dos personagens
+			yield WaitForSeconds(1);
+		
+		btProximoON = true;
+		}
+	
+	//depois que o Tom toca teclas aleatorias
+	if(proximo > 15 && proximo < 18)
+		{
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[proximo - 1], posicao, Quaternion.identity);
 		
 		yield WaitForSeconds(1);
 		
 		btProximoON = true;
 		}
 	
-	if(proximo > 15)
+	//entre puzzle e segunda musica
+	if(proximo > 18 && proximo < 33)
 		{
-		posicao = Vector3(0.07, 0.24, 0);
-		Instantiate(texto[proximo - 1], posicao, Quaternion.identity);
+		if(PosMusicas.proximo == 21) //tempo de espera para som de grito e troca de cenario
+			yield WaitForSeconds(2); 
+		
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[proximo - 2], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		if(PosMusicas.proximo == 23) //espera pra terminar o movimento dos personagens
+			yield WaitForSeconds(0.5);
+		
+		btProximoON = true;
+		}
+	
+	//entre segunda e terceira musica
+	if(proximo > 33 && proximo < 47)
+		{
+		if(PosMusicas.proximo == 36)
+			yield WaitForSeconds(2);
+			
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[proximo - 3], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		if(PosMusicas.proximo == 37 || PosMusicas.proximo == 38) //espera pra terminar o movimento dos personagens
+			yield WaitForSeconds(1);
+		
+		btProximoON = true;
+		}
+	
+	//entre terceira e quarta musica
+	if(proximo > 47 && proximo < 55)
+		{
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[proximo - 4], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		btProximoON = true;
+		}
+	
+	//entre quarta e quinta musica
+	if(proximo > 55 && proximo < 59)
+		{
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[proximo - 5], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		btProximoON = true;
+		}
+	
+	//antes da cena da mafia
+	if(proximo > 59 && proximo < 63)
+		{
+		posicao = Vector3(0.037, 0.256, 0);
+		Instantiate(texto[proximo - 6], posicao, Quaternion.identity);
 		
 		yield WaitForSeconds(1);
 		

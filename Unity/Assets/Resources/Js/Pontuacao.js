@@ -9,6 +9,8 @@ var finalSkin : GUISkin;
 var btRecomecar : GUISkin;
 var btMenu : GUISkin;
 var btMusicas : GUISkin; //imagem do botao de cada musica da tela de escolha
+var btSeguir : GUISkin; //botao para avançar
+var hSlider : GUISkin;
 
 var textoMusica : GameObject[]; //nome de cada musica na tela de escolha
 
@@ -68,6 +70,15 @@ var objAni : GameObject[]; //objetos da animacao inicial
 //objAni[3] = teclado
 //objAni[4] = fundoSotao
 //objAni[5] = fundoPuzzleQuadro
+//objAni[6] = botao Notas
+
+var spritesC : Sprite[];
+//spritesC[0] = sotao
+//spritesC[1] = fundoPato
+//spritesC[2] = garagem
+//spritesC[3] = pentagrama inteiro
+//spritesC[4] = pentagrama cortado
+//spritesC[5] = show
 
 //derrota
 var telaDerrota : GameObject; //objeto da tela de derrota
@@ -90,7 +101,6 @@ static var musicaOK3 : boolean; //NAO ZERAR EM NENHUM MOMENTO; define que a musi
 static var musicaOK4 : boolean; //NAO ZERAR EM NENHUM MOMENTO; define que a musica ja foi tocada.
 static var musicaOK5 : boolean; //NAO ZERAR EM NENHUM MOMENTO; define que a musica ja foi tocada.
 static var musicaOK6 : boolean; //NAO ZERAR EM NENHUM MOMENTO; define que a musica ja foi tocada.
-var btAvancar : GameObject; //surge quando as tres statics estao true; libera a animacao final.
 static var travaTeclas : boolean; //acessada em Teclas
 
 //revelar algo escondido - PARA TESTES
@@ -103,6 +113,21 @@ static var puzzle : int; //acessada em ChecarTrigger.js, ChecarTriggerFull.js e 
 //puzzle Suburbio
 var puzzleSuburbio : GameObject[]; //objetos do puzzle suburbio
 
+//animacoes das fases
+var aniFase : GameObject[];
+//aniFase[0] = arvore
+//anifase[1] = pato
+//anifase[2] = senhora
+//anifase[3] = tom teclado
+//anifase[4] = baterista
+//anifase[5] = guitarrista
+//anifase[6] = baixista
+//anifase[7] = plateia do show
+//anifase[8] = tom teclado show
+//anifase[9] = baterista show
+//anifase[10] = guitarrista show
+//anifase[11] = baixista show
+
 
 function Start () {
 
@@ -113,13 +138,11 @@ function Start () {
 
 	relog = 0;
 	pontuacao = 0;
-	numMusica = 0;
-	escolhaOK = false; //tirar daqui e colocar dentro dos botoes que chamam essa cena
+	escolhaOK = false; 
 	multiplicador = 1;
 	planoPreto.renderer.enabled = false;
 	planoPreto.renderer.material.color.a = 0.7;
 	btRecomecarFim.transform.position.y = -40;
-	btAvancar.transform.position.y = -40;
 	
 	//pause
 	isPause = false;
@@ -134,9 +157,10 @@ function Start () {
 	
 	//animacao Inicial
 	objAni[0].transform.position.y = -12;
-	objAni[1].transform.position.x = 150;
+	objAni[1].renderer.material.color.a = 0;
 	objAni[2].renderer.material.color.a = 0;
 	objAni[3].transform.position.y = -34;
+	objAni[4].transform.localScale = Vector2(12, 12);
 	objAni[5].renderer.enabled = false;
 	animacaoIn = 0;
 	
@@ -144,7 +168,6 @@ function Start () {
 	travaTeclas = true;
 
 	//puzzle
-	puzzle = 0;
 	puzzleSuburbio[0].renderer.enabled = false; //marcacao do quadro
 	puzzleSuburbio[1].renderer.enabled = false; //quadro
 	ChecaPuzzle.quadroOK = false;
@@ -153,14 +176,37 @@ function Start () {
 	if(!treino)
 		{
 		if(numMusica == 0)		
-			puzzle = 1;
+			numMusica = 4; //primeira musica = 4
+			//puzzle = 1;
 		}
-		else
-			{
-			yield WaitForSeconds(1);
-	
-			NomesMusicas(); //coloca o nome das musicas na tela de escolha
-			}
+	else if(numMusica == 0) //para nao chamar os nomes quando o jogador pressionar recomeçar no treino
+		NomesMusicas(); //coloca o nome das musicas na tela de escolha - TREINO
+
+		
+	//animacoes das fases
+	aniFase[0].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[1].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[1].GetComponent(Animator).enabled = false;
+	aniFase[2].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[2].GetComponent(Animator).enabled = false;
+	aniFase[3].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[3].GetComponent(Animator).enabled = false;
+	aniFase[4].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[4].GetComponent(Animator).enabled = false;
+	aniFase[5].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[5].GetComponent(Animator).enabled = false;
+	aniFase[6].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[6].GetComponent(Animator).enabled = false;
+	aniFase[7].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[7].GetComponent(Animator).enabled = false;
+	aniFase[8].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[8].GetComponent(Animator).enabled = false;
+	aniFase[9].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[9].GetComponent(Animator).enabled = false;
+	aniFase[10].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[10].GetComponent(Animator).enabled = false;
+	aniFase[11].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[11].GetComponent(Animator).enabled = false;
 	
 }
 
@@ -201,17 +247,22 @@ function Update () {
 			if(objAni[0].transform.position.y >= -16.5)
 				objAni[0].transform.position.y -= 4*Time.deltaTime; //caixas do canto superior direito
 		
-			if(objAni[1].transform.position.x >= 72)
-				objAni[1].transform.position.x -= 50*Time.deltaTime; //pentagrama entra da direita para a esquerda
+			if(objAni[1].renderer.material.color.a != 1)
+				objAni[1].renderer.material.color.a += 0.02; //pentagrama aparece
 				else if(objAni[2].renderer.material.color.a != 1)
 						objAni[2].renderer.material.color.a += 0.05; //area de colisao das notas aparece
 			
 			if(objAni[4].renderer.material.color.a >= 0.61)
 				objAni[4].renderer.material.color.a -= 0.02; //imagem de fundo (sotao) fica mais transparente
+			
+			objAni[6].GetComponent(SpriteRenderer).enabled = true; //botao notas
+			objAni[6].GetComponent(BoxCollider).enabled = true; //botao notas
 			}
 			else
 				{
 				objAni[4].renderer.enabled = false;
+				objAni[6].GetComponent(SpriteRenderer).enabled = false; //botao notas
+				objAni[6].GetComponent(BoxCollider).enabled = false; //botao notas
 				
 				if(!objAni[5].renderer.enabled)
 					objAni[5].renderer.enabled = true;
@@ -221,16 +272,11 @@ function Update () {
 				}
 			
 		
-		if(objAni[3].transform.position.y <= -19)
+		if(objAni[3].transform.position.y <= -18.8)
 			objAni[3].transform.position.y += 20*Time.deltaTime; //teclado sobe
 		
 		
 		}
-	
-	
-	//treino
-	if(treino)
-		objAni[0].transform.position.y = -12; //se for treino, o marcador de vida nao vai aparecer
 
 
 	if(escolhaOK) //relog começa a contar depois que a escolha da musica foi feita
@@ -294,30 +340,59 @@ function Update () {
 	
 	
 	//troca de sprites de "vida"
-	if(ChecarTrigger.vida == 42)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[7];
-	
-	if(ChecarTrigger.vida == 39)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[6];
+	if(!treino && puzzle == 0)	
+		{
+		if(ChecarTrigger.vida == 42)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[7];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0, 1, 0);
+			}
 		
-	if(ChecarTrigger.vida == 36)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[5];
-	
-	if(ChecarTrigger.vida == 33)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[4];
-	
-	if(ChecarTrigger.vida == 30)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[3];
-	
-	if(ChecarTrigger.vida == 27)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[2];
-	
-	if(ChecarTrigger.vida == 24)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[1];
-	
-	if(ChecarTrigger.vida == 21)
-		tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[0];
+		if(ChecarTrigger.vida == 39)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[6];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.2, 0.8, 0);
+			}
+			
+		if(ChecarTrigger.vida == 36)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[5];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.4, 0.8, 0);
+			}
 		
+		if(ChecarTrigger.vida == 33)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[4];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.6, 0.6, 0);
+			}
+		
+		if(ChecarTrigger.vida == 30)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[3];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0.4, 0);
+			}
+		
+		if(ChecarTrigger.vida == 27)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[2];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0.2, 0);
+			}
+	
+		if(ChecarTrigger.vida == 24)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[1];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0, 0);
+			}
+	
+		if(ChecarTrigger.vida == 21)
+			{
+			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[0];
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.4, 0, 0);
+			}
+		}
+		
+		else
+			tecladoVida.GetComponent(SpriteRenderer).color = Color(0, 0, 0);
 		
 	
 	//pause
@@ -341,39 +416,50 @@ function Update () {
 		}
 	
 	//musicas sem escolha de dificuldade
-	//Suki - QUARTA
+	//Suki - TERCEIRA
 	if(numMusica == 2)
 		if(!escolhaOK)
-			Suki(); //chama a funcao que roda a musica do Suki 
+			TerceiraMusica(); //chama a funcao que roda a musica do Suki 
 			
-	//Roger - TERCEIRA
+	//Roger - SEGUNDA
 	if(numMusica == 3)
 		if(!escolhaOK)
-			Roger(); //chama a funcao que roda a musica do Roger 
+			SegundaMusica(); //chama a funcao que roda a musica do Roger 
 	
 	//Roger2 - PRIMEIRA
 	if(numMusica == 4)
 		if(!escolhaOK)
-			Roger2(); //chama a funcao que roda a musica do Roger 
+			PrimeiraMusica(); //chama a funcao que roda a musica do Roger 
 	
-	//SukiRock - SEXTA
+	//SukiRock - QUINTA
 	if(numMusica == 5)
 		if(!escolhaOK)
-			SukiRock(); //chama a funcao que roda a musica SukiRock 
+			QuintaMusica(); //chama a funcao que roda a musica SukiRock 
 	
-	//RogerRock - QUINTA
+	//RogerRock - QUARTA
 	if(numMusica == 6)
 		if(!escolhaOK)
-			RogerRock(); //chama a funcao que roda a musica RogerRock
+			QuartaMusica(); //chama a funcao que roda a musica RogerRock
 		
-	//puzzle - SEGUNDA
+	//puzzle
 	if(puzzle == 1)
 		if(!escolhaOK)
 			puzzleSub(); //chama a funcao que roda o puzzle do suburbio
+
+
+	//animacao das fases
+	if(numMusica == 3 && relog > 70)
+		{
+		aniFase[1].GetComponent(Animator).enabled = false;
+		aniFase[2].GetComponent(Animator).enabled = false;
+		
+		if(aniFase[1].transform.position.x < 16.25)
+			aniFase[1].transform.position.x += 0.1;	
+		
+		if(aniFase[1].transform.position.y > 8.25)
+			aniFase[1].transform.position.y -= 0.1;
+		}
 	
-	//fim do jogo - (musicaOK2 && musicaOK3 && musicaOK4 && musicaOK5 && musicaOK6)
-	if((musicaOK2 && musicaOK3 && musicaOK4) || Input.GetKeyDown("q")) //a tecla Q tah como teste
-		btAvancar.transform.position.y = -18; //botao avancar aparece na tela para chamar a animacao final
 
 }
 
@@ -541,21 +627,57 @@ if(!isPause && !derrota && animacaoIn > 0)
 			*/
 			
 			
-			GUI.skin = finalSkin;
-			GUI.Box(Rect(Screen.width*0.05,Screen.height*0.05,Screen.width*0.95,Screen.height*0.5), "Acerto: " + PorcentagemAcerto.porcentagem.ToString() + "%" + " (" + PorcentagemAcerto.acertos.ToString() + " / " + PorcentagemAcerto.totalNotas.ToString() + ")"); //porcentagem de acerto
-			GUI.Box(Rect(Screen.width*0.1,Screen.height*0.2,Screen.width*0.8,Screen.height*0.5), "Pontos: " + pontuacao.ToString()); //pontuacao regular
-			GUI.Box(Rect(Screen.width*0.1,Screen.height*0.35,Screen.width*0.8,Screen.height*0.5), "Vidas: " + ChecarTrigger.vida.ToString()); //vidas no final da musica
-			GUI.Box(Rect(Screen.width*0.1,Screen.height*0.6,Screen.width*0.8,Screen.height*0.7), "Final: " + pontuacaoFinal.ToString()); //pontuacao * vidas
-			GUI.Box(Rect(Screen.width*0.1,Screen.height*0.75,Screen.width*0.8,Screen.height*0.7), "Melhor: " + hs[0].ToString()); //melhor resultado
 			planoPreto.renderer.material.color.a = 0.7; //plano preto de fundo 70%
 			planoPreto.transform.position.y = 0; //plano preto no centro da tela
 			
-			GUI.skin = btRecomecar;
+			GUI.skin = finalSkin;
+			GUI.Box(Rect(Screen.width*0.05,Screen.height*0.05,Screen.width*0.95,Screen.height*0.5), "Acerto: " + PorcentagemAcerto.porcentagem.ToString() + "%" + " (" + PorcentagemAcerto.acertos.ToString() + " / " + PorcentagemAcerto.totalNotas.ToString() + ")"); //porcentagem de acerto
+			
+			if(!treino)
+				{
+				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.2,Screen.width*0.8,Screen.height*0.5), "Pontos: " + pontuacao.ToString()); //pontuacao regular
+				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.35,Screen.width*0.8,Screen.height*0.5), "Vidas: " + ChecarTrigger.vida.ToString()); //vidas no final da musica
+				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.6,Screen.width*0.8,Screen.height*0.7), "Final: " + pontuacaoFinal.ToString()); //pontuacao * vidas
+				//GUI.Box(Rect(Screen.width*0.1,Screen.height*0.75,Screen.width*0.8,Screen.height*0.7), "Melhor: " + hs[0].ToString()); //melhor resultado
+				}
+			
+			
+			GUI.skin = btSeguir;
 			if(GUI.Button(Rect(Screen.width*0.8,Screen.height*0.75,Screen.width*0.1,Screen.height*0.15), ""))
 				{
-				if(numMusica == 4)
-					puzzle = 1;
-				Application.LoadLevel("Teclados_teste");
+				if(!treino)
+					{
+					if(numMusica == 4)
+						{
+						PosMusicas.proximo = 0;
+						Application.LoadLevel("PosMusicas");
+						}
+					
+					else if(numMusica == 3)
+						{
+						PosMusicas.proximo = 34;
+						Application.LoadLevel("PosMusicas");
+						}
+				
+					else if(numMusica == 6)
+						{
+						PosMusicas.proximo = 48;
+						Application.LoadLevel("PosMusicas");
+						}
+				
+					else if(numMusica == 5)
+						{
+						PosMusicas.proximo = 56;
+						Application.LoadLevel("PosMusicas");
+						}
+					}
+					
+				else
+					{
+					numMusica = 0;
+					Application.LoadLevel("Teclados_teste");
+					}
+					
 				travaTeclas = false;
 				}
 				
@@ -575,6 +697,19 @@ if(!isPause && !derrota && animacaoIn > 0)
 			if(numMusica == 6)
 				musicaOK6 = true; //define que a musica 5 ja foi tocada
 			
+			
+			//animacoes das fases
+			aniFase[1].GetComponent(Animator).enabled = false;
+			aniFase[2].GetComponent(Animator).enabled = false;
+			aniFase[3].GetComponent(Animator).enabled = false;
+			aniFase[4].GetComponent(Animator).enabled = false;
+			aniFase[5].GetComponent(Animator).enabled = false;
+			aniFase[6].GetComponent(Animator).enabled = false;
+			aniFase[7].GetComponent(Animator).enabled = false;
+			aniFase[8].GetComponent(Animator).enabled = false;
+			aniFase[9].GetComponent(Animator).enabled = false;
+			aniFase[10].GetComponent(Animator).enabled = false;
+			aniFase[11].GetComponent(Animator).enabled = false;
 			}
 		}
 		
@@ -589,10 +724,11 @@ if(!isPause && !derrota && animacaoIn > 0)
 		}*/
 	
 	//controle de volume das musicas
-	if(numMusica != 0)
+	if(numMusica != 0 && puzzle == 0 && animacaoIn == 3)
 		{
 		//slider para controlar o volume da musica
-		inGameVolume = GUI.HorizontalSlider (Rect (Screen.width*0.5, Screen.height*0.04, Screen.width*0.1, Screen.height*0.05), inGameVolume, 0.0, 1.0);
+		GUI.skin = hSlider;
+		inGameVolume = GUI.HorizontalSlider (Rect (Screen.width*0.271, Screen.height*0.69, Screen.width*0.08, Screen.height*0.08), inGameVolume, 0.0, 1.0);
 		audio.volume = inGameVolume; //a variavel volume (nativa) se iguala a variavel de volume criada.
 		}
 	
@@ -600,35 +736,54 @@ if(!isPause && !derrota && animacaoIn > 0)
 }
 
 //funcao da musica do Roger (segunda musica)
-function Roger() {
+function SegundaMusica() {
 
 	escolhaOK = true;
 	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].renderer.material.color.a = 1;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[1];
+	objAni[4].transform.localScale = Vector2(11, 11);
+	objAni[4].transform.position.y = -2.64;
 
 	position = Vector3 (9.7, 6.75, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
+	
+	//animacao da fase
+	aniFase[0].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[1].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[2].GetComponent(SpriteRenderer).enabled = true;
 
 	yield WaitForSeconds(3.1);
 	
 	animacaoIn = 3;
 	travaTeclas = false;
 	
+	//animacao da fase
+	aniFase[1].GetComponent(Animator).enabled = true;
+	aniFase[2].GetComponent(Animator).enabled = true;
+	
 	//musica
-	position = Vector3 (51.9, 0, 0); //(52.1, 0, 0);
+	position = Vector3 (51.9, -2.9372, 0); //(52.1, 0, 0);
 	Instantiate(musica[4], position, Quaternion.identity);
 	audio.PlayOneShot(audios[2]);
-	planoPreto.transform.position.y = 40;
+	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
 }
 
 //funcao da musica do Roger2 (primeira musica)
-function Roger2() {
+function PrimeiraMusica() {
 
 	escolhaOK = true;
 	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
+	objAni[1].renderer.material.color.a = 0;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
+	objAni[4].transform.localScale = Vector2(14, 14);
+	objAni[4].transform.position.y = 1.58;
 
 	position = Vector3 (9.7, 6.75, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
@@ -641,19 +796,24 @@ function Roger2() {
 	travaTeclas = false;
 	
 	//musica
-	position = Vector3 (55.3, 0, 0);
+	position = Vector3 (55.3, -2.9372, 0);
 	Instantiate(musica[7], position, Quaternion.identity);
 	audio.PlayOneShot(audios[4]);
-	planoPreto.transform.position.y = 40;
+	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
 }
 
 //funcao da musica do Suki (terceira musica)
-function Suki() {
+function TerceiraMusica() {
 	
 	escolhaOK = true;
 	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
+	objAni[1].renderer.material.color.a = 0;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
+	objAni[4].transform.localScale = Vector2(14, 14);
+	objAni[4].transform.position.y = 1.58;
 	
 	position = Vector3 (9.7, 6.75, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
@@ -666,60 +826,98 @@ function Suki() {
 	travaTeclas = false;
 	
 	//musica
-	position = Vector3 (47.3, 0, 0);
+	position = Vector3 (47.3, -2.9372, 0);
 	Instantiate(musica[1], position, Quaternion.identity);
 	audio.PlayOneShot(audios[1]);
-	planoPreto.transform.position.y = 40;
+	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
 }
 
-//funcao da musica do Suki (musica final)
-function SukiRock() {
+//funcao da musica do Suki (quinta musica)
+function QuintaMusica() {
 	
 	escolhaOK = true;
 	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].renderer.material.color.a = 1;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[5];
+	objAni[4].transform.localScale = Vector2(10, 10);
+	objAni[4].transform.position.y = -7.068;
 	
 	position = Vector3 (9.7, 6.75, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
+	
+	//animacao da fase
+	aniFase[7].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[8].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[9].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[10].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[11].GetComponent(SpriteRenderer).enabled = true;
 
 	yield WaitForSeconds(3.1);
 	
 	animacaoIn = 3;
 	travaTeclas = false;
 	
+	//animacao da fase
+	aniFase[7].GetComponent(Animator).enabled = true;
+	aniFase[8].GetComponent(Animator).enabled = true;
+	aniFase[9].GetComponent(Animator).enabled = true;
+	aniFase[10].GetComponent(Animator).enabled = true;
+	aniFase[11].GetComponent(Animator).enabled = true;
+	
 	//musica
-	position = Vector3 (18.4, 0, 0);
+	position = Vector3 (18.4, -2.9372, 0);
 	Instantiate(musica[8], position, Quaternion.identity);
 	audio.PlayOneShot(audios[5]);
-	planoPreto.transform.position.y = 40;
+	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
 }
 
 //funcao da musica do Roger (quarta musica)
-function RogerRock() {
+function QuartaMusica() {
 	
 	escolhaOK = true;
 	animacaoIn = 2;
+	
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].renderer.material.color.a = 1;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[2];
+	objAni[4].transform.localScale = Vector2(11, 11);
+	objAni[4].transform.position.y = -0.26798;
 	
 	position = Vector3 (9.7, 6.75, -3); 
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
+	
+	//animacao da fase
+	aniFase[3].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[4].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[5].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[6].GetComponent(SpriteRenderer).enabled = true;
 
 	yield WaitForSeconds(3.1);
 	
 	animacaoIn = 3;
 	travaTeclas = false;
 	
+	//animacao da fase
+	
+	aniFase[3].GetComponent(Animator).enabled = true;
+	aniFase[4].GetComponent(Animator).enabled = true;
+	aniFase[5].GetComponent(Animator).enabled = true;
+	aniFase[6].GetComponent(Animator).enabled = true;
+	
 	//musica
-	position = Vector3 (77.8, 0, 0); //versao 1: (50, 0, 0); VelPrefab = 6.141
+	position = Vector3 (77.8, -2.9372, 0); //versao 1: (50, 0, 0); VelPrefab = 6.141
 	Instantiate(musica[9], position, Quaternion.identity);
 	audio.PlayOneShot(audios[6]);
-	planoPreto.transform.position.y = 40;
+	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 	
 }
@@ -746,7 +944,7 @@ function puzzleSub() {
 	puzzleSuburbio[0].GetComponent(ChecaPuzzle).enabled = true;
 	puzzleSuburbio[0].renderer.enabled = true; //marcacao do quadro
 	puzzleSuburbio[1].renderer.enabled = true; //quadro
-	planoPreto.transform.position.y = 40;
+	planoPreto.transform.position.y = 50;
 
 }
 
@@ -781,7 +979,9 @@ static function Mute() {
 
 }
 
-function NomesMusicas () { //Instanciar nome das musicas na tela de escolha
+function NomesMusicas () { //Instanciar nome das musicas na tela de escolha - TREINO
+
+	yield WaitForSeconds(1);
 
 	//primeira
 	position = Vector3 (0.23, 0.76, 1);

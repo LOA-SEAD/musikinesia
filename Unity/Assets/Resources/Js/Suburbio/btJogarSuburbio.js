@@ -35,4 +35,7 @@ function OnMouseDown () {
 	audio.PlayOneShot(efeitos[1]);
 	Instanciar.jogar = true;
 	
+	if(!DestruirTextoSub.destruir)
+		DestruirTextoSub.destruir = true;
+	
 }

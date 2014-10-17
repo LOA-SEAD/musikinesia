@@ -14,15 +14,27 @@ static var chamaFuncao : boolean; //acessada em botaoAvancar.js e em Teclas.js
 
 static var proximo : int; //define a etapa do puzzle e dos textos; acessada em botaoAvancar.js e Teclas.js
 
+var relog : float;
+var relogInt : int;
+var pontos : int;
+var skinPontos : GUISkin;
+
 function Start () {
 
+	relog = 90;
+	pontos = 0;
+
 	falaPai.renderer.enabled = true;
-	posicao = Vector3(0.23, 0.95, 0);
-	Instantiate(texto[0], posicao, Quaternion.identity);
 	
-	yield WaitForSeconds(2);
+	if(proximo == 0)
+		{
+		posicao = Vector3(0.15, 0.95, 0);
+		Instantiate(texto[0], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds(2);
 			
-	AvancarOK = true;
+		AvancarOK = true;
+		}
 
 }
 
@@ -48,6 +60,18 @@ function Update () {
 		else
 			btAvancar.transform.position.y = -40; //sai a tela
 	
+	if(Teclas.etapaPuzzle == 6 && relog >= -0.1 && !quadroOK)
+		{
+		relog -= Time.deltaTime;
+		relogInt = Mathf.Abs(relog);
+		}
+	
+	if(Teclas.etapaPuzzle == 7)
+		pontos = Mathf.Abs(relog * 100 / Teclas.pontoNota);		
+		 
+	if(relog <= 0) //derrota
+		Application.LoadLevel("Derrota");
+	
 }
 
 function TextoPai() {
@@ -68,7 +92,7 @@ function TextoPai() {
 	else if(proximo == 13)
 		Teclas.etapaPuzzle = 5;
 	
-	else if(proximo == 16)
+	else if(proximo == 17)
 		Teclas.etapaPuzzle = 6;
 	
 	else
@@ -76,13 +100,39 @@ function TextoPai() {
 	
 	//texto
 	AvancarOK = false;
-	posicao = Vector3(0.23, 0.95, 0); //instantiate do texto
-	Instantiate(texto[proximo], posicao, Quaternion.identity);
+	posicao = Vector3(0.15, 0.95, 0); //instantiate do texto
+	if(proximo < 17)
+		Instantiate(texto[proximo], posicao, Quaternion.identity);
+		
+	else if(proximo == 18)
+		Instantiate(texto[proximo - 1], posicao, Quaternion.identity);
 			
 	yield WaitForSeconds(2);
 	
-	if(proximo != 1 &&	proximo != 3 && proximo != 6 && proximo != 10 && proximo != 13 && proximo != 16)
+	if(proximo != 1 &&	proximo != 3 && proximo != 6 && proximo != 10 && proximo != 13 && proximo != 17)
 		AvancarOK = true;
 	
 	
+}
+
+function OnGUI() {
+	
+	GUI.skin = skinPontos;
+	
+	if(Pontuacao.puzzle == 1)
+		{
+		//relogio
+		if(Teclas.etapaPuzzle == 6)
+			{
+			GUI.Box(Rect(Screen.width*0.8, Screen.height*0.25, Screen.width*0.13, Screen.height*0.1), "TEMPO: ");
+			GUI.Box(Rect(Screen.width*0.9, Screen.height*0.25, Screen.width*0.1, Screen.height*0.1), relogInt.ToString());
+			}
+		
+		if(Teclas.etapaPuzzle == 7)
+			{
+			GUI.Box(Rect(Screen.width*0.78, Screen.height*0.4, Screen.width*0.15, Screen.height*0.1), "PONTOS: ");
+			GUI.Box(Rect(Screen.width*0.9, Screen.height*0.4, Screen.width*0.1, Screen.height*0.1), pontos.ToString());
+			}
+		}
+
 }

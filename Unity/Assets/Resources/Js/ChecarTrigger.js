@@ -30,6 +30,7 @@ function Start () {
 	combo = 0;
 	maisPontos = false;
 	vida = 30;
+	posicao = Vector3(-6.5, 11.32382, -2); //posicao para instanciar um objeto.
 
 }
 
@@ -39,14 +40,15 @@ function OnTriggerEnter(other : Collider) {
 
 	if(Pontuacao.puzzle == 0) //funciona soh para as musicas
 		{
+		
+		PorcentagemAcerto.totalNotas++; //soma 1 nota ao total de notas da musica
+		PorcentagemAcerto.acertos++; //soma 1 as notas acertadas
+		
 		if(!Pontuacao.treino) //caso nao seja treino, os pontos e combos sao computados
 			{
 			combo++; //soma 1 no combo
 			pontos += 5*Pontuacao.multiplicador; //soma a pontuacao 10 vezes o multiplicador definido em Pontuacao.js
 			pontosFeitos += 5*Pontuacao.multiplicador; //soma a pontuacao 10 vezes o multiplicador definido em Pontuacao.js
-			posicao = Vector3(-6.5, 11.32382, -2); //posicao para instanciar um objeto.
-			PorcentagemAcerto.totalNotas++; //soma 1 nota ao total de notas da musica
-			PorcentagemAcerto.acertos++; //soma 1 as notas acertadas
 			
 			if(Tutorial.proximo != 22)
 				Instantiate(mostraPontos, posicao, Quaternion.identity); //instancia os pontos feitos pelo jogador ao acertar a nota;

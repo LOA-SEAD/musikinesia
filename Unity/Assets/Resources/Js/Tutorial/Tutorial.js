@@ -78,7 +78,7 @@ function Start () {
 	Instantiate(objeto[0], positionIns, Quaternion.identity);
 	
 	yield WaitForSeconds(1.2);
-	positionIns = Vector3(0.18, 0.86, 0);
+	positionIns = Vector3(0.15, 0.83, 0);
 	Instantiate(objeto[1], positionIns, Quaternion.identity);
 	
 	yield WaitForSeconds(3);
@@ -173,7 +173,7 @@ function Animacao () {
 		Instantiate(objeto[0], positionIns, Quaternion.identity);
 	
 		yield WaitForSeconds(1.2);
-		positionIns = Vector3(0.18, 0.86, 0);
+		positionIns = Vector3(0.15, 0.83, 0);
 		Instantiate(objeto[1], positionIns, Quaternion.identity);
 	
 		yield WaitForSeconds(3);
@@ -187,7 +187,7 @@ function Animacao () {
 		Instantiate(objeto[3], positionIns, Quaternion.identity);
 	
 		yield WaitForSeconds(1.2);
-		positionIns = Vector3(0.17, 0.83, 0);
+		positionIns = Vector3(0.15, 0.83, 0);
 		Instantiate(objeto[4], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(3);
@@ -223,7 +223,7 @@ function Animacao () {
 		{
 		btProximo = false;
 		btVoltar = false;		
-		positionIns = Vector3(0.19, 0.83, 0);
+		positionIns = Vector3(0.15, 0.83, 0);
 		Instantiate(objeto[7], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(2.5);
@@ -236,117 +236,117 @@ function Animacao () {
 		positionIns = Vector3(-2, -2.8, 0.5);
 		Instantiate(objeto[8], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 		
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 		
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//D3
 		positionIns = Vector3(1, -1.8, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 		
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 		
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//E3
 		positionIns = Vector3(4, -0.8, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//F3
 		positionIns = Vector3(7, 0.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//A3
 		positionIns = Vector3(13, 2.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//B3
 		positionIns = Vector3(16, 3.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//C4
 		positionIns = Vector3(19, 4.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//D4
 		positionIns = Vector3(22, 5.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 		
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 		
 		//E4
 		positionIns = Vector3(25, 6.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//F4
 		positionIns = Vector3(28, 7.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//G4
 		positionIns = Vector3(31, 8.2, 0.5);
 		Instantiate(objeto[6], positionIns, Quaternion.identity);
 	
-		yield WaitForSeconds(0.4);
+		yield WaitForSeconds(0.2);
 	
 		//explosao
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
@@ -363,7 +363,7 @@ function Animacao () {
 		btVoltar = false;
 		objeto[9].renderer.enabled = false;
 		
-		positionIns = Vector3(0.1905, 0.83, 0);
+		positionIns = Vector3(0.15, 0.83, 0);
 		Instantiate(objeto[10], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(8);
@@ -399,7 +399,7 @@ function Animacao () {
 	if(proximo == 10)
 		{		
 		yield WaitForSeconds(1.2);
-		positionIns = Vector3(0.19, 0.83, 0);
+		positionIns = Vector3(0.15, 0.83, 0);
 		Instantiate(objeto[16], positionIns, Quaternion.identity);
 		
 		objeto[17].renderer.enabled = true;
@@ -524,7 +524,7 @@ function Animacao () {
 		
 		yield WaitForSeconds(1);
 		
-		positionIns = Vector3(0.19, 0.83, 0);
+		positionIns = Vector3(0.15, 0.83, 0);
 		Instantiate(objeto[24], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(3);
@@ -593,7 +593,7 @@ function Animacao () {
 		btProximo = true;
 		btVoltar = true;
 		}
-	
+	/*
 	if(proximo == 23)
 		imgInterface.renderer.enabled = true;
 	
@@ -625,9 +625,9 @@ function Animacao () {
 		imgInterface.GetComponent(SpriteRenderer).sprite = imgInterfaceSp[8];
 	
 	if(proximo == 33)
-		imgInterface.GetComponent(SpriteRenderer).sprite = imgInterfaceSp[9];
+		imgInterface.GetComponent(SpriteRenderer).sprite = imgInterfaceSp[9];*/
 	
-	if(proximo == 34)
+	if(proximo == 23)
 		{
 		Introducao.proximo = 26;
 		Application.LoadLevel("Introducao");

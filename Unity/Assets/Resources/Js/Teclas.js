@@ -14,6 +14,8 @@ var notas : AudioClip[]; //timbres
 //notas 2 = Suki - terceira musica
 //notas 3 = Roger 1 - segunda musica
 //notas 4 = Roger 2 - primeira musica
+//notas 5 = Suki Rock - quinta musica
+//notas 6 = Roger Rock - quarta musica
 
 var corBranca : boolean;
 
@@ -26,17 +28,15 @@ var quadro : GameObject;
 var teclaPuzzle : int; //checa qual tecla que eh qual pelo inspector
 static var etapaPuzzle : int; //checa em qual momento o puzzle estah (narrativa)
 
-var relog : float;
-var pontoNota : int;
-var pontos : int;
+static var pontoNota : int;
 
 function Start () {
+	
+	pontoNota = 0;
 	
 	teclaDown = false;
 	renderer.material.color = Color(1, 1, 1, 1);
 	etapaPuzzle = 0;
-	relog = 60;
-	pontos = 0;
 	
 }
 
@@ -49,29 +49,16 @@ function Update () {
 		{
 		if(Input.GetKeyDown(tecla))
 			teclaApertada();
-	
+
 		if(Input.GetKeyUp(tecla))
 			teclaLevantada();
+
 		}
 		
 	if(Pontuacao.puzzle == 1)
-		{
-		if(etapaPuzzle == 6 && relog >= -0.1 && !ChecaPuzzle.quadroOK)
-			relog -= Time.deltaTime;
-		
-		if(ChecaPuzzle.quadroOK)
-			etapaPuzzle = 7;
-			
 		if(teclaPuzzle == -1)
 			renderer.material.color = Color(0.2, 0.2, 0.2, 1);
-		 
-		if(relog <= 0) //derrota
-			{
-			etapaPuzzle = 0;
-			ChecaPuzzle.proximo = 0;
-			Derrota();
-			}
-		}
+			
 }
 
 function OnMouseDown() {
@@ -183,12 +170,17 @@ function teclaApertada () {
 			audio.PlayOneShot(notas[3]);
 				
 		//roger2
-		if(Pontuacao.numMusica2 == 4 || Pontuacao.numMusica2 == 5) //mudar qdo eu pegar as notas do Rock com o Suki
+		if(Pontuacao.numMusica2 == 4)
 			audio.PlayOneShot(notas[4]);
-				
+		
+		//sukiRock
+		if(Pontuacao.numMusica2 == 5)
+			audio.PlayOneShot(notas[5]);
+						
 		//rogerRock
 		if(Pontuacao.numMusica2 == 6)
 			audio.PlayOneShot(notas[6]);
+		
 	
 	if(Pontuacao.puzzle == 0) //soh funciona nas musicas
 		{	
@@ -230,6 +222,11 @@ function teclaApertada () {
 					break;
 				}
 		*/
+		
+	yield WaitForSeconds(0.1);
+			
+	trigger.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
+	trigger50.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
 
 }
 
@@ -246,20 +243,4 @@ function teclaLevantada () {
 
 }
 
-function OnGUI() {
-
-	if(Pontuacao.puzzle == 1)
-		{
-		//relogio
-		if(etapaPuzzle != 7)
-			GUI.Box(Rect(Screen.width*0.8, Screen.height*0.20, Screen.width*0.1, Screen.height*0.05), relog.ToString());
-		
-		if(etapaPuzzle == 7)
-			{
-			pontos = Mathf.Abs(relog * 100 / pontoNota);	
-			GUI.Box(Rect(Screen.width*0.8, Screen.height*0.30, Screen.width*0.1, Screen.height*0.05), pontos.ToString());
-			}
-		
-		}
-}
 

@@ -36,6 +36,9 @@ function Escolha () {
 		Pontuacao.isPause = false;
 		AudioListener.pause = false;
 		Application.LoadLevel("Teclados_teste");
+		ChecaPuzzle.proximo = 0;
+		ChecaPuzzle.chamaFuncao = false;
+		ChecaPuzzle.quadroOK = false;
 		}
 			
 		

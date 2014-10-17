@@ -39,7 +39,14 @@ function OnMouseEnter() {
 function Escolha () {
 
 	if(transform.position.y > -7) //açao do primeiro botao
+		{
 		Application.LoadLevel("Teclados_teste");
+		if(Pontuacao.puzzle == 1)
+			{
+			ChecaPuzzle.proximo = 16;
+			ChecaPuzzle.chamaFuncao = true;
+			}
+		}
 		
 	if(transform.position.y < -7 && transform.position.y > -10) //açao do segundo botao
 		Application.LoadLevel("Menu");

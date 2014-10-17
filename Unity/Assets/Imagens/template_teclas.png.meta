@@ -1,6 +1,17 @@
 fileFormatVersion: 2
 guid: 0434f0bd1e925de49828847fb33a9cc6
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: template_teclas_0
+    21300002: template_teclas_1
+    21300004: template_teclas_2
+    21300006: template_teclas_3
+    21300008: template_teclas_4
+    21300010: template_teclas_14
+    21300012: template_teclas_15
+    21300014: template_teclas_16
+    21300016: template_teclas_17
+    21300018: template_teclas_18
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
