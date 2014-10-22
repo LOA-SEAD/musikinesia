@@ -3,6 +3,13 @@
 //define a açao das teclas do teclado
 
 
+private var csScript : MidiInput;
+csScript = this.GetComponent("MidiInput");
+
+var channel : MidiChannel = MidiChannel.All;
+
+var noteNumber : int = 36;
+
 var trigger : GameObject; //trigger referente a tecla
 var trigger50 : GameObject; //trigger referente a tecla - 50% do valor
 
@@ -47,10 +54,10 @@ function Update () {
 	
 	if(!Pontuacao.travaTeclas)	
 		{
-		if(Input.GetKeyDown(tecla))
+		if(Input.GetKeyDown(tecla) || csScript.GetKeyDown (channel, noteNumber))
 			teclaApertada();
 
-		if(Input.GetKeyUp(tecla))
+		if(Input.GetKeyUp(tecla) || csScript.GetKeyUp (channel, noteNumber))
 			teclaLevantada();
 
 		}

@@ -24,21 +24,44 @@ static var proximo : int; //acessada em botoesIntro.js e Introducao.js
 static var chamaAnimacao : boolean;
 
 var musica : AudioClip[];
-var volMus0 : float = 1.0;
-var volMus1 : float = 0.0;
+var volMus0 : float;
+var volMus1 : float;
 var fadeIn : boolean;
 var fadeOut : boolean;
+
+//pause
+var pauseMenu : GameObject; //menu de pause
+static var isPause : boolean; //define se esta pausado
 
 function Start () {
 	
 	baseTexto.GetComponent(Animator).enabled = true;
 	Animacao();
 	
+	pauseMenu.transform.position.y = 20;
+	
 }
 
 function Update () {
 
-	audio.volume = volume;
+	//pause
+	if(Input.GetKeyDown(KeyCode.Escape) || botoesPauseIntro.menuVoltar) //aperta ESC
+		{
+		isPause = !isPause; //troca entre pausado e despausado
+		AudioListener.pause = !AudioListener.pause; //pausa e despausa o audio
+		botoesPauseIntro.menuVoltar = false;  //desativa a variavel
+		if(isPause)
+			{
+			Time.timeScale = 0; //congela toda a movimentacao
+			pauseMenu.transform.position.y = 0; //desce o menu de pause para o centro da tela
+			} else	{
+					Time.timeScale = 1; //tempo volta ao normal
+					pauseMenu.transform.position.y = 20; //menu de pause volta a se esconder acima do quadro
+					botoesPauseIntro.menuVoltar = false; //desativa a booleana que tira o pause
+					}
+		}
+	
+	//audio.volume = volume;
 	
 	if(chamaAnimacao)
 		{
@@ -47,19 +70,19 @@ function Update () {
 		}
 	
 	if(fadeIn)
-		if(volMus1 < 1)
+		if(volMus1 < 0.5)
 			{
 			volMus1 += 0.2 * Time.deltaTime;
-			audio.volume = volMus1;
 			volume = volMus1;
+			audio.volume = volMus1;
 			}
 		
 	if(fadeOut)
-		if(volMus0 > 0.1)
+		if(volMus0 > 0)
 			{
-			volMus0 -= 0.4 * Time.deltaTime;
 			audio.volume = volMus0;
 			volume = volMus0;
+			volMus0 -= 0.4 * Time.deltaTime;
 			}
 		
 	if(btProximo)
@@ -69,7 +92,7 @@ function Update () {
 		btAvancar.transform.position.y = -8;
 
 
-	if(proximo == 0 || proximo == 2)
+	if(proximo == 0) //|| proximo == 2
 		{
 		if(personagem[0].renderer.material.color.a != 1)
 			personagem[0].renderer.material.color.a += 0.03;
@@ -127,7 +150,7 @@ function Animacao() {
 
 	if(proximo == 0)
 		{
-		volume = 1;
+		//volume = 0.5;
 		pausar = false;
 		btProximo = false;
 		audio.clip = musica[0];
@@ -141,6 +164,7 @@ function Animacao() {
 		cenario[2].renderer.enabled = false;
 		cenario[3].renderer.material.color.a = 0;
 		cenario[4].renderer.material.color.a = 0;
+		cenario[4].GetComponent(Animator).enabled = false;
 		planoPreto.renderer.material.color.a = 0;
 		personagem[2].renderer.enabled = false;
 		
@@ -161,22 +185,24 @@ function Animacao() {
 	if(proximo == 1)
 		{
 		btProximo = false;
-		personagem[0].renderer.material.color.a = 0;
-		cenario[4].renderer.material.color.a = 0;
+		//personagem[0].renderer.material.color.a = 0;
+		//cenario[4].renderer.material.color.a = 0;
 	
+		audio.PlayOneShot(sons[5]);
+		
 		yield WaitForSeconds(0.5);
 		
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[1], posicao, Quaternion.identity);
-		
 	
 		yield WaitForSeconds(3);
 	
-		proximo = 2;
+		btProximo = true; //proximo = 2;
 		}
 	
 	if(proximo == 2)
-		{				
+		{			
+		btProximo = false;	
 		posicao = Vector3(0, -3.22, 0);
 		Instantiate(baseTexto, posicao, Quaternion.identity);
 		
@@ -192,6 +218,12 @@ function Animacao() {
 	
 	if(proximo == 3)
 		{
+		btProximo = false;
+		cenario[4].GetComponent(Animator).enabled = true;
+		audio.PlayOneShot(sons[6]);
+		
+		yield WaitForSeconds(1);
+		
 		personagem[0].GetComponent(SpriteRenderer).sprite = spritesP;
 		btProximo = false;
 	
@@ -199,29 +231,30 @@ function Animacao() {
 		Instantiate(texto[3], posicao, Quaternion.identity);
 	
 		yield WaitForSeconds(1);
+		audio.PlayOneShot(sons[7]);
 	
 		btProximo = true; //proximo = 4;
 		}
-		
-		//pedaço da narrativa faltando
-	
 	
 	if(proximo == 4)
 		{
 		btProximo = false;
 		personagem[0].renderer.material.color.a = 0;
 		cenario[4].renderer.material.color.a = 0;
+		cenario[4].GetComponent(Animator).enabled = false;
 		
 		yield WaitForSeconds(2);
 		proximo = 10;
 		
 		fadeOut = true;
+		volMus0 = 0.5;
 	
 		yield WaitForSeconds(3);
 		
 		audio.clip = musica[1];
 		fadeOut = false;
 		fadeIn = true;
+		volMus1 = 0;
 	
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[4], posicao, Quaternion.identity);
@@ -419,23 +452,7 @@ function Animacao() {
 		btProximo = false;
 	
 		Instantiate(texto[15], posicao, Quaternion.identity);
-	/*
-		yield WaitForSeconds(4);
 	
-		audio.PlayOneShot(sons[5]);
-	
-		yield WaitForSeconds(1);
-	
-		audio.PlayOneShot(sons[6]);
-	
-		yield WaitForSeconds(1);
-	
-		audio.PlayOneShot(sons[7]);
-	
-		yield WaitForSeconds(1);
-	
-		audio.PlayOneShot(sons[8]);
-	*/
 		yield WaitForSeconds(1);
 	
 		btProximo = true; //proximo = 25;

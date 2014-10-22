@@ -49,8 +49,29 @@ function OnMouseDown () {
 
 function Acao() {
 	
-	PosMusicas.proximo++;
-	PosMusicas.chamaAnimacao = true;
+	if(PosMusicas.proximo == 36)
+		{
+		PosMusicas.proximo = 370; //tela fora da numeraçao normal
+		PosMusicas.chamaAnimacao = true;
+		}
+	
+	else if(PosMusicas.proximo == 370)
+		{
+		PosMusicas.proximo = 371; //tela fora da numeraçao normal
+		PosMusicas.chamaAnimacao = true;
+		}
+	
+	else if(PosMusicas.proximo == 51)
+		{
+		PosMusicas.proximo = 520; //tela fora da numeraçao normal
+		PosMusicas.chamaAnimacao = true;
+		}
+		
+	else
+		{
+		PosMusicas.proximo++;
+		PosMusicas.chamaAnimacao = true;
+		}
 	
 }
 

@@ -49,6 +49,9 @@ var speed : float[]; //velocidades dos objetos que se movem de maneira constante
 static var chamarAnimacao : boolean; //acessada em botoesTutorial.js
 static var chamarVoltar : boolean; //acessada em botoesTutorial.js
 
+var pauseMenu : GameObject; //menu de pause
+static var isPause : boolean; //define se esta pausado
+
 function Start () {
 	
 	proximo = 0;
@@ -71,6 +74,7 @@ function Start () {
 	
 	imgInterface.renderer.enabled = false;
 	
+	pauseMenu.transform.position.y = 55;
 
 //animacao 1
 	yield WaitForSeconds(1.5);
@@ -87,6 +91,24 @@ function Start () {
 }
 
 function Update () {
+
+//pause
+	if(Input.GetKeyDown(KeyCode.Escape) || botoesPauseTut.menuVoltar) //aperta ESC
+		{
+		isPause = !isPause; //troca entre pausado e despausado
+		AudioListener.pause = !AudioListener.pause; //pausa e despausa o audio
+		botoesPauseTut.menuVoltar = false;  //desativa a variavel
+		if(isPause)
+			{
+			Time.timeScale = 0; //congela toda a movimentacao
+			pauseMenu.transform.position.y = 3; //desce o menu de pause para o centro da tela
+			} else	{
+					Time.timeScale = 1; //tempo volta ao normal
+					pauseMenu.transform.position.y = 55; //menu de pause volta a se esconder acima do quadro
+					botoesPauseTut.menuVoltar = false; //desativa a booleana que tira o pause
+					}
+		}
+
 
 //botao Avançar
 	if(chamarAnimacao)

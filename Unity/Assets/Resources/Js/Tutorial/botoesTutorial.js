@@ -6,6 +6,14 @@ var efeitos : AudioClip[];
 
 function Start () {
 
+	if(transform.position.y > 17) //botao Pular
+		{
+		if(Pontuacao.numMusica == 0)
+			transform.position.y = 19.42;
+		else
+			transform.position.y = 40;
+		}
+
 }
 
 function Update () {

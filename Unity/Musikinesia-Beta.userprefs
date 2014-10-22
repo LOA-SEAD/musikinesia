@@ -1,16 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Pontuacao.js">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Teclas.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Pontuacao.js" Line="175" Column="16" />
-      <File FileName="Assets\Resources\Js\Tutorial\Tutorial.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\PorcentagemAcerto.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\ChecarTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\DestruirNotas.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Suburbio\Instanciar.js" Line="46" Column="1" />
-      <File FileName="Assets\Resources\Js\Suburbio\btJogarSuburbio.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Suburbio\DestruirTextoSub.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\PosMusicas\PosMusicas.js" Line="64" Column="5" />
+      <File FileName="Assets\Resources\Js\Teclas.js" Line="33" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
