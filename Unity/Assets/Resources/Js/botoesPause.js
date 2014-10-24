@@ -31,7 +31,7 @@ function OnMouseDown () {
 
 function Escolha () {
 
-	if(transform.position.y > -6)
+	if(gameObject.tag == "bt1") //botao Recomecar
 		{
 		Pontuacao.isPause = false;
 		AudioListener.pause = false;
@@ -42,17 +42,17 @@ function Escolha () {
 		}
 			
 		
-	if(transform.position.y < -6 && transform.position.y > -8)
+	if(gameObject.tag == "bt2") //botao Menu Inicial
 		{
 		Pontuacao.isPause = false;
 		AudioListener.pause = false;
 		Application.LoadLevel("Menu");
 		}		
 		
-	if(transform.position.y < -8 && transform.position.y > -10)
+	if(gameObject.tag == "bt3") //botao Voltar
 		menuVoltar = true;
 		
-	if(transform.position.y < -10)
+	if(gameObject.tag == "bt4") //botao Tutorial
 		{
 		Time.timeScale = 1; //tempo volta ao normal
 		Pontuacao.isPause = false;

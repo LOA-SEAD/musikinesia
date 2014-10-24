@@ -1,18 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Pontuacao.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Tutorial\Tutorial.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Pontuacao.js" Line="22" Column="29" />
-      <File FileName="Assets\Resources\Js\PosMusicas\PosMusicas.js" Line="68" Column="20" />
-      <File FileName="Assets\Resources\Js\PosMusicas\btProximoPM.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Tutorial\botoesTutorial.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\botoesPause.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Tutorial\botoesPauseTut.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Tutorial\Tutorial.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\botaoMenu.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Introducao\Introducao.js" Line="34" Column="55" />
-      <File FileName="Assets\Resources\Js\Introducao\botoesPauseIntro.js" Line="60" Column="20" />
-      <File FileName="Assets\Resources\Js\PosMusicas\botoesPausePosM.js" Line="27" Column="1" />
+      <File FileName="Assets\Resources\Js\botoesPause.js" Line="55" Column="46" />
+      <File FileName="Assets\Resources\Js\Menu\botoes.js" Line="69" Column="28" />
+      <File FileName="Assets\Resources\Js\Ranking\btVoltar.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Introducao\botoesIntro.js" Line="43" Column="33" />
+      <File FileName="Assets\Resources\Js\Introducao\botoesPauseIntro.js" Line="44" Column="28" />
+      <File FileName="Assets\Resources\Js\PosMusicas\botoesPausePosM.js" Line="52" Column="44" />
+      <File FileName="Assets\Resources\Js\PosMusicas\btProximoPM.js" Line="28" Column="38" />
+      <File FileName="Assets\Resources\Js\botaoAvancar.js" Line="27" Column="1" />
+      <File FileName="Assets\Resources\Js\Tutorial\botoesPauseTut.js" Line="51" Column="44" />
+      <File FileName="Assets\Resources\Js\Tutorial\botoesTutorial.js" Line="15" Column="4" />
+      <File FileName="Assets\Resources\Js\Tutorial\Tutorial.js" Line="664" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

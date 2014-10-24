@@ -31,7 +31,7 @@ function OnMouseDown () {
 
 function Escolha () {
 
-	if(transform.position.y > 2) // y = 3
+	if(gameObject.tag == "bt1") //botao Recomeçar
 		{
 		Time.timeScale = 1; //tempo volta ao normal
 		Tutorial.isPause = false;
@@ -40,7 +40,7 @@ function Escolha () {
 		}
 			
 		
-	if(transform.position.y < 2 && transform.position.y > 0) // y = 1
+	if(gameObject.tag == "bt2") //botao Menu
 		{
 		Time.timeScale = 1; //tempo volta ao normal
 		Tutorial.isPause = false;
@@ -48,7 +48,7 @@ function Escolha () {
 		Application.LoadLevel("Menu");
 		}		
 		
-	if(transform.position.y < 0 && transform.position.y > -2) // y = -1
+	if(gameObject.tag == "bt3") //botao Voltar
 		menuVoltar = true;
 		
 	/*	

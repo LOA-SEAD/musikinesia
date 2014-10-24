@@ -661,6 +661,7 @@ function Voltar(){
 
 	if(proximo == 4 && btProximo)
 		{
+		objeto[2].transform.position.x = -70;
 		voltar = 4; //limpa a cena atual
 		objeto[5].renderer.enabled = false;
 		objeto[5].transform.position.x = 14.321;

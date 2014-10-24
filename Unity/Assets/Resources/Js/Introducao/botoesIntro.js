@@ -38,9 +38,9 @@ function OnMouseDown () {
 	audio.PlayOneShot(efeitos[1]);
 	if(transform.position.y > 0)
 		{
-		if(Introducao.proximo < 26) //26 eh o numero de troca da tela de tutorial para a segunda parte da introduçao
+		if(gameObject.tag == "bt1") //26 eh o numero de troca da tela de tutorial para a segunda parte da introduçao
 			Application.LoadLevel("Tutorial");
-		else
+		else if(gameObject.tag == "bt2")
 			Application.LoadLevel("Suburbio");
 		}
 	

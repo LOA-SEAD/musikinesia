@@ -39,11 +39,11 @@ function OnMouseDown () {
 
 	audio.PlayOneShot(efeitos[1]);
 	
-	if(transform.position.y > -25 && transform.position.y < 0)
-		Acao();
-	
-	else
+	if(gameObject.tag == "bt1")
 		Pular();
+	
+	else if(gameObject.tag == "bt2")
+		Acao();
 
 }
 

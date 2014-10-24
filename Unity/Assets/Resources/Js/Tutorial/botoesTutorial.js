@@ -44,13 +44,13 @@ function OnMouseExit () {
 function OnMouseDown () {
 
 	audio.PlayOneShot(efeitos[1]);
-	if(transform.position.y > 17) //botao Pular
+	if(gameObject.tag == "bt1") //botao Pular
 		{
 		Introducao.proximo = 26;
 		Application.LoadLevel("Introducao");
 		}
 	
-	if(transform.position.y < 17 && transform.position.y > -10) //botao voltar
+	if(gameObject.tag == "bt3") //botao voltar
 		Tutorial.chamarVoltar = true;
 	
 	if(transform.position.y < -10) //botao avançar
@@ -60,7 +60,7 @@ function OnMouseDown () {
 
 function Acao() {
 
-	if(transform.position.y < -10 && transform.position.y > -12) //botao avançar
+	if(gameObject.tag == "bt2") //botao avançar
 		{
 		Tutorial.proximo++;
 		Tutorial.chamarAnimacao = true;

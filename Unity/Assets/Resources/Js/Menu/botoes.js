@@ -16,7 +16,7 @@ function Start () {
 	
 	guia.renderer.enabled = false;
 	planoPreto.renderer.enabled = false;
-	transform.renderer.material.color.a = 0;
+	//transform.renderer.material.color.a = 0;
 	guia.transform.renderer.material.color.a = 0;
 	btVoltar.transform.position.y = -10; //botao Voltar fora da tela
 	
@@ -24,14 +24,8 @@ function Start () {
 
 function Update () {
 	
-	if(transform.renderer.material.color.a != 1)
-		transform.renderer.material.color.a += 0.05;
-		
-	if(creditos.transform.position.y == 0)
-		btVoltar.transform.position.y = -4.2;
-		
-		else
-		btVoltar.transform.position.y = -10;
+	//if(transform.renderer.material.color.a != 1)
+		//transform.renderer.material.color.a += 0.05;
 
 }
 
@@ -43,12 +37,12 @@ function OnMouseEnter() {
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0); //botao fica vermelho
+	//renderer.material.color -= Color(0, 0.1, 0.1, 0); //botao fica vermelho
 	guia.renderer.enabled = true;
 	
 	//guia aparece ao lado do escrito
 	guia.transform.renderer.material.color.a += 0.2; //animacao de fade
-	guia.transform.position.x = transform.position.x - 3;
+	guia.transform.position.x = transform.position.x - 2.5;
 	guia.transform.position.y = transform.position.y;
 
 	
@@ -57,7 +51,7 @@ function OnMouseOver () {
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1); //botao fica na cor original
+	//renderer.material.color = Color(1, 1, 1, 1); //botao fica na cor original
 	guia.renderer.enabled = false;
 	guia.transform.renderer.material.color.a = 0;
 
@@ -65,46 +59,47 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
-	if(transform.position.y > -4.3) 
-		{
-		Jogo();
-		audio.PlayOneShot(efeitos[1]);
-		}		
-		else
-			Application.Quit();	//botao Sair	
+	Jogo();
+	audio.PlayOneShot(efeitos[1]);			
 
 }
 
 function Jogo () {
 
-	guia.transform.renderer.material.color = Color(0, 0, 0, 1); //Guia fica preto ao clicar
-
-	yield WaitForSeconds(0.2);
-	planoPreto.renderer.enabled = true;
-	planoPreto.renderer.material.color.a = 0.7;
-
-	positionIns = Vector3(0.4, 0.5, -3);
-	Instantiate(loading, positionIns, Quaternion.identity);
-
-	
-	yield WaitForSeconds(1.5);
-	
-	
-	if(transform.position.y > -1.9 && transform.position.y < -1.1) //botao Jogar
-		Application.LoadLevel("Introducao");
-	
-	if(transform.position.y > -2.7 && transform.position.y < -1.9) //botao Treino
+	if(gameObject.tag == "bt1" || gameObject.tag == "bt2")
 		{
-		Application.LoadLevel("Teclados_teste");
-		Pontuacao.treino = true;
+		guia.transform.renderer.material.color = Color(0, 0, 0, 1); //Guia fica preto ao clicar
+
+		yield WaitForSeconds(0.2);
+		planoPreto.renderer.enabled = true;
+		planoPreto.renderer.material.color.a = 0.7;
+
+		positionIns = Vector3(0.4, 0.5, -3);
+		Instantiate(loading, positionIns, Quaternion.identity);
+
+	
+		yield WaitForSeconds(1.5);
+	
+	
+		if(gameObject.tag == "bt1") //botao Jogar
+			Application.LoadLevel("Introducao");
+	
+		if(gameObject.tag == "bt2") //botao Treino
+			{
+			Application.LoadLevel("Teclados_teste");
+			Pontuacao.treino = true;
+			}
+		
 		}
 	
-	if(transform.position.y > -3.5 && transform.position.y < -2.7) //botao Ranking
+	if(gameObject.tag == "bt3") //botao Ranking
 		Application.LoadLevel("Ranking");
 	
-	if(transform.position.y > -4.3 && transform.position.y < -3.5) //botao Creditos
-		creditos.transform.position.y = 0;
+	if(gameObject.tag == "bt4") //botao Creditos
+		Application.LoadLevel("Creditos");
+		
+	if(gameObject.tag == "bt5") //botao Sair
+		Application.Quit();	//botao Sair
 	
-	
-			
+		
 }
