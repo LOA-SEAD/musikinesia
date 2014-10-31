@@ -1,14 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Geral\Ranking\RMesh3.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" Line="42" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="138" Column="180" />
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="170" Column="17" />
-      <File FileName="Assets\Resources\Js\Jogo\botaoAvancar.js" Line="47" Column="31" />
-      <File FileName="Assets\Resources\Js\Narrativa\Introducao\Introducao.js" Line="33" Column="44" />
-      <File FileName="Assets\Resources\Js\Narrativa\Introducao\botoesIntro.js" Line="9" Column="76" />
-      <File FileName="Assets\Resources\Js\Jogo\botoesPause.js" Line="41" Column="4" />
+      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" Line="25" Column="13" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="208" Column="24" />
+      <File FileName="Assets\Resources\Js\Jogo\botaoAvancar.js" Line="64" Column="21" />
+      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="75" Column="30" />
+      <File FileName="Assets\Resources\Js\Geral\Derrota\botoesDerrota.js" Line="37" Column="2" />
+      <File FileName="Assets\Resources\Js\Geral\Menu\botoes.js" Line="77" Column="29" />
+      <File FileName="Assets\Resources\Js\Geral\Ranking\RMesh3.js" Line="21" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
