@@ -53,42 +53,42 @@ TextureImporter:
     - name: tom_0
       rect:
         serializedVersion: 2
-        x: 17
+        x: 11
         y: 128
-        width: 55
+        width: 71
         height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: tom_1
       rect:
         serializedVersion: 2
-        x: 116
+        x: 109
         y: 128
-        width: 58
+        width: 71
         height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: tom_2
       rect:
         serializedVersion: 2
         x: 200
         y: 128
-        width: 69
+        width: 71
         height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: tom_3
       rect:
         serializedVersion: 2
-        x: 17
+        x: 12
         y: 8
-        width: 63
+        width: 71
         height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: tom_4
       rect:
@@ -98,17 +98,17 @@ TextureImporter:
         width: 71
         height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: tom_5
       rect:
         serializedVersion: 2
-        x: 205
+        x: 202
         y: 8
-        width: 64
+        width: 71
         height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
