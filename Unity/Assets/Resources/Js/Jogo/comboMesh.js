@@ -16,11 +16,15 @@ function Update () {
 		if(Pontuacao.combo < 37) //37 eh o numero do combo maximo
 			myMesh.text = Pontuacao.combo.ToString() + "/" + Pontuacao.comboRestante.ToString();
 
-		if(Pontuacao.combo >= 37)
+		else if(Pontuacao.combo >= 37)
 			myMesh.text = "CHEIO";
 		}
-		else
-			myMesh.text = "--";
+	
+	else if(!Pontuacao.treino && Pontuacao.puzzle == 1)
+		myMesh.text = ChecaPuzzle.relogInt.ToString(); //relogio do puzzle
+	
+	else
+		myMesh.text = "--";
 
 
 }

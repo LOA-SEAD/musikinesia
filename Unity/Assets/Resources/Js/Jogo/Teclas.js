@@ -107,15 +107,13 @@ function teclaApertada () {
 		
 		if(etapaPuzzle == 1 && teclaPuzzle == 5) //nota Sol
 			{
-			print(etapaPuzzle);
 			etapaPuzzle = -1;
 			ChecaPuzzle.proximo++;
 			ChecaPuzzle.chamaFuncao = true;
 			}
 		
 		if((etapaPuzzle == 2 && teclaPuzzle == 1) || (etapaPuzzle == 3 && teclaPuzzle == 4)) //nota Do e Fa
-			{
-			print(etapaPuzzle);						
+			{					
 			quadro.transform.Rotate (0, 0, z);
 			quadro.transform.Translate(0, x, 0);
 			renderer.material.color = Color(0.7, 0.4, 0, 1);
@@ -125,8 +123,7 @@ function teclaApertada () {
 			}
 		
 		if((etapaPuzzle == 4 && teclaPuzzle == 3) || (etapaPuzzle == 5 && teclaPuzzle == 7)) //nota Mi e Si
-			{
-			print(etapaPuzzle);			
+			{		
 			quadro.transform.Rotate (0, 0, z);
 			quadro.transform.Translate(0, x, 0);
 			renderer.material.color = Color(0, 0.5, 0.9, 1);
@@ -136,8 +133,7 @@ function teclaApertada () {
 			}
 		
 		if(etapaPuzzle == 6) //as 4 notas
-			{
-			print(etapaPuzzle);			
+			{	
 			quadro.transform.Rotate (0, 0, z);
 			quadro.transform.Translate(0, x, 0);
 			}

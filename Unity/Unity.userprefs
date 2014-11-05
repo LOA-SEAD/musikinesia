@@ -1,14 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Geral\Ranking\RMesh3.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" Line="25" Column="13" />
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="208" Column="24" />
+      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" Line="137" Column="3" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="178" Column="10" />
       <File FileName="Assets\Resources\Js\Jogo\botaoAvancar.js" Line="64" Column="21" />
-      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="75" Column="30" />
-      <File FileName="Assets\Resources\Js\Geral\Derrota\botoesDerrota.js" Line="37" Column="2" />
+      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="252" Column="1" />
+      <File FileName="Assets\Resources\Js\Geral\Derrota\botoesDerrota.js" Line="34" Column="1" />
       <File FileName="Assets\Resources\Js\Geral\Menu\botoes.js" Line="77" Column="29" />
-      <File FileName="Assets\Resources\Js\Geral\Ranking\RMesh3.js" Line="21" Column="1" />
+      <File FileName="Assets\Resources\Js\Geral\Ranking\RMesh3.js" Line="22" Column="2" />
+      <File FileName="Assets\Resources\Js\Jogo\PorcentagemAcerto.js" Line="22" Column="2" />
+      <File FileName="Assets\Resources\Js\Jogo\pontosMesh.js" Line="18" Column="47" />
+      <File FileName="Assets\Resources\Js\Jogo\comboMesh.js" Line="30" Column="2" />
+      <File FileName="Assets\Resources\Js\Jogo\multiplicadorMesh.js" Line="20" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -12,7 +12,11 @@ function Update () {
 	
 	if(!Pontuacao.treino && Pontuacao.puzzle == 0)
 		myMesh.text = Pontuacao.multiplicador.ToString() + "X";
-		else
-			myMesh.text = "--";
+	
+	else if(Pontuacao.treino && Pontuacao.puzzle == 0)
+		myMesh.text = "--";
+	
+	else
+		myMesh.text = "";
 
 }

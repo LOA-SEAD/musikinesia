@@ -11,12 +11,12 @@ function Update () {
 
 
 	for (var i: int = 1; i < 6; i++)
-		if(GetComponent(MeshRenderer).name == "M1hs" + i.ToString())
-			myMesh.text = i.ToString() + ": " + PlayerPrefs.GetInt("HScore" + i.ToString()).ToString();
-		if(GetComponent(MeshRenderer).name == "M2hs" + i.ToString())
-			myMesh.text = i.ToString() + ": " + PlayerPrefs.GetInt("HScore" + i.ToString()).ToString();
-		if(GetComponent(MeshRenderer).name == "M3hs" + i.ToString())
-			myMesh.text = i.ToString() + ": " + PlayerPrefs.GetInt("HScore" + i.ToString()).ToString();
+		if(GetComponent(MeshRenderer).name == "M1hs" + 1)
+			myMesh.text = i.ToString() + ": " + PlayerPrefs.GetInt("HScore" + 1).ToString();
+		if(GetComponent(MeshRenderer).name == "M2hs" + 2)
+			myMesh.text = i.ToString() + ": " + PlayerPrefs.GetInt("HScore" + 2).ToString();
+		if(GetComponent(MeshRenderer).name == "M3hs" + 3)
+			myMesh.text = i.ToString() + ": " + PlayerPrefs.GetInt("HScore" + 3).ToString();
 }
 
 	

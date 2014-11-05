@@ -16,13 +16,13 @@ static var proximo : int; //define a etapa do puzzle e dos textos; acessada em b
 static var ajustaQuadro : boolean; //libera o ajuste do quadro para começar o puzzle; acessado em Teclas.js
 
 var relog : float;
-var relogInt : int;
-var pontos : int;
+static var relogInt : int;
+static var pontos : int;
 var skinPontos : GUISkin;
 
 function Start () {
 
-	relog = 120;
+	relog = 120; //padrao = 120
 	pontos = 0;
 
 	falaPai.renderer.enabled = true;
@@ -119,7 +119,7 @@ function TextoPai() {
 	
 	
 }
-
+/*
 function OnGUI() {
 	
 	GUI.skin = skinPontos;
@@ -152,4 +152,4 @@ function OnGUI() {
 			}
 		}
 
-}
+}*/

@@ -128,8 +128,11 @@ var aniFase : GameObject[];
 //anifase[10] = guitarrista show
 //anifase[11] = baixista show
 
+var templatePontos : GameObject;
+var templatePontosS : Sprite[];
+
 //para teste
-//var relogTeste : float;
+var relogTeste : float;
 
 
 function Start () {
@@ -181,8 +184,8 @@ function Start () {
 	if(!treino)
 		{
 		if(numMusica == 0)		
-			//numMusica = 4; //primeira musica = 4
-			puzzle = 1;
+			numMusica = 4; //primeira musica = 4
+			//puzzle = 1;
 		}
 	else if(numMusica == 0) //para nao chamar os nomes quando o jogador pressionar recomeçar no treino
 		NomesMusicas(); //coloca o nome das musicas na tela de escolha - TREINO
@@ -213,6 +216,13 @@ function Start () {
 	aniFase[11].GetComponent(SpriteRenderer).enabled = false;
 	aniFase[11].GetComponent(Animator).enabled = false;
 	
+	//template de pontos
+	if(puzzle == 0)
+		templatePontos.GetComponent(SpriteRenderer).sprite = templatePontosS[0];
+	
+	else
+		templatePontos.GetComponent(SpriteRenderer).sprite = templatePontosS[1];
+	
 }
 
 function Update () {
@@ -224,7 +234,7 @@ function Update () {
 		print(relog);
 		print(puzzle);
 		}
-		//aparecerTeste = !aparecerTeste;
+		//aparecerTeste = !aparecerTeste;*/
 	
 	//Pular pra narrativa = teste
 	if(Input.GetKey("q"))
@@ -234,7 +244,7 @@ function Update () {
 		relogTeste = 0;
 	
 	if(relogTeste > 3)
-		Application.LoadLevel("NarrativaSuburbio");*/
+		Application.LoadLevel("NarrativaSuburbio");
 
 
 	//animacao Inicial
@@ -547,7 +557,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 			
 			
 			//ranking
-			/*
+			
 			if(numMusica == 4)
 				{
 				for(i = 1; i< 6; i++)
@@ -558,7 +568,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 				for(i = 1; i< 6; i++)
 					hs[i-1] = PlayerPrefs.GetInt("HScore" + (i+5).ToString());
 				}
-			else if(numMusica == 2)
+			else if(numMusica == 6)
 				{
 				for(i = 1; i< 6; i++)
 					hs[i-1] = PlayerPrefs.GetInt("HScore" + (i+10).ToString());
@@ -635,7 +645,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 				PlayerPrefs.SetInt("HScore3-4", hs[3]);
 				PlayerPrefs.SetInt("HScore3-5", hs[4]);
 			}
-			*/
+			
 			
 			
 			planoPreto.renderer.material.color.a = 0.7; //plano preto de fundo 70%
