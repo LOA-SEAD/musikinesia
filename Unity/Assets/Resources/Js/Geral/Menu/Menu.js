@@ -40,6 +40,9 @@ function Start () {
 	ChecaPuzzle.proximo = 0;
 	ChecaPuzzle.chamaFuncao = false;
 	ChecaPuzzle.quadroOK = false;
+	ChecaPuzzle.ajustaQuadro = false;
+	ChecaPuzzle.relogInt = 0;
+	ChecaPuzzle.pontos = 0;
 	
 	//pause
 	Pontuacao.isPause = false; //desativa o pause do jogo (se estiver pausado)
@@ -48,6 +51,8 @@ function Start () {
 	
 	//desativa o modo treino
 	Pontuacao.treino = false;
+	
+	
 	
 	yield WaitForSeconds(0.9);
 	positionIns = Vector3(0, 0.5, 0);

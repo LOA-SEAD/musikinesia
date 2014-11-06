@@ -12,6 +12,10 @@ function Update () {
 
 	if(Input.GetKeyDown("space"))
 		Acao();
+	
+	if(ChecaPuzzle.proximo == 17)
+		if(!Pontuacao.treino)
+			PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
 
 }
 

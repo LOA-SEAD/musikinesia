@@ -12,11 +12,16 @@ var efeitos : AudioClip[];
 var creditos : GameObject; //tela de credito
 var btVoltar : GameObject; //botao voltar
 
+var continuaOK : int; //habilita o botao continua
+
 function Start () {
 	
 	planoPreto.renderer.enabled = false;
 	//transform.renderer.material.color.a = 0;
 	btVoltar.transform.position.y = -10; //botao Voltar fora da tela
+	
+	//save game
+	continuaOK = PlayerPrefs.GetInt("Continua"); //botao Continua ativo
 	
 }
 
@@ -24,6 +29,10 @@ function Update () {
 	
 	//if(transform.renderer.material.color.a != 1)
 		//transform.renderer.material.color.a += 0.05;
+	
+	//if(gameObject.tag == "bt2" && savedGame == 0) //botao Continuar
+		//color = Color(0.7, 0.7, 0.7, 1); //botao fica cinza = inativo
+		
 
 }
 
@@ -59,7 +68,7 @@ function OnMouseDown () {
 
 function Jogo () {
 
-	if(gameObject.tag == "bt1" || gameObject.tag == "bt2")
+	if(gameObject.tag == "bt1" || (gameObject.tag == "bt2" && continuaOK == 1) || gameObject.tag == "bt3")
 		{
 		//guia.transform.renderer.material.color = Color(0, 0, 0, 1); //Guia fica preto ao clicar
 
@@ -72,21 +81,27 @@ function Jogo () {
 
 	
 		yield WaitForSeconds(1.5);
-	
-	
-		if(gameObject.tag == "bt1") //botao Jogar
+		
+		if(gameObject.tag == "bt1") //botao Novo Jogo
+			{
+			PlayerPrefs.SetInt("SaveGame", 0); //valor usado pra narrativa
+			PlayerPrefs.SetInt("Continua", 0); //botao Continua
 			Application.LoadLevel("Introducao");
+			}
+		
+		if(gameObject.tag == "bt2" && continuaOK == 1) //botao Continuar
+			{
+			PosMusicas.proximo = PlayerPrefs.GetInt("SaveGame");
+			Application.LoadLevel("NarrativaSuburbio");
+			}
 	
-		if(gameObject.tag == "bt2") //botao Treino
+		if(gameObject.tag == "bt3") //botao Treino
 			{
 			Application.LoadLevel("Jogo");
 			Pontuacao.treino = true;
 			}
-		
+			//Application.LoadLevel("Ranking");
 		}
-	
-	if(gameObject.tag == "bt3") //botao Ranking
-		Application.LoadLevel("Ranking");
 	
 	if(gameObject.tag == "bt4") //botao Creditos
 		Application.LoadLevel("Creditos");

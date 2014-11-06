@@ -557,7 +557,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 			
 			
 			//ranking
-			
+			/*
 			if(numMusica == 4)
 				{
 				for(i = 1; i< 6; i++)
@@ -644,7 +644,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 				PlayerPrefs.SetInt("HScore3-3", hs[2]);
 				PlayerPrefs.SetInt("HScore3-4", hs[3]);
 				PlayerPrefs.SetInt("HScore3-5", hs[4]);
-			}
+			}*/
 			
 			
 			
@@ -660,6 +660,21 @@ if(!isPause && !derrota && animacaoIn > 0)
 				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.35,Screen.width*0.8,Screen.height*0.5), "Vidas: " + ChecarTrigger.vida.ToString()); //vidas no final da musica
 				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.6,Screen.width*0.8,Screen.height*0.7), "Final: " + pontuacaoFinal.ToString()); //pontuacao * vidas
 				//GUI.Box(Rect(Screen.width*0.1,Screen.height*0.75,Screen.width*0.8,Screen.height*0.7), "Melhor: " + hs[0].ToString()); //melhor resultado
+				
+				if(numMusica == 4)
+					PosMusicas.proximo = 0;
+					
+				else if(numMusica == 3)
+					PosMusicas.proximo = 34;
+			
+				else if(numMusica == 6)
+					PosMusicas.proximo = 48;
+			
+				else if(numMusica == 5)
+					PosMusicas.proximo = 56;
+				
+				PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
+				PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
 				}
 			
 			
@@ -667,31 +682,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 			if(GUI.Button(Rect(Screen.width*0.8,Screen.height*0.75,Screen.width*0.1,Screen.height*0.15), ""))
 				{
 				if(!treino)
-					{
-					if(numMusica == 4)
-						{
-						PosMusicas.proximo = 0;
-						Application.LoadLevel("NarrativaSuburbio");
-						}
-					
-					else if(numMusica == 3)
-						{
-						PosMusicas.proximo = 34;
-						Application.LoadLevel("NarrativaSuburbio");
-						}
-				
-					else if(numMusica == 6)
-						{
-						PosMusicas.proximo = 48;
-						Application.LoadLevel("NarrativaSuburbio");
-						}
-				
-					else if(numMusica == 5)
-						{
-						PosMusicas.proximo = 56;
-						Application.LoadLevel("NarrativaSuburbio");
-						}
-					}
+					Application.LoadLevel("NarrativaSuburbio");
 					
 				else
 					{
