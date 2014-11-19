@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-static var destruir : boolean; //acessada em Instanciar.js
+static var destruir : boolean; //acessada em btJogarSuburbio.js
 
 function Start () {
 

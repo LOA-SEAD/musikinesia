@@ -1,6 +1,6 @@
 ﻿#pragma strict
 //script do botao de mute
-
+/*
 static var muteOn : boolean; //acessado em Pontuacao.js
 
 var imagem1 : Sprite;
@@ -31,3 +31,4 @@ function OnMouseDown() {
 }
 
 
+*/

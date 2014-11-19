@@ -1,7 +1,7 @@
 ﻿#pragma strict
 //script do botao recomeçar, presente no canto superior esquerdo na tela do jogo
 
-
+/*
 var imagem : Sprite[]; //sprites do botao
 
 function Start () {
@@ -30,3 +30,4 @@ function OnMouseUp() {
 	GetComponent(SpriteRenderer).sprite = imagem[0];
 
 }
+*/

@@ -100,6 +100,7 @@ function OnMouseUp() {
 
 function teclaApertada () {
 
+//Puzzle
 	if(Pontuacao.puzzle == 1 && !ChecaPuzzle.quadroOK) //soh funciona no puzzle
 		{
 		
@@ -146,19 +147,17 @@ function teclaApertada () {
 				quadro.transform.Rotate (0, 0, z);
 				quadro.transform.Translate(0, x, 0);
 				}
-		
 		}	
 
+//Musicas
 	if(Pontuacao.puzzle == 0) //soh funciona nas musicas
 		{	
 		teclaDown = true;
 		corBranca = false;
-	
-		if(teclaDown)
-			{
-			trigger.transform.collider.enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
-			trigger50.transform.collider.enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
-			}
+			
+		trigger.transform.collider.enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
+		trigger50.transform.collider.enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
+		
 		}
 	
 		yield WaitForSeconds(0.02);
@@ -242,7 +241,7 @@ function teclaLevantada () {
 		corBranca = true;
 		trigger.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
 		trigger50.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
-		ChecarTrigger.maisPontos = false;
+		//ChecarTrigger.maisPontos = false;
 		teclaDown = false;
 		}
 

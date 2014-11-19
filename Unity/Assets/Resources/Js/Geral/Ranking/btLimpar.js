@@ -1,5 +1,5 @@
 ﻿#pragma strict
-
+/*
 function Start () {
 
 }
@@ -29,3 +29,4 @@ function Limpar() {
 			PlayerPrefs.DeleteKey("HScore" + 3);
 
 }
+*/

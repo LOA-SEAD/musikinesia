@@ -1,6 +1,6 @@
 ﻿#pragma strict
 //script dentro do prefab da bolinha azul que sinaliza a tecla apertada errada
-
+/*
 function Start () {
 	
 }
@@ -11,3 +11,4 @@ function Update () {
 	Destroy(gameObject, 0.2); //destroi a bolinha
 
 }
+*/

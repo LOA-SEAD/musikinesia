@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 public class ChecaPuzzle : MonoBehaviour {
 
 
@@ -36,3 +36,4 @@ public class ChecaPuzzle : MonoBehaviour {
 		//Debug.Log (transform.position.x - quadroTeste.position.x);
 	}
 }
+*/
