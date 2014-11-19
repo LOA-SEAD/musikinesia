@@ -1,0 +1,603 @@
+fileFormatVersion: 2
+guid: 962edc5f2320c2b47842a3c62032d748
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: AFalaPai
+    21300002: AMenu
+    21300004: AMenuDown
+    21300006: ATecla1
+    21300008: ATecla2
+    21300010: ATecla3
+    21300012: ATecla4
+    21300014: ANotas
+    21300016: ANotasDown
+    21300018: Aregressiva3
+    21300020: Aregressiva2
+    21300022: Aregressiva1
+    21300024: ATeclas
+    21300026: ATeclasDown
+    21300028: ATecla5
+    21300030: ATeclado
+    21300032: ATecla1down
+    21300034: ATecla2down
+    21300036: ATecla3down
+    21300038: ATecla4down
+    21300040: ANota
+    21300042: ATecla5down
+    21300044: ANotaDo
+    21300046: AVisorTecladoPuzzle
+    21300048: AVisorTeclado
+    21300050: AVidaCheia
+    21300052: AQuadro
+    21300054: AVidaVazia
+    21300056: AVida0
+    21300058: AVida1
+    21300060: AVida2
+    21300062: AVida3
+    21300064: AVida4
+    21300066: AVida5
+    21300068: AVida6
+    21300070: AVida7
+    21300072: APentagramaFull
+    21300074: APentagramaHalf
+    21300076: ABtJogar
+    21300078: ABtTreino
+    21300080: ABtRanking
+    21300082: ABtCreditos
+    21300084: ABtAvancar
+    21300086: ABtVoltar
+    21300088: ABtNovoJogo
+    21300090: ABtContinuar
+    21300092: ABtTutorial
+    21300094: ABtMenuIn
+    21300096: ABtPular
+    21300098: ABtSair
+    21300100: ABtRecomecar
+    21300102: ABtOpcoes
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Web
+    maxTextureSize: 2048
+    textureFormat: -1
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: AFalaPai
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 637
+        height: 67
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMenu
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 272
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMenuDown
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 272
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 134
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla2
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 134
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla3
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 134
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla4
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 134
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANotas
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 256
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANotasDown
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 256
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aregressiva3
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 88
+        width: 139
+        height: 174
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aregressiva2
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 88
+        width: 139
+        height: 174
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Aregressiva1
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 88
+        width: 122
+        height: 174
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATeclas
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 240
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATeclasDown
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 240
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla5
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 159
+        width: 32
+        height: 79
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATeclado
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 0
+        width: 512
+        height: 232
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla1down
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla2down
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla3down
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 0
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla4down
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 48
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANota
+      rect:
+        serializedVersion: 2
+        x: 1242
+        y: 115
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ATecla5down
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 24
+        width: 32
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANotaDo
+      rect:
+        serializedVersion: 2
+        x: 1244
+        y: 88
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVisorTecladoPuzzle
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 0
+        width: 319
+        height: 72
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVisorTeclado
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 0
+        width: 396
+        height: 72
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AQuadro
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 0
+        width: 72
+        height: 60
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida2
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida3
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida4
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida5
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida6
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVida7
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 347
+        width: 23
+        height: 102
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APentagramaFull
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 477
+        width: 588
+        height: 243
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APentagramaHalf
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 595
+        width: 588
+        height: 125
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtJogar
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 458
+        width: 43
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtTreino
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 442
+        width: 53
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtRanking
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 426
+        width: 62
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtCreditos
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 410
+        width: 71
+        height: 13
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtAvancar
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 391
+        width: 63
+        height: 13
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtVoltar
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 378
+        width: 53
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtNovoJogo
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 362
+        width: 80
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtContinuar
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 346
+        width: 79
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtTutorial
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 378
+        width: 69
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtMenuIn
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 394
+        width: 102
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtPular
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 410
+        width: 44
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtSair
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 426
+        width: 34
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtRecomecar
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 439
+        width: 80
+        height: 13
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ABtOpcoes
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 455
+        width: 53
+        height: 15
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

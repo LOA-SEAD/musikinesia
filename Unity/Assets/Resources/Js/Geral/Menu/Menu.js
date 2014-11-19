@@ -10,6 +10,8 @@ var positionIns : Vector3; //define a posicao de instantiate
 
 var efeito : GameObject; //particulas atras do logo
 
+var canvasMenu : Canvas;
+
 function Start () {
 
 	//zerar variaveis static
@@ -57,6 +59,8 @@ function Start () {
 	yield WaitForSeconds(0.9);
 	positionIns = Vector3(0, 0.5, 0);
 	Instantiate(efeito, positionIns, Quaternion.identity);
+	
+	canvasMenu.GetComponent(Animator).enabled = true;
 
 }
 

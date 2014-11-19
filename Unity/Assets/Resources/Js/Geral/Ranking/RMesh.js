@@ -1,5 +1,5 @@
 ﻿#pragma strict
-
+/*
 function Start () {
 
 }
@@ -42,5 +42,5 @@ function Update () {
 	if (GetComponent(MeshRenderer).name == "M3hs5")
 		myMesh.text = "5: " + PlayerPrefs.GetInt("HScore3-5").ToString();
 }
-
+*/
 	

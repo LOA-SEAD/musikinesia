@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DestruirTextoSub.cs" />
      <Compile Include="Assets\Resources\Js\Geral\Tutorial\guiScale.cs" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.cs" />
      <Compile Include="Assets\Scripts\PressScript.cs" />

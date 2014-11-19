@@ -70,6 +70,7 @@ function Escolha () {
 		{
 		Pontuacao.treino = true;
 		Pontuacao.numMusica = 0;
+		Pontuacao.puzzle = 0;
 		Application.LoadLevel("Jogo");
 		}
 

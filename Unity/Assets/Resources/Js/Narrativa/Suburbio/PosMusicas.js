@@ -66,7 +66,7 @@ function Start () {
 	
 	//para teste
 	//if(proximo < 19)
-		//proximo = 34;
+		//proximo = 45;
 
 	pauseMenu.transform.position.y = 20;
 	
@@ -78,6 +78,13 @@ function Start () {
 	
 	posicao = Vector3(0, -3.556, 0);
 	Instantiate(baseTexto, posicao, Quaternion.identity);
+	
+	if(proximo < 37)
+		{
+		audio.clip = musicas[0];
+		audio.Play();
+		audio.loop = true;
+		}
 	
 	if(proximo == 0)
 		{		
@@ -99,13 +106,6 @@ function Start () {
 		objetos[1].renderer.enabled = false;
 		personagem[0].GetComponent(Animator).enabled = false; //para de rodar a animacao do pai flutuando
 		personagem[0].transform.Rotate (0, 180, -180);
-		}
-	
-	if(proximo < 37)
-		{
-		audio.clip = musicas[0];
-		audio.Play();
-		audio.loop = true;
 		}
 	
 	Animacao();

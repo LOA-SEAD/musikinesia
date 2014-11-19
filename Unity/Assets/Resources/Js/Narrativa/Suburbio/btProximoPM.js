@@ -12,7 +12,7 @@ function Update () {
 		if(transform.position.y > -25 && transform.position.y < 0)
 			Acao();
 			
-	if(transform.position.y > 0 && PosMusicas.proximo >= 47)
+	if(gameObject.tag == "bt1" && PosMusicas.proximo >= 56)
 		transform.position.y = 40;
 
 }
@@ -87,5 +87,8 @@ function Pular() {
 	
 	else if(PosMusicas.proximo > 32 && PosMusicas.proximo <= 46)
 		PosMusicas.proximo = 47;
+	
+	else if(PosMusicas.proximo > 47 && PosMusicas.proximo <= 54)
+		PosMusicas.proximo = 55;
 
 }
