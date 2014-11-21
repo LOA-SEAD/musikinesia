@@ -16,7 +16,7 @@ function Start () {
 
 function Update () {
 
-	if(Pontuacao.relog > 69 && Pontuacao.puzzle == 0 && !Pontuacao.treino)
+	if(Pontuacao.relog > 69 && Pontuacao.puzzle == 0) //&& !Pontuacao.treino
 		porcentagem = acertos * 100 / totalNotas;
 
 }

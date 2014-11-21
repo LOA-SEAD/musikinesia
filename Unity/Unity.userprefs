@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\ChecarTrigger.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Jogo\ChecarTrigger.js" Line="13" Column="3" />
-      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="244" Column="5" />
-      <File FileName="Assets\Resources\Js\Jogo\ChecarTriggerFull.js" Line="4" Column="3" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="53" Column="57" />
+      <File FileName="Assets\Resources\Js\Jogo\ChecarTrigger.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\ChecarTriggerFull.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

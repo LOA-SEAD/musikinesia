@@ -727,7 +727,7 @@ function PrimeiraMusica() {
 	objAni[4].transform.localScale = Vector2(14, 14);
 	objAni[4].transform.position.y = 1.58;
 
-	position = Vector3 (9.7, 6.75, -3);
+	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
@@ -758,7 +758,7 @@ function SegundaMusica() {
 	objAni[4].transform.localScale = Vector2(11, 11);
 	objAni[4].transform.position.y = -2.64;
 
-	position = Vector3 (9.7, 6.75, -3);
+	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
@@ -797,7 +797,7 @@ function TerceiraMusica() {
 	objAni[4].transform.localScale = Vector2(14, 14);
 	objAni[4].transform.position.y = 1.58;
 	
-	position = Vector3 (9.7, 6.75, -3);
+	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
@@ -829,7 +829,7 @@ function QuartaMusica() {
 	objAni[4].transform.localScale = Vector2(11, 11);
 	objAni[4].transform.position.y = -0.26798;
 	
-	position = Vector3 (9.7, 6.75, -3); 
+	position = Vector3 (15.48, -1.17, -3); 
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
@@ -873,7 +873,7 @@ function QuintaMusica() {
 	objAni[4].transform.localScale = Vector2(10, 10);
 	objAni[4].transform.position.y = -7.068;
 	
-	position = Vector3 (9.7, 6.75, -3);
+	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
@@ -913,7 +913,7 @@ function puzzleSub() {
 	escolhaOK = true;
 	animacaoIn = 2;
 	
-	position = Vector3 (9.7, 6.75, -3);
+	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
