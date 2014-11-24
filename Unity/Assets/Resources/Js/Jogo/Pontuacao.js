@@ -56,6 +56,7 @@ var objAni : GameObject[]; //objetos da animacao inicial
 //objAni[2] = fundoPuzzleQuadro
 //objAni[3] = teclado
 //objAni[4] = fundoSotao
+//objAni[5] = fundoAnimacao
 
 var spritesC : Sprite[];
 //spritesC[0] = sotao
@@ -150,6 +151,7 @@ function Start () {
 	objAni[3].transform.position.y = -34;
 	objAni[4].transform.localScale = Vector2(12, 12);
 	objAni[2].renderer.enabled = false;
+	objAni[5].renderer.enabled = false;
 	animacaoIn = 0;
 	
 	//teclas do teclado travadas
@@ -754,9 +756,8 @@ function SegundaMusica() {
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
 	objAni[1].renderer.material.color.a = 1;
-	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[1];
-	objAni[4].transform.localScale = Vector2(11, 11);
-	objAni[4].transform.position.y = -2.64;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[1];
+	objAni[5].renderer.enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
@@ -825,9 +826,8 @@ function QuartaMusica() {
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
 	objAni[1].renderer.material.color.a = 1;
-	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[2];
-	objAni[4].transform.localScale = Vector2(11, 11);
-	objAni[4].transform.position.y = -0.26798;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[2];
+	objAni[5].renderer.enabled = true;
 	
 	position = Vector3 (15.48, -1.17, -3); 
 	Instantiate(regressiva, position, Quaternion.identity);
@@ -869,9 +869,8 @@ function QuintaMusica() {
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
 	objAni[1].renderer.material.color.a = 1;
-	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[5];
-	objAni[4].transform.localScale = Vector2(10, 10);
-	objAni[4].transform.position.y = -7.068;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[5];
+	objAni[5].renderer.enabled = true;
 	
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);

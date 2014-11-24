@@ -1,8 +1,6 @@
 ﻿#pragma strict
 //script da animacao final
 
-
-var baseTexto : GameObject; //base dos textos
 var texto : GameObject[]; //textos das falas dos personagens
 var logo : GameObject; //logo do Musikinesia
 var planoPreto : GameObject; //plano preto 70%
@@ -74,10 +72,6 @@ function Start () {
 	planoPreto.renderer.material.color.a = 0;
 	btVoltar.renderer.enabled = false;
 	personagem[3].renderer.enabled = false;
-	baseTexto.GetComponent(Animator).enabled = true;
-	
-	posicao = Vector3(0, -3.556, 0);
-	Instantiate(baseTexto, posicao, Quaternion.identity);
 	
 	if(proximo < 37)
 		{

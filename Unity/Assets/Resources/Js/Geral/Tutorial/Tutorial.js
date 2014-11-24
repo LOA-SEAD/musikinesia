@@ -56,7 +56,7 @@ function Start () {
 	
 	proximo = 0;
 	btProximo = false;
-	objeto[2].transform.position.x = -70;
+	objeto[2].transform.position.x = -80;
 	objeto[5].renderer.enabled = false;
 	objeto[5].renderer.material.color.a = 0;
 	objeto[9].renderer.enabled = false;
@@ -66,7 +66,7 @@ function Start () {
 	objeto[15].renderer.material.color.a = 0;
 	objeto[17].renderer.enabled = false;
 	objeto[17].renderer.material.color.a = 0;
-	objeto[21].renderer.enabled = false;
+	//objeto[21].renderer.enabled = false;
 	objeto[25].renderer.enabled = false;
 	objeto[25].renderer.material.color.a = 0;
 	objeto[26].transform.position.y = -40;
@@ -139,10 +139,10 @@ function Update () {
 //essas partes da animaçao estao fora da funçao Animacao() porque precisam do Update() para se movimentarem
 	if(proximo == 1)
 		{
-		if(objeto[2].transform.position.x <= 15)
+		if(objeto[2].transform.position.x <= -10)
 			objeto[2].transform.position.x += speed[0]*Time.deltaTime;
 			
-		if(objeto[2].transform.position.x >= 14)
+		if(objeto[2].transform.position.x >= -11)
 			btProximo = true;
 		}
 	
@@ -580,6 +580,9 @@ function Animacao () {
 		btProximo = false;
 		btVoltar = false;
 		
+		objeto[5].renderer.enabled = false;
+		objeto[2].transform.position.x = 18.1;
+		objeto[2].transform.localScale.x = 12.60802;
 		objeto[15].renderer.enabled = true;
 		objeto[15].renderer.material.color.a = 0.7;
 		objeto[28].renderer.enabled = false;
@@ -602,7 +605,7 @@ function Animacao () {
 		//musica
 		positionIns = Vector3(50, 0, 0);
 		Instantiate(objeto[20], positionIns, Quaternion.identity);
-		objeto[21].renderer.enabled = true;
+		//objeto[21].renderer.enabled = true;
 		
 		//sai trava de tela
 		objeto[22].transform.position.y += 100; 
@@ -716,7 +719,7 @@ function Voltar(){
 	if(proximo == 22 && btProximo)
 		{
 		voltar = 22;
-		objeto[21].renderer.enabled = false;
+		//objeto[21].renderer.enabled = false;
 		objeto[22].transform.position.y -= 100;
 		objeto[26].transform.position.y = -40; 
 		
