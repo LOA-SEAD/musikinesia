@@ -46,8 +46,15 @@ function OnMouseDown () {
 	audio.PlayOneShot(efeitos[1]);
 	if(gameObject.tag == "bt1") //botao Pular
 		{
-		Introducao.proximo = 26;
-		Application.LoadLevel("Introducao");
+		if(!Pontuacao.treino)
+			{
+			Introducao.proximo = 26;
+			Application.LoadLevel("Introducao");
+			}
+			
+		else
+			Application.LoadLevel("Jogo");
+			
 		}
 	
 	if(gameObject.tag == "bt3") //botao voltar

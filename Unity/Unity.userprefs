@@ -1,14 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Narrativa\Suburbio\PosMusicas.js" Line="126" Column="7" />
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="872" Column="62" />
-      <File FileName="Assets\Resources\Js\Jogo\ChecarTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\ChecarTriggerFull.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\PorcentagemAcerto.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Geral\Tutorial\Tutorial.js" Line="68" Column="43" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="32" Column="4" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTrigger.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="23" Column="21" />
+      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="57" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
