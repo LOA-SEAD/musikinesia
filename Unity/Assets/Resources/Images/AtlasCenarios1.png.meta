@@ -51,6 +51,10 @@ TextureImporter:
     maxTextureSize: 2048
     textureFormat: -2
     compressionQuality: 50
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    compressionQuality: 50
   spriteSheet:
     sprites:
     - name: ACenarioMusPato

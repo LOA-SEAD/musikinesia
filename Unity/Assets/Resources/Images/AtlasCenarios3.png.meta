@@ -5,6 +5,7 @@ TextureImporter:
     21300000: ACenarioIntro
     21300002: ACenarioTut
     21300004: ACenarioDerrota
+    21300006: ACenarioPuzzleMafia
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -48,6 +49,10 @@ TextureImporter:
     maxTextureSize: 2048
     textureFormat: -1
     compressionQuality: 50
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    compressionQuality: 50
   spriteSheet:
     sprites:
     - name: ACenarioIntro
@@ -77,6 +82,16 @@ TextureImporter:
         y: 420
         width: 480
         height: 300
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACenarioPuzzleMafia
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 640
+        height: 360
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

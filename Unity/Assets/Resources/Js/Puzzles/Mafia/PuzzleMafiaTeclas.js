@@ -5,7 +5,10 @@ var tecla : String = "a";
 var numTecla : int; //distingue as teclas
 static var etapa : int; //define qual tecla deverah ser tocada em seguida
 
-var teclaDown : boolean; //verifica se a tecla ta apertada
+var teclaDown : boolean; //verifica se uma tecla ja foi apertada. O jogador deve acertar tudo apos isso
+static var etapaOK : boolean; //verifica se o jogador acertou aquela etapa
+
+var notas : AudioClip;
 
 function Start () {
 
@@ -19,35 +22,72 @@ function Update () {
 		teclaDown = true;
 		}
 	
-	if(Input.GetKeyUp(tecla))
-		teclaDown = false;
+	if(PuzzleMafia.perdeu)
+		{
+		etapa = 0;
+		print("errou");
+		PuzzleMafia.perdeu = false;
+		}
+
+}
+
+function OnMouseDown(){
+
+	Verificacao();
+	teclaDown = true;
 
 }
 
 function Verificacao() {
 
-	if(etapa == 0)
+	audio.PlayOneShot(notas);
+
+	if(etapa == 0 || etapa == 3 || etapa == 6)
 		if(numTecla == 6) //La
 			if(PuzzleMafia.tempoCerto)
 				{
-				etapa = 1;
+				etapa++;
+					
 				print(etapa);
+				etapaOK = true;
+				
+				yield WaitForSeconds (0.2);
+				
+				etapaOK = false;
 				}
 	
-	else if(etapa == 1)
+	if(etapa == 1 || etapa == 4 || etapa == 7)
 		if(numTecla == 1) //Do
 			if(PuzzleMafia.tempoCerto)
 				{
-				etapa = 2;
+				etapa++;
+				
 				print(etapa);
+				etapaOK = true;
+				
+				yield WaitForSeconds (0.2);
+				
+				etapaOK = false;
 				}
 	
-	else if(etapa == 2)
+	if(etapa == 2 || etapa == 5 || etapa == 8)
 		if(numTecla == 3) //Mi
 			if(PuzzleMafia.tempoCerto)
 				{
-				print("beleza");
+				etapa++;
+				
 				print(etapa);
+				etapaOK = true;
+				
+				if(etapa < 9)
+					{
+					yield WaitForSeconds (0.2);
+				
+					etapaOK = false;
+					}
+					
+				else
+					print("beleza");
 				}
 				
 

@@ -8,9 +8,17 @@ var animTriggerPrefab : GameObject[];
 
 var metronomo : AudioClip[];
 
+static var perdeu : boolean;
+
+var panela : GameObject[];
+
 function Start () {
 
 	Animacao();
+	
+	panela[0].GetComponent(Animator).enabled = true;
+	panela[1].GetComponent(Animator).enabled = false;
+	panela[2].GetComponent(Animator).enabled = false;
 
 }
 
@@ -42,12 +50,15 @@ function OnTriggerEnter(other : Collider) {
 function OnTriggerExit(other : Collider) {
 
 	tempoCerto = false;
+	
+	if(!PuzzleMafiaTeclas.etapaOK)
+		perdeu = true;
 
 }
 
 function Animacao() {
 	
-	yield WaitForSeconds(0.1);
+	//yield WaitForSeconds(0.1);
 	
 	if(animTriggerNum == 0)
 		{
@@ -55,6 +66,9 @@ function Animacao() {
 		audio.clip = metronomo[0];
 		audio.Play();
 		audio.loop = true;
+		panela[0].GetComponent(Animator).enabled = true;
+		panela[1].GetComponent(Animator).enabled = false;
+		panela[2].GetComponent(Animator).enabled = false;
 		}
 		
 	if(animTriggerNum == 1)
@@ -63,6 +77,9 @@ function Animacao() {
 		audio.clip = metronomo[1];
 		audio.Play();
 		audio.loop = true;
+		panela[1].GetComponent(Animator).enabled = true;
+		panela[0].GetComponent(Animator).enabled = false;
+		panela[2].GetComponent(Animator).enabled = false;
 		}
 	
 	if(animTriggerNum == 2)
@@ -71,6 +88,9 @@ function Animacao() {
 		audio.clip = metronomo[2];
 		audio.Play();
 		audio.loop = true;
+		panela[2].GetComponent(Animator).enabled = true;
+		panela[0].GetComponent(Animator).enabled = false;
+		panela[1].GetComponent(Animator).enabled = false;
 		}
 	
 }

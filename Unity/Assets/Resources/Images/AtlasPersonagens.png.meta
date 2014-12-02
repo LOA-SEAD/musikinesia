@@ -62,6 +62,26 @@ TextureImporter:
     21300114: ATomBanda1
     21300116: AMensagem0
     21300118: AMensagem1
+    21300120: Panela1_1
+    21300122: Panela1_2
+    21300124: Panela1_3
+    21300126: Panela1_4
+    21300128: Panela1_5
+    21300130: Panela2_1
+    21300132: Panela2_2
+    21300134: Panela2_3
+    21300136: Panela2_4
+    21300138: Panela2_5
+    21300140: Panela3_1
+    21300142: Panela3_2
+    21300144: Panela3_3
+    21300146: Panela3_4
+    21300148: Panela3_5
+    21300150: Panela4_1
+    21300152: Panela4_2
+    21300154: Panela4_3
+    21300156: Panela4_4
+    21300158: Panela4_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -102,6 +122,10 @@ TextureImporter:
   textureType: 8
   buildTargetSettings:
   - buildTarget: Web
+    maxTextureSize: 2048
+    textureFormat: -1
+    compressionQuality: 50
+  - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -1
     compressionQuality: 50
@@ -704,6 +728,206 @@ TextureImporter:
         y: 205
         width: 90
         height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 646
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela1_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 646
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela1_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 646
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela1_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 646
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela1_5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 646
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela2_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 566
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela2_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 566
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela2_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 566
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela2_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 566
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela2_5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 566
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela3_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 486
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela3_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 486
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela3_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 486
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela3_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 486
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela3_5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 486
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela4_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 406
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela4_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 406
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela4_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 406
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela4_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 406
+        width: 96
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Panela4_5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 406
+        width: 96
+        height: 74
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

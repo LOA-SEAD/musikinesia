@@ -341,54 +341,54 @@ function Update () {
 		if(ChecarTrigger.vida == 42)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[7];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0, 1, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0, 1, 0);
 			}
 		
 		if(ChecarTrigger.vida == 39)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[6];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.2, 0.8, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.2, 0.8, 0);
 			}
 			
 		if(ChecarTrigger.vida == 36)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[5];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.4, 0.8, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.4, 0.8, 0);
 			}
 		
 		if(ChecarTrigger.vida == 33)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[4];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.6, 0.6, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.6, 0.6, 0);
 			}
 		
 		if(ChecarTrigger.vida == 30)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[3];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0.4, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0.4, 0);
 			}
 		
 		if(ChecarTrigger.vida == 27)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[2];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0.2, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0.2, 0);
 			}
 	
 		if(ChecarTrigger.vida == 24)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[1];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.8, 0, 0);
 			}
 	
 		if(ChecarTrigger.vida == 21)
 			{
 			tecladoVida.GetComponent(SpriteRenderer).sprite = spriteTeclado[0];
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0.4, 0, 0);
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0.4, 0, 0);
 			}
 		}
 		
-		else
-			tecladoVida.GetComponent(SpriteRenderer).color = Color(0, 0, 0);
+		//else
+			//tecladoVida.GetComponent(SpriteRenderer).color = Color(0, 0, 0);
 		
 	
 	//pause
