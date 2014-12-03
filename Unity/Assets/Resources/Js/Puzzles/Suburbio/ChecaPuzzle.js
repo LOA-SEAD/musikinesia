@@ -6,7 +6,7 @@ static var quadroOK : boolean; //acessado em botaoAvancar.js e em Teclas.js. Zer
 var btAvancar : GameObject;
 var AvancarOK : boolean; //define que o botao avançar ta na tela
 
-var falaPai : GameObject; //sprite do balao e do pai
+var fala : GameObject[]; //sprite do balao e do pai
 var texto : GameObject[]; //falas do pai
 var posicao : Vector3; //posicao de instantiate
 
@@ -25,7 +25,8 @@ function Start () {
 	relog = 120; //padrao = 120
 	pontos = 0;
 
-	falaPai.renderer.enabled = true;
+	fala[0].renderer.enabled = true;
+	fala[1].renderer.enabled = true;
 	renderer.enabled = false;
 	
 	if(proximo == 0)

@@ -82,6 +82,8 @@ TextureImporter:
     21300154: Panela4_3
     21300156: Panela4_4
     21300158: Panela4_5
+    21300160: AFalaPai
+    21300162: AFalaMacarroni
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -928,6 +930,26 @@ TextureImporter:
         y: 406
         width: 96
         height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AFalaPai
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 148
+        width: 61
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AFalaMacarroni
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 137
+        width: 88
+        height: 65
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

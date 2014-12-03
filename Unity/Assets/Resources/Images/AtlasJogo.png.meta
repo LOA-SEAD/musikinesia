@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: 962edc5f2320c2b47842a3c62032d748
 TextureImporter:
   fileIDToRecycleName:
-    21300000: AFalaPai
+    21300000: AFalaBox
     21300002: AMenu
     21300004: AMenuDown
     21300006: ATecla1
@@ -63,6 +63,8 @@ TextureImporter:
     21300116: ANoteZone
     21300118: AClaveSol
     21300120: APentagramaTut
+    21300122: AVisorPuzzle
+    21300124: APuzzleMafiaFundoPanela
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -112,12 +114,12 @@ TextureImporter:
     compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: AFalaPai
+    - name: AFalaBox
       rect:
         serializedVersion: 2
         x: 0
         y: 272
-        width: 637
+        width: 575
         height: 67
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -679,6 +681,26 @@ TextureImporter:
         y: 603
         width: 588
         height: 117
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AVisorPuzzle
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 0
+        width: 56
+        height: 72
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APuzzleMafiaFundoPanela
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 5
+        width: 19
+        height: 15
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
