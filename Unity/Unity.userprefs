@@ -1,13 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="1" Column="1" />
-      <File FileName="F:\Lucas\LOA\Musikinesia-Beta\Assets\Scripts\UnitySynthTest.cs" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="106" Column="7" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="123" Column="38" />
-      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" Line="55" Column="17" />
-      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\mudaTextoPuzzle.js" Line="14" Column="2" />
+      <File FileName="Assets\Resources\Js\Jogo\comboMesh.js" Line="17" Column="4" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="61" Column="6" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="42" Column="5" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaCombo.js" Line="16" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

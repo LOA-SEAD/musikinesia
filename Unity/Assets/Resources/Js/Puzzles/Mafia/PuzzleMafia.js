@@ -14,6 +14,7 @@ var panela : GameObject[];
 
 static var proximo : int;
 static var chamaFuncao : boolean;
+var btProximo : GameObject;
 
 var texto : GameObject[];
 var posicao : Vector3;
@@ -25,6 +26,7 @@ function Start () {
 
 	Animacao();
 	chamaFuncao = false;
+	btProximo.transform.position.y = -20;
 	
 	panela[0].GetComponent(Animator).enabled = false;
 	panela[1].GetComponent(Animator).enabled = false;
@@ -33,15 +35,17 @@ function Start () {
 	visorTeclado[1].renderer.enabled = false;
 	visorTeclado[2].renderer.enabled = false;
 	fundoPanela.transform.position.x = -20;
+	fundoPanela.GetComponent(SpriteRenderer).color = Color(0.6, 0.2, 0.2, 1);
 
 }
 
 function Update () {
 
 	if(Input.GetKeyDown("space"))
-		chamaFuncao = true;
+		if(btProximo.transform.position.y > -5)
+			chamaFuncao = true;
 
-	if(Input.GetKeyDown("a"))
+	/*if(Input.GetKeyDown("a"))
 		if(tempoCerto)
 			print("ok");
 	
@@ -54,13 +58,20 @@ function Update () {
 			animTriggerNum = 0;
 		
 		Animacao();
-		}
+		}*/
 	
-	if(chamaFuncao)
+	if(chamaFuncao && proximo < 13)
 		{
 		proximo++;
 		Animacao();
+		btProximo.transform.position.y = -20;
 		chamaFuncao = false;
+		}
+	
+	if(PuzzleMafiaTeclas.chamaFuncao)
+		{
+		CorFundo();
+		PuzzleMafiaTeclas.chamaFuncao = false;
 		}
 
 }
@@ -81,8 +92,6 @@ function OnTriggerExit(other : Collider) {
 }
 
 function Animacao() {
-	
-	//yield WaitForSeconds(0.1);
 	
 	posicao = Vector3(0.18, 0.96, 0); //instantiate do texto
 	Instantiate(texto[proximo], posicao, Quaternion.identity);
@@ -135,7 +144,25 @@ function Animacao() {
 		audio.Stop();
 		}
 	
+	if(proximo != 3 && proximo != 7 && proximo != 11)
+		{
+		yield WaitForSeconds(1);
+		
+		btProximo.transform.position.y = -4;
+		}
+	
 }
+
+function CorFundo(){
+	
+	fundoPanela.GetComponent(SpriteRenderer).color = Color(0.1, 0.6, 0.2, 1);
+	
+	yield WaitForSeconds(0.1);
+	
+	fundoPanela.GetComponent(SpriteRenderer).color = Color(0.6, 0.2, 0.2, 1);
+
+}
+
 /*
 function OnGUI() {
 

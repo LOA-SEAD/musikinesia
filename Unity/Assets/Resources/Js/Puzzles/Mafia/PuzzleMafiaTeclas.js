@@ -10,7 +10,13 @@ static var etapaOK : boolean; //verifica se o jogador acertou aquela etapa
 
 var notas : AudioClip;
 
+static var chamaFuncao : boolean;
+
+static var combo : int; //acessada em PuzzleMafiaCombo
+
 function Start () {
+
+	chamaFuncao = false;
 
 }
 
@@ -33,7 +39,8 @@ function Update () {
 	if(PuzzleMafia.perdeu)
 		{
 		etapa = 0;
-		print("errou");
+		//print("errou");
+		combo = 0;
 		PuzzleMafia.perdeu = false;
 		}
 
@@ -63,9 +70,11 @@ function Verificacao1() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 					
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				yield WaitForSeconds (0.2);
 				
@@ -77,9 +86,11 @@ function Verificacao1() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 				
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				yield WaitForSeconds (0.2);
 				
@@ -91,9 +102,11 @@ function Verificacao1() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 				
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				if(etapa < 9)
 					{
@@ -106,6 +119,7 @@ function Verificacao1() {
 					{
 					PuzzleMafia.chamaFuncao = true;
 					etapa = 10;
+					combo = 0;
 					}
 				}
 				
@@ -121,9 +135,11 @@ function Verificacao2() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 					
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				yield WaitForSeconds (0.2);
 				
@@ -135,9 +151,11 @@ function Verificacao2() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 				
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				yield WaitForSeconds (0.2);
 				
@@ -149,9 +167,11 @@ function Verificacao2() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 				
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				if(etapa < 9)
 					{
@@ -164,6 +184,7 @@ function Verificacao2() {
 					{
 					PuzzleMafia.chamaFuncao = true;
 					etapa = 10;
+					combo = 0;
 					}
 				}
 				
@@ -179,9 +200,11 @@ function Verificacao3() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 					
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				yield WaitForSeconds (0.2);
 				
@@ -193,9 +216,11 @@ function Verificacao3() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 				
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				yield WaitForSeconds (0.2);
 				
@@ -207,9 +232,11 @@ function Verificacao3() {
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
+				combo++;
 				
 				print(etapa);
 				etapaOK = true;
+				chamaFuncao = true;
 				
 				if(etapa < 9)
 					{
@@ -222,6 +249,7 @@ function Verificacao3() {
 					{
 					PuzzleMafia.chamaFuncao = true;
 					etapa = 10;
+					combo = 0;
 					}
 				}
 				
