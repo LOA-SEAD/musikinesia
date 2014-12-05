@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Jogo\comboMesh.js" Line="17" Column="4" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="61" Column="6" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="42" Column="5" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaCombo.js" Line="16" Column="22" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="212" Column="4" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="33" Column="60" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTrigger.js" Line="9" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\mudaTextoPuzzle.js" Line="15" Column="2" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaBtProximo.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

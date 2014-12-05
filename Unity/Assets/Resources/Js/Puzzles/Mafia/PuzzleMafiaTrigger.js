@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
-var destruirPrefab : int;
+var i : int;
+var j : int;
 
 function Start () {
 
@@ -8,7 +9,8 @@ function Start () {
 
 function Update () {
 
-	if(destruirPrefab == PuzzleMafia.animTriggerNum)
+	if(PuzzleMafia.proximo == i || PuzzleMafia.proximo == j)
 		Destroy(gameObject);
+		
 
 }

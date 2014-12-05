@@ -2,8 +2,6 @@
 
 static var tempoCerto : boolean; //PuzzleMafiaTeclas.js
 
-static var animTriggerNum : int;
-
 var animTriggerPrefab : GameObject[];
 
 var metronomo : AudioClip[];
@@ -21,6 +19,8 @@ var posicao : Vector3;
 var visorTeclado : GameObject[];
 
 var fundoPanela : GameObject;
+
+var spritePanela : Sprite[];
 
 function Start () {
 
@@ -43,29 +43,29 @@ function Update () {
 
 	if(Input.GetKeyDown("space"))
 		if(btProximo.transform.position.y > -5)
+			{
 			chamaFuncao = true;
+			print(proximo);
+			}
 
 	/*if(Input.GetKeyDown("a"))
 		if(tempoCerto)
 			print("ok");
 	
-	if(Input.GetKeyDown("s"))
-		{		
-		if(animTriggerNum < 3)
-			animTriggerNum++;
+	*/
+	
+	if(chamaFuncao)
+		{
+		proximo++;	
+		btProximo.transform.position.y = -20;	
+		
+		if(proximo < 14)
+			Animacao();
 		
 		else
-			animTriggerNum = 0;
+			MixPanelas();
 		
-		Animacao();
-		}*/
-	
-	if(chamaFuncao && proximo < 13)
-		{
-		proximo++;
-		Animacao();
-		btProximo.transform.position.y = -20;
-		chamaFuncao = false;
+		chamaFuncao = false;	
 		}
 	
 	if(PuzzleMafiaTeclas.chamaFuncao)
@@ -151,6 +151,66 @@ function Animacao() {
 		btProximo.transform.position.y = -4;
 		}
 	
+}
+
+function MixPanelas() {
+
+	if(Random.value < 0.33)
+		{
+		proximo = 15;
+		panela[0].GetComponent(SpriteRenderer).sprite = spritePanela[0];
+		Instantiate(texto[3], posicao, Quaternion.identity);
+		PuzzleMafiaTeclas.etapa = 0;
+		Instantiate(animTriggerPrefab[0], Vector3(20, 0, 0), Quaternion.identity);
+		audio.clip = metronomo[0];
+		audio.Play();
+		audio.loop = true;
+		panela[0].GetComponent(Animator).enabled = true;
+		panela[1].GetComponent(Animator).enabled = false;
+		panela[2].GetComponent(Animator).enabled = false;
+		visorTeclado[0].renderer.enabled = true;
+		fundoPanela.transform.position.x = -5.5;
+		}
+		
+	if(Random.value >= 0.33 && Random.value <= 0.66)
+		{
+		proximo = 16;
+		panela[1].GetComponent(SpriteRenderer).sprite = spritePanela[1];
+		PuzzleMafiaTeclas.etapa = 0;
+		Instantiate(animTriggerPrefab[1], Vector3(20, 0, 0), Quaternion.identity);
+		audio.clip = metronomo[1];
+		audio.Play();
+		audio.loop = true;
+		panela[1].GetComponent(Animator).enabled = true;
+		panela[0].GetComponent(Animator).enabled = false;
+		panela[2].GetComponent(Animator).enabled = false;
+		visorTeclado[1].renderer.enabled = true;
+		fundoPanela.transform.position.x = 0;
+		}
+		
+	if(Random.value > 0.66)
+		{
+		proximo = 17;
+		panela[2].GetComponent(SpriteRenderer).sprite = spritePanela[2];
+		PuzzleMafiaTeclas.etapa = 0;
+		Instantiate(animTriggerPrefab[2], Vector3(20, 0, 0), Quaternion.identity);
+		audio.clip = metronomo[2];
+		audio.Play();
+		audio.loop = true;
+		panela[2].GetComponent(Animator).enabled = true;
+		panela[0].GetComponent(Animator).enabled = false;
+		panela[1].GetComponent(Animator).enabled = false;
+		visorTeclado[2].renderer.enabled = true;
+		fundoPanela.transform.position.x = 5.5;
+		}
+	
+	if(proximo != 3 && proximo != 7 && proximo != 11)
+		{
+		yield WaitForSeconds(1);
+		
+		btProximo.transform.position.y = -4;
+		}
+
 }
 
 function CorFundo(){

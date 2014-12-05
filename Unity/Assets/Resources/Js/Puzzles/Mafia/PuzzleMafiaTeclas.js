@@ -24,13 +24,13 @@ function Update () {
 
 	if(Input.GetKeyDown(tecla))
 		{
-		if(PuzzleMafia.proximo == 3)
+		if(PuzzleMafia.proximo == 3 || PuzzleMafia.proximo == 14)
 			Verificacao1();
 		
-		if(PuzzleMafia.proximo == 7)
+		if(PuzzleMafia.proximo == 7 || PuzzleMafia.proximo == 15)
 			Verificacao2();
 		
-		if(PuzzleMafia.proximo == 11)
+		if(PuzzleMafia.proximo == 11 || PuzzleMafia.proximo == 16)
 			Verificacao3();	
 			
 		teclaDown = true;
@@ -147,7 +147,7 @@ function Verificacao2() {
 				}
 	
 	if(etapa == 1 || etapa == 4 || etapa == 7)
-		if(numTecla == 1) //Do
+		if(numTecla == 8) //Do4
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
@@ -163,7 +163,7 @@ function Verificacao2() {
 				}
 	
 	if(etapa == 2 || etapa == 5 || etapa == 8)
-		if(numTecla == 3) //Mi
+		if(numTecla == 10) //Mi4
 			if(PuzzleMafia.tempoCerto)
 				{
 				etapa++;
