@@ -10,7 +10,10 @@ function Start () {
 function Update () {
 
 	if(PuzzleMafia.proximo == i || PuzzleMafia.proximo == j)
+		{
+		animation.Stop();
 		Destroy(gameObject);
+		}
 		
 
 }
