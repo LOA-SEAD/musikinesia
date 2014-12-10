@@ -99,9 +99,12 @@
      <Compile Include="Assets\Resources\Js\Narrativa\Suburbio\btProximoPM.js" />
      <Compile Include="Assets\Resources\Js\Narrativa\Suburbio\mudaTextoPos.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaAjuda.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaAnimacoes.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaBtProximo.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaCombo.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaMenu.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaPause.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTrigger.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" />

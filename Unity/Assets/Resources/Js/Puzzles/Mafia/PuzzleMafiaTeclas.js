@@ -14,9 +14,17 @@ static var chamaFuncao : boolean;
 
 static var combo : int; //acessada em PuzzleMafiaCombo
 
+var panelas : GameObject[];
+var panela1 : Sprite[];
+var panela2 : Sprite[];
+var panela3 : Sprite[];
+
+static var i : int; //valor de cada sprite
+
 function Start () {
 
 	chamaFuncao = false;
+	i = 0;
 
 }
 
@@ -39,6 +47,7 @@ function Update () {
 	if(PuzzleMafia.perdeu)
 		{
 		etapa = 0;
+		i = 0;
 		//print("errou");
 		combo = 0;
 		PuzzleMafia.perdeu = false;
@@ -76,6 +85,20 @@ function Verificacao1() {
 				etapaOK = true;
 				chamaFuncao = true;
 				
+				//sprite da panela
+				i++;
+				
+				yield WaitForSeconds (0.05);
+				
+				if(i == 1)
+					panelas[0].GetComponent(SpriteRenderer).sprite = panela1[1];
+				
+				if(i == 4)
+					panelas[0].GetComponent(SpriteRenderer).sprite = panela1[4];
+				
+				if(i == 7)
+					panelas[0].GetComponent(SpriteRenderer).sprite = panela1[2];
+				
 				yield WaitForSeconds (0.2);
 				
 				etapaOK = false;
@@ -91,6 +114,20 @@ function Verificacao1() {
 				print(etapa);
 				etapaOK = true;
 				chamaFuncao = true;
+				
+				//sprite da panela
+				i++;
+				
+				yield WaitForSeconds (0.05);
+				
+				if(i == 2)
+					panelas[0].GetComponent(SpriteRenderer).sprite = panela1[2];
+				
+				if(i == 5)
+					panelas[0].GetComponent(SpriteRenderer).sprite = panela1[0];
+				
+				if(i == 8)
+					panelas[0].GetComponent(SpriteRenderer).sprite = panela1[3];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -110,6 +147,17 @@ function Verificacao1() {
 				
 				if(etapa < 9)
 					{
+					//sprite da panela
+					i++;
+					
+					yield WaitForSeconds (0.05);
+					
+					if(i == 3)
+						panelas[0].GetComponent(SpriteRenderer).sprite = panela1[3];
+				
+					if(i == 6)
+						panelas[0].GetComponent(SpriteRenderer).sprite = panela1[4];
+					
 					yield WaitForSeconds (0.2);
 				
 					etapaOK = false;
@@ -120,6 +168,7 @@ function Verificacao1() {
 					PuzzleMafia.chamaFuncao = true;
 					etapa = 10;
 					combo = 0;
+					i = 0;
 					}
 				}
 				
@@ -141,6 +190,20 @@ function Verificacao2() {
 				etapaOK = true;
 				chamaFuncao = true;
 				
+				//sprite da panela
+				i++;
+				
+				yield WaitForSeconds (0.05);
+				
+				if(i == 1)
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[1];
+				
+				if(i == 4)
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[4];
+				
+				if(i == 7)
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[2];
+				
 				yield WaitForSeconds (0.2);
 				
 				etapaOK = false;
@@ -156,6 +219,20 @@ function Verificacao2() {
 				print(etapa);
 				etapaOK = true;
 				chamaFuncao = true;
+				
+				//sprite da panela
+				i++;
+				
+				yield WaitForSeconds (0.05);
+				
+				if(i == 2)
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[2];
+				
+				if(i == 5)
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[0];
+				
+				if(i == 8)
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[3];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -175,6 +252,17 @@ function Verificacao2() {
 				
 				if(etapa < 9)
 					{
+					//sprite da panela
+					i++;
+					
+					yield WaitForSeconds (0.05);
+					
+					if(i == 3)
+						panelas[1].GetComponent(SpriteRenderer).sprite = panela1[3];
+				
+					if(i == 6)
+						panelas[1].GetComponent(SpriteRenderer).sprite = panela1[4];
+					
 					yield WaitForSeconds (0.2);
 				
 					etapaOK = false;
@@ -185,6 +273,7 @@ function Verificacao2() {
 					PuzzleMafia.chamaFuncao = true;
 					etapa = 10;
 					combo = 0;
+					i = 0;
 					}
 				}
 				
@@ -206,6 +295,20 @@ function Verificacao3() {
 				etapaOK = true;
 				chamaFuncao = true;
 				
+				//sprite da panela
+				i++;
+				
+				yield WaitForSeconds (0.05);
+				
+				if(i == 1)
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[1];
+				
+				if(i == 4)
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[4];
+				
+				if(i == 7)
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[2];
+				
 				yield WaitForSeconds (0.2);
 				
 				etapaOK = false;
@@ -221,6 +324,20 @@ function Verificacao3() {
 				print(etapa);
 				etapaOK = true;
 				chamaFuncao = true;
+				
+				//sprite da panela
+				i++;
+				
+				yield WaitForSeconds (0.05);
+				
+				if(i == 2)
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[2];
+				
+				if(i == 5)
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[0];
+				
+				if(i == 8)
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[3];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -240,6 +357,17 @@ function Verificacao3() {
 				
 				if(etapa < 9)
 					{
+					//sprite da panela
+					i++;
+					
+					yield WaitForSeconds (0.05);
+					
+					if(i == 3)
+						panelas[2].GetComponent(SpriteRenderer).sprite = panela1[3];
+				
+					if(i == 6)
+						panelas[2].GetComponent(SpriteRenderer).sprite = panela1[4];
+					
 					yield WaitForSeconds (0.2);
 				
 					etapaOK = false;
@@ -250,6 +378,7 @@ function Verificacao3() {
 					PuzzleMafia.chamaFuncao = true;
 					etapa = 10;
 					combo = 0;
+					i = 0;
 					}
 				}
 				

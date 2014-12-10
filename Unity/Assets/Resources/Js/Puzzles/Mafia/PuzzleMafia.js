@@ -24,7 +24,17 @@ var spritePanela : Sprite[];
 
 var contadorMix : int; //conta o numero de vezes que o jogador tocou o mix
 
+//Pause
+static var isPause : boolean;
+var pauseMenu : GameObject;
+
 function Start () {
+	
+	//pause
+	isPause = false;
+	Time.timeScale = 1;
+	AudioListener.pause = false;
+	
 
 	Animacao();
 	chamaFuncao = false;
@@ -50,7 +60,23 @@ function Update () {
 	if(Input.GetKeyDown("w"))
 		print(proximo);
 		
-		
+	
+	//pause
+	if(Input.GetKeyDown(KeyCode.Escape) || PuzzleMafiaPause.menuVoltar) //aperta ESC
+		{
+		isPause = !isPause; //troca entre pausado e despausado
+		AudioListener.pause = !AudioListener.pause; //pausa e despausa o audio
+		PuzzleMafiaPause.menuVoltar = false;  //desativa a variavel
+		if(isPause)
+			{
+			Time.timeScale = 0; //congela toda a movimentacao
+			pauseMenu.transform.position.y = 0; //desce o menu de pause para o centro da tela
+			} else	{
+					Time.timeScale = 1; //tempo volta ao normal
+					pauseMenu.transform.position.y = 15; //menu de pause volta a se esconder acima do quadro
+					PuzzleMafiaPause.menuVoltar = false; //desativa a booleana que tira o pause
+					}
+		}	
 		
 		
 
@@ -104,8 +130,11 @@ function Verificacao() {
 	if(proximo < 14)
 		Animacao();
 		
-	if(proximo >= 14)
+	if(proximo >= 14 && contadorMix <= 3)
 		MixPanelas();
+		
+	if(contadorMix == 4)
+		Application.LoadLevel("NarrativaMafia");
 
 }
 
@@ -121,7 +150,7 @@ function Animacao() {
 		audio.clip = metronomo[0];
 		audio.Play();
 		audio.loop = true;
-		panela[0].GetComponent(Animator).enabled = true;
+		//panela[0].GetComponent(Animator).enabled = true;
 		visorTeclado[0].renderer.enabled = true;
 		fundoPanela.transform.position.x = -5.5;
 		}
@@ -133,7 +162,7 @@ function Animacao() {
 		audio.clip = metronomo[1];
 		audio.Play();
 		audio.loop = true;
-		panela[1].GetComponent(Animator).enabled = true;
+		//panela[1].GetComponent(Animator).enabled = true;
 		visorTeclado[1].renderer.enabled = true;
 		fundoPanela.transform.position.x = 0;
 		}
@@ -145,7 +174,7 @@ function Animacao() {
 		audio.clip = metronomo[2];
 		audio.Play();
 		audio.loop = true;
-		panela[2].GetComponent(Animator).enabled = true;
+		//panela[2].GetComponent(Animator).enabled = true;
 		visorTeclado[2].renderer.enabled = true;
 		fundoPanela.transform.position.x = 5.5;
 		}
@@ -191,7 +220,14 @@ function MixPanelas() {
 	audio.Stop();
 	
 	if(contadorMix == 3)
-		print("ok");
+		{
+		Instantiate(texto[14], posicao, Quaternion.identity);
+		contadorMix = 4;
+		
+		yield WaitForSeconds(1);
+		
+		btProximo.transform.position.y = -4;
+		}
 	
 	if(contadorMix == 2)
 		{
@@ -201,7 +237,7 @@ function MixPanelas() {
 		Instantiate(texto[11], posicao, Quaternion.identity);
 		audio.clip = metronomo[2];
 		audio.Play();
-		panela[2].GetComponent(Animator).enabled = true;
+		//panela[2].GetComponent(Animator).enabled = true;
 		visorTeclado[2].renderer.enabled = true;
 		fundoPanela.transform.position.x = 5.5;
 		}
@@ -214,7 +250,7 @@ function MixPanelas() {
 		Instantiate(texto[3], posicao, Quaternion.identity);
 		audio.clip = metronomo[0];
 		audio.Play();
-		panela[0].GetComponent(Animator).enabled = true;
+		//panela[0].GetComponent(Animator).enabled = true;
 		visorTeclado[0].renderer.enabled = true;
 		fundoPanela.transform.position.x = -5.5;
 		}
@@ -227,7 +263,7 @@ function MixPanelas() {
 		Instantiate(texto[7], posicao, Quaternion.identity);
 		audio.clip = metronomo[1];
 		audio.Play();
-		panela[1].GetComponent(Animator).enabled = true;
+		//panela[1].GetComponent(Animator).enabled = true;
 		visorTeclado[1].renderer.enabled = true;
 		fundoPanela.transform.position.x = 0;
 		}

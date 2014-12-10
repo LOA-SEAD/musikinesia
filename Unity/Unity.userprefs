@@ -2,13 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="190" Column="40" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\mudaTextoPuzzle.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaBtProximo.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaCombo.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaAnimacoes.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="266" Column="5" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="310" Column="15" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaPause.js" Line="17" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\botaoAjuda.js" Line="42" Column="2" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaMenu.js" Line="16" Column="32" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaAjuda.js" Line="23" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
