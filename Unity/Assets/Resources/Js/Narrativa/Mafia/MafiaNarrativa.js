@@ -18,7 +18,7 @@ var sons : AudioClip[];
 function Start () {
 	
 	//TESTES
-	//proximo = 29;
+	proximo = 14;
 
 	btAvancar.transform.localPosition.y = -500; //fora da tela
 
@@ -48,7 +48,7 @@ function Start () {
 		Animacao();
 		}
 	
-	if(proximo == 29)
+	if(proximo == 33)
 		{
 		personagem[0].transform.localPosition.x = 40;
 		personagem[0].sprite = spriteP[0];
@@ -109,11 +109,11 @@ function Animacao() {
 	
 //trocas de sprite
 	//Tom normal
-	if(proximo == 3 || proximo == 11 || proximo == 21 || proximo == 24)
+	if(proximo == 3 || proximo == 11 || proximo == 21 || proximo == 24 || proximo == 29)
 		personagem[0].sprite = spriteP[0];
 	
 	//Tom com braços cruzados
-	if(proximo == 6 || proximo == 13 || proximo == 35 || proximo == 39)
+	if(proximo == 6 || proximo == 13 || proximo == 27 || proximo == 32 || proximo == 35 || proximo == 39)
 		personagem[0].sprite = spriteP[1];
 	
 	//tom com a mao no queixo
@@ -121,24 +121,28 @@ function Animacao() {
 		personagem[0].sprite = spriteP[3];
 	
 	//tom assustado
-	if(proximo == 27 || proximo == 37)
+	if(proximo == 37)
 		personagem[0].sprite = spriteP[5];
 	
 	//Dom Macarroni com a mao levantada
-	if(proximo == 27 || proximo == 41)
+	if(proximo == 25 || proximo == 27 || proximo == 41)
 		personagem[3].sprite = spriteP[6];
 	
 	//Dom Macarroni com a mao abaixada
-	if(proximo == 20 || proximo == 25)
+	if(proximo == 20 || proximo == 22 || proximo == 25)
 		personagem[3].sprite = spriteP[7];
+	
+	//Dom Macarroni rindo
+	if(proximo == 28)
+		personagem[3].sprite = spriteP[8];
 	
 	//Dom Macarroni bravo
 	if(proximo == 24 || proximo == 34)
 		personagem[3].sprite = spriteP[9];
 	
 	//Dom Macarroni desdenhando
-	if(proximo == 32)
-		personagem[3].sprite = spriteP[11];
+	if(proximo == 24 || proximo == 32)
+		personagem[3].sprite = spriteP[10];
 
 
 //trocas de posiçao
@@ -191,7 +195,7 @@ function Animacao() {
 		//Application.LoadLevel("Jogo");
 		}
 	
-	if(proximo > 13 && proximo < 28)
+	if(proximo > 13 && proximo < 32)
 		{
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[proximo - 1], posicao, Quaternion.identity);
@@ -204,12 +208,12 @@ function Animacao() {
 		btProximo = true;
 		}
 		
-	/*if(proximo == 28)
+	if(proximo == 32)
 		{		
-		Pontuacao.numMusica == ;
-		Application.LoadLevel("Jogo");
-		}*/
-	
+		//Pontuacao.numMusica =  ;
+		//Application.LoadLevel("Jogo");
+		}
+	/*
 	if(proximo == 30)
 		{
 		posicao = Vector3(0.045, 0.32, 0);
@@ -228,7 +232,7 @@ function Animacao() {
 		yield WaitForSeconds (1);
 		
 		btProximo = true;
-		}
+		}*/
 	
 	/*if(proximo == 43)
 		{		
