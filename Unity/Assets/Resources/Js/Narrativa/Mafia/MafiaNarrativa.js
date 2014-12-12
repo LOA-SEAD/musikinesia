@@ -99,6 +99,10 @@ function Update () {
 		if(personagem[3].rectTransform.localPosition.x <= -300)
 			personagem[3].rectTransform.position.x += 0.16;
 	
+	if(proximo == 30)
+		if(personagem[3].rectTransform.localPosition.x >= -900)
+			personagem[3].rectTransform.position.x -= 0.16;
+	
 	if(proximo == 31)
 		if(personagem[4].rectTransform.localPosition.x >= 400)
 			personagem[4].rectTransform.position.x -= 0.16;
@@ -154,6 +158,9 @@ function Animacao() {
 	
 	if(proximo == 17)
 		personagem[0].rectTransform.rotation.y = 180;
+	
+	if(proximo == 30)
+		personagem[3].rectTransform.rotation.y = 180;
 	
 	if(proximo == 31)
 		{
