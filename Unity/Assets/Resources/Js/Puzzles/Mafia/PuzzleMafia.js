@@ -134,7 +134,10 @@ function Verificacao() {
 		MixPanelas();
 		
 	if(contadorMix == 4)
+		{
+		MafiaNarrativa.proximo = 33;
 		Application.LoadLevel("NarrativaMafia");
+		}
 
 }
 

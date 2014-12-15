@@ -84,6 +84,9 @@ TextureImporter:
     21300158: Panela4_5
     21300160: AFalaPai
     21300162: AFalaMacarroni
+    21300164: AMaezel2
+    21300166: AMaezel3
+    21300168: AMaezel4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -436,20 +439,20 @@ TextureImporter:
     - name: AMaezel0
       rect:
         serializedVersion: 2
-        x: 735
-        y: 209
-        width: 68
-        height: 90
+        x: 420
+        y: 286
+        width: 123
+        height: 98
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: AMaezel1
       rect:
         serializedVersion: 2
-        x: 807
-        y: 209
-        width: 68
-        height: 90
+        x: 545
+        y: 286
+        width: 123
+        height: 98
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -950,6 +953,36 @@ TextureImporter:
         y: 137
         width: 88
         height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMaezel2
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 285
+        width: 123
+        height: 98
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMaezel3
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 398
+        width: 123
+        height: 98
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMaezel4
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 399
+        width: 123
+        height: 98
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

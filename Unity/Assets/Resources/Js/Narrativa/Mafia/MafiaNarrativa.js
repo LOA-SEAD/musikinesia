@@ -18,7 +18,7 @@ var sons : AudioClip[];
 function Start () {
 	
 	//TESTES
-	proximo = 14;
+	proximo = 33;
 
 	btAvancar.transform.localPosition.y = -500; //fora da tela
 
@@ -102,10 +102,10 @@ function Update () {
 	if(proximo == 30)
 		if(personagem[3].rectTransform.localPosition.x >= -900)
 			personagem[3].rectTransform.position.x -= 0.16;
-	
-	if(proximo == 31)
+	/*
+	if(proximo == 33)
 		if(personagem[4].rectTransform.localPosition.x >= 400)
-			personagem[4].rectTransform.position.x -= 0.16;
+			personagem[4].rectTransform.position.x -= 0.16;*/
 
 }
 
@@ -117,7 +117,7 @@ function Animacao() {
 		personagem[0].sprite = spriteP[0];
 	
 	//Tom com braços cruzados
-	if(proximo == 6 || proximo == 13 || proximo == 27 || proximo == 32 || proximo == 35 || proximo == 39)
+	if(proximo == 6 || proximo == 13 || proximo == 27 || proximo == 32 || proximo == 38)
 		personagem[0].sprite = spriteP[1];
 	
 	//tom com a mao no queixo
@@ -125,7 +125,7 @@ function Animacao() {
 		personagem[0].sprite = spriteP[3];
 	
 	//tom assustado
-	if(proximo == 37)
+	if(proximo == 35)
 		personagem[0].sprite = spriteP[5];
 	
 	//Dom Macarroni com a mao levantada
@@ -137,15 +137,15 @@ function Animacao() {
 		personagem[3].sprite = spriteP[7];
 	
 	//Dom Macarroni rindo
-	if(proximo == 28)
+	if(proximo == 28 || proximo == 33 || proximo == 37)
 		personagem[3].sprite = spriteP[8];
 	
 	//Dom Macarroni bravo
-	if(proximo == 24 || proximo == 34)
+	if(proximo == 24)
 		personagem[3].sprite = spriteP[9];
 	
 	//Dom Macarroni desdenhando
-	if(proximo == 24 || proximo == 32)
+	if(proximo == 24 || proximo == 32 || proximo == 36)
 		personagem[3].sprite = spriteP[10];
 
 
@@ -161,7 +161,7 @@ function Animacao() {
 	
 	if(proximo == 30)
 		personagem[3].rectTransform.rotation.y = 180;
-	
+	/*
 	if(proximo == 31)
 		{
 		personagem[0].rectTransform.rotation.y = 0;
@@ -170,8 +170,8 @@ function Animacao() {
 		
 		proximo = 32;
 		chamaFuncao = true;
-		}
-
+		}*/
+/*
 //efeitos sonoros
 	if(proximo == 29)
 		{
@@ -180,7 +180,7 @@ function Animacao() {
 		
 		proximo = 30;
 		chamaFuncao = true;
-		}
+		}*/
 
 	
 //texto
@@ -194,13 +194,13 @@ function Animacao() {
 		btProximo = true;
 		}
 		
-	if(proximo == 13)
+	/*if(proximo == 13)
 		{
 		yield WaitForSeconds (2.5); //tempo dos personagens olharem pro segundo capanga
 		
-		//Pontuacao.numMusica == ;
-		//Application.LoadLevel("Jogo");
-		}
+		Pontuacao.numMusica = ;
+		Application.LoadLevel("Jogo");
+		}*/
 	
 	if(proximo > 13 && proximo < 32)
 		{
@@ -216,32 +216,20 @@ function Animacao() {
 		}
 		
 	if(proximo == 32)
-		{		
-		//Pontuacao.numMusica =  ;
-		//Application.LoadLevel("Jogo");
-		}
-	/*
-	if(proximo == 30)
+		Application.LoadLevel("PuzzleMafia");
+
+	
+	if(proximo > 32 && proximo < 39)
 		{
 		posicao = Vector3(0.045, 0.32, 0);
-		Instantiate(texto[27], posicao, Quaternion.identity);
+		Instantiate(texto[proximo - 2], posicao, Quaternion.identity);
 		
 		yield WaitForSeconds (1);
 		
 		btProximo = true;
 		}
 	
-	if(proximo > 31 && proximo < 43)
-		{
-		posicao = Vector3(0.045, 0.32, 0);
-		Instantiate(texto[proximo - 4], posicao, Quaternion.identity);
-		
-		yield WaitForSeconds (1);
-		
-		btProximo = true;
-		}*/
-	
-	/*if(proximo == 43)
+	/*if(proximo == 39)
 		{		
 		Pontuacao.numMusica == ;
 		Application.LoadLevel("Jogo");
