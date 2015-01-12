@@ -87,6 +87,10 @@ TextureImporter:
     21300164: AMaezel2
     21300166: AMaezel3
     21300168: AMaezel4
+    21300170: AMacarroni6_punhosFechados
+    21300172: AMacarroni7_velho0
+    21300174: AMacarroni8_velho1
+    21300176: AMacarroni9_velho2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -351,7 +355,7 @@ TextureImporter:
         serializedVersion: 2
         x: 382
         y: 101
-        width: 89
+        width: 97
         height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -359,9 +363,9 @@ TextureImporter:
     - name: AMacarroni1_maoBaixa
       rect:
         serializedVersion: 2
-        x: 472
+        x: 486
         y: 101
-        width: 89
+        width: 97
         height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -369,9 +373,9 @@ TextureImporter:
     - name: AMacarroni2_rindo
       rect:
         serializedVersion: 2
-        x: 560
+        x: 586
         y: 101
-        width: 89
+        width: 97
         height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -379,9 +383,9 @@ TextureImporter:
     - name: AMacarroni3_bravo
       rect:
         serializedVersion: 2
-        x: 647
+        x: 689
         y: 101
-        width: 89
+        width: 97
         height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -389,9 +393,9 @@ TextureImporter:
     - name: AMacarroni4_desdem
       rect:
         serializedVersion: 2
-        x: 736
+        x: 793
         y: 101
-        width: 89
+        width: 97
         height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -399,9 +403,9 @@ TextureImporter:
     - name: AMacarroni5_olhandoBaixo
       rect:
         serializedVersion: 2
-        x: 828
+        x: 903
         y: 101
-        width: 89
+        width: 97
         height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -429,8 +433,8 @@ TextureImporter:
     - name: ABau
       rect:
         serializedVersion: 2
-        x: 933
-        y: 134
+        x: 815
+        y: 311
         width: 116
         height: 74
       alignment: 0
@@ -949,9 +953,9 @@ TextureImporter:
     - name: AFalaMacarroni
       rect:
         serializedVersion: 2
-        x: 472
+        x: 486
         y: 137
-        width: 88
+        width: 97
         height: 65
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -983,6 +987,46 @@ TextureImporter:
         y: 399
         width: 123
         height: 98
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMacarroni6_punhosFechados
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 619
+        width: 97
+        height: 101
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMacarroni7_velho0
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 619
+        width: 97
+        height: 101
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMacarroni8_velho1
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 619
+        width: 97
+        height: 101
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMacarroni9_velho2
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 619
+        width: 97
+        height: 101
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
