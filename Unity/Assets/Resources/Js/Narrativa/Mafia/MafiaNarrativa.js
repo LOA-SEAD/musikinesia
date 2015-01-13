@@ -207,7 +207,7 @@ function Animacao() {
 		personagem[4].sprite = spriteP[17];
 	
 	//Maezel com o metronomo
-	if(proximo == 56)
+	if(proximo == 56 || proximo == 62)
 		personagem[4].sprite = spriteP[18];
 	
 	//Maezel de braços abertos
@@ -254,8 +254,25 @@ function Animacao() {
 //objetos instanciaveis
 	if(proximo == 57)
 		{
-		posicao = Vector3(0.045, 0.32, 0);
+		posicao = Vector3(0, 0, 0);
 		Instantiate(objeto[0], posicao, Quaternion.identity);
+		}
+	
+	if(proximo == 62)
+		{
+		posicao = Vector3(0, 0, 0);
+		Instantiate(objeto[1], posicao, Quaternion.identity);
+		
+		posicao = Vector3(-2.7, 0.2, 0);
+		Instantiate(objeto[2], posicao, Quaternion.identity);
+		
+		posicao = Vector3(3.9, 0.2, 0);
+		Instantiate(objeto[3], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds (1);
+		
+		posicao = Vector3(0, 0, 0);
+		Instantiate(objeto[4], posicao, Quaternion.identity);
 		}
 
 	
@@ -319,7 +336,7 @@ function Animacao() {
 		yield WaitForSeconds (1);
 		
 		if(proximo == 51)
-			yield WaitForSeconds(2);
+			yield WaitForSeconds(0.5);
 		
 		btProximo = true;
 		}
@@ -331,7 +348,7 @@ function Animacao() {
 		btProximo = true;
 		}
 	
-	if(proximo > 57 && proximo < 63)
+	if(proximo > 57 && proximo < 62)
 		{
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[proximo - 4], posicao, Quaternion.identity);
@@ -341,7 +358,24 @@ function Animacao() {
 		btProximo = true;
 		}
 	
-	/*if(proximo == 61)
+	if(proximo == 62)
+		{
+		yield WaitForSeconds (2);
+		
+		btProximo = true;
+		}
+	
+	if(proximo == 63)
+		{
+		posicao = Vector3(0.045, 0.32, 0);
+		Instantiate(texto[proximo - 5], posicao, Quaternion.identity);
+		
+		yield WaitForSeconds (1);
+		
+		btProximo = true;
+		}
+	
+	/*if(proximo == 64)
 		{		
 		Pontuacao.numMusica = ;
 		Application.LoadLevel("Jogo");

@@ -1,15 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="100" Column="29" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaPause.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="275" Column="23" />
+      <File FileName="Assets\Plugins\CSharpSynth\Banks\Fm\FMInstrument.cs" Line="356" Column="1" />
+      <File FileName="Assets\Scripts\UnitySynthTest.cs" Line="10" Column="29" />
       <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\botaoAjuda.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaMenu.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaAjuda.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
