@@ -165,25 +165,29 @@ function teclaApertada () {
 		if(Pontuacao.numMusica2 < 2)
 			audio.PlayOneShot(notas[4]); //tutorial com timbre da primeira musica
 				
-		//suki
+		//mus3
 		if(Pontuacao.numMusica2 == 2)
 			audio.PlayOneShot(notas[2]);
 		
-		//roger1
+		//mus2
 		if(Pontuacao.numMusica2 == 3)
 			audio.PlayOneShot(notas[3]);
 				
-		//roger2
+		//mus1
 		if(Pontuacao.numMusica2 == 4)
 			audio.PlayOneShot(notas[4]);
 		
-		//sukiRock
+		//mus5
 		if(Pontuacao.numMusica2 == 5)
 			audio.PlayOneShot(notas[5]);
 						
-		//rogerRock
+		//mus4
 		if(Pontuacao.numMusica2 == 6)
 			audio.PlayOneShot(notas[6]);
+		
+		//mus6
+		if(Pontuacao.numMusica2 == 8)
+			audio.PlayOneShot(notas[8]);
 		
 	
 	if(Pontuacao.puzzle == 0) //soh funciona nas musicas

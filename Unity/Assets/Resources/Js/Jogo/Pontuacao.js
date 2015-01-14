@@ -21,11 +21,13 @@ static var numMusica2 : int; //copia de numMusica para transforma-la em static s
 
 static var escolhaOK : boolean; //define se o jogador ja escolheu a musica (True); acessada em botaoAvancar.js
 
-var velSuki : float; //velocidade do prefab das notas - musica Suki
-var velRoger : float; //velocidade do prefab das notas - musica Roger
-var velRoger2 : float; //velocidade do prefab das notas - musica Roger2
-var velSukiRock : float; //velocidade do prefab das notas - musica SukiRock
-var velRogerRock : float; //velocidade do prefab das notas - musica SukiRock
+var velMus3 : float; //velocidade do prefab das notas
+var velMus2 : float; //velocidade do prefab das notas
+var velMus1 : float; //velocidade do prefab das notas
+var velMus5 : float; //velocidade do prefab das notas
+var velMus4 : float; //velocidade do prefab das notas
+var velMus6 : float; //velocidade do prefab das notas
+var velMus7 : float; //velocidade do prefab das notas
 
 static var relog : float; //relogio para liberar a tela final; acessada em PorcentagemAcerto.js
 
@@ -166,7 +168,7 @@ function Start () {
 	if(!treino)
 		{
 		if(numMusica == 0)		
-			numMusica = 4; //primeira musica = 4
+			numMusica = 8; //primeira musica = 4
 			//puzzle = 1;
 		}
 	else if(numMusica == 0) //para nao chamar os nomes quando o jogador pressionar recomeçar no treino
@@ -283,19 +285,22 @@ function Update () {
 	
 	
 	if(numMusica == 2)
-		VelPrefab.speed = velSuki; //define a velocidade do prefab das notas
+		VelPrefab.speed = velMus3; //define a velocidade do prefab das notas
 	
 	if(numMusica == 3)
-		VelPrefab.speed = velRoger; //define a velocidade do prefab das notas
+		VelPrefab.speed = velMus2; //define a velocidade do prefab das notas
 	
 	if(numMusica == 4)
-		VelPrefab.speed = velRoger2; //define a velocidade do prefab das notas
+		VelPrefab.speed = velMus1; //define a velocidade do prefab das notas
 	
 	if(numMusica == 5)
-		VelPrefab.speed = velSukiRock; //define a velocidade do prefab das notas
+		VelPrefab.speed = velMus5; //define a velocidade do prefab das notas
 	
 	if(numMusica == 6)
-		VelPrefab.speed = velRogerRock; //define a velocidade do prefab das notas
+		VelPrefab.speed = velMus4; //define a velocidade do prefab das notas
+	
+	if(numMusica == 8)
+		VelPrefab.speed = velMus7; //define a velocidade do prefab das notas
 		
 	
 	//pontuacao
@@ -436,6 +441,16 @@ function Update () {
 	if(numMusica == 6)
 		if(!escolhaOK)
 			QuartaMusica(); //chama a funcao que roda a musica RogerRock
+	
+	//Primeira Musica Mafia - SEXTA
+	if(numMusica == 7)
+		if(!escolhaOK)
+			SextaMusica(); //chama a funcao que roda a primeira musica da mafia
+	
+	//Segunda Musica Mafia - SETIMA
+	if(numMusica == 8)
+		if(!escolhaOK)
+			SetimaMusica(); //chama a funcao que roda a primeira musica da mafia
 		
 	//puzzle
 	if(puzzle == 1)
@@ -495,7 +510,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 	//fim
 	if(relog > 69 && puzzle == 0) //trava para nao ficar rodando o if de baixo sempre; nao funciona no modo puzzle
 		{
-		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100))
+		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 8 && relog > 120))
 			{
 			//travar teclas do teclado para nao computar pontos
 			travaTeclas = true;			
@@ -644,6 +659,9 @@ if(!isPause && !derrota && animacaoIn > 0)
 				else if(numMusica == 5)
 					PosMusicas.proximo = 56;
 				
+				else if(numMusica == 8)
+					MafiaNarrativa.proximo = 40;
+				
 				PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
 				PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
 				}
@@ -653,7 +671,13 @@ if(!isPause && !derrota && animacaoIn > 0)
 			if(GUI.Button(Rect(Screen.width*0.8,Screen.height*0.75,Screen.width*0.1,Screen.height*0.15), ""))
 				{
 				if(!treino)
-					Application.LoadLevel("NarrativaSuburbio");
+					{
+					if(numMusica <= 5)
+						Application.LoadLevel("NarrativaSuburbio");
+					
+					if(numMusica > 5)
+						Application.LoadLevel("NarrativaMafia");
+					}
 					
 				else
 					{
@@ -900,6 +924,66 @@ function QuintaMusica() {
 	position = Vector3 (18.4, -2.9372, 0);
 	Instantiate(musica[4], position, Quaternion.identity);
 	audio.PlayOneShot(audios[4]);
+	planoPreto.transform.position.y = 50;
+	ChecarTrigger.pontos = 0;
+
+}
+
+//funcao da primeira musica da mafia (sexta musica)
+function SextaMusica() {
+
+	escolhaOK = true;
+	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
+	objAni[1].renderer.material.color.a = 0;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
+	objAni[4].transform.localScale = Vector2(14, 14);
+	objAni[4].transform.position.y = 1.58;
+
+	position = Vector3 (15.48, -1.17, -3);
+	Instantiate(regressiva, position, Quaternion.identity);
+
+	audio.Stop();
+
+	yield WaitForSeconds(3.1);
+	
+	animacaoIn = 3;
+	travaTeclas = false;
+	
+	//musica
+	position = Vector3 (400, -42.95, -3.1);
+	Instantiate(musica[5], position, Quaternion.identity);
+	audio.PlayOneShot(audios[6]);
+	planoPreto.transform.position.y = 50;
+	ChecarTrigger.pontos = 0;
+
+}
+
+//funcao da segunda musica da mafia (setima musica)
+function SetimaMusica() {
+
+	escolhaOK = true;
+	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
+	objAni[1].renderer.material.color.a = 0;
+	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
+	objAni[4].transform.localScale = Vector2(14, 14);
+	objAni[4].transform.position.y = 1.58;
+
+	position = Vector3 (15.48, -1.17, -3);
+	Instantiate(regressiva, position, Quaternion.identity);
+
+	audio.Stop();
+
+	yield WaitForSeconds(3.1);
+	
+	animacaoIn = 3;
+	travaTeclas = false;
+	
+	//musica
+	position = Vector3 (439, -42.95, -3.1); //444.77
+	Instantiate(musica[5], position, Quaternion.identity);
+	audio.PlayOneShot(audios[6]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 

@@ -19,7 +19,7 @@ var sons : AudioClip[];
 function Start () {
 	
 	//TESTES
-	proximo = 40;
+	//proximo = 40;
 
 	btAvancar.transform.localPosition.y = -500; //fora da tela
 
