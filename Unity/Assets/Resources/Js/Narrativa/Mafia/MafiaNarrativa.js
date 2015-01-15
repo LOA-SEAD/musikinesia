@@ -287,13 +287,13 @@ function Animacao() {
 		btProximo = true;
 		}
 		
-	/*if(proximo == 13)
+	if(proximo == 13)
 		{
 		yield WaitForSeconds (2.5); //tempo dos personagens olharem pro segundo capanga
 		
-		Pontuacao.numMusica = ;
+		Pontuacao.numMusica = 7;
 		Application.LoadLevel("Jogo");
-		}*/
+		}
 	
 	if(proximo > 13 && proximo < 32)
 		{
@@ -322,11 +322,11 @@ function Animacao() {
 		btProximo = true;
 		}
 	
-	/*if(proximo == 39)
+	if(proximo == 39)
 		{		
-		Pontuacao.numMusica = ;
+		Pontuacao.numMusica = 8;
 		Application.LoadLevel("Jogo");
-		}*/
+		}
 		
 	if(proximo > 39 && proximo < 57)
 		{
@@ -377,8 +377,7 @@ function Animacao() {
 	
 	/*if(proximo == 64)
 		{		
-		Pontuacao.numMusica = ;
-		Application.LoadLevel("Jogo");
+		Mundo Piratas
 		}*/
 
 }

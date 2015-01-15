@@ -27,6 +27,7 @@ var velMus1 : float; //velocidade do prefab das notas
 var velMus5 : float; //velocidade do prefab das notas
 var velMus4 : float; //velocidade do prefab das notas
 var velMus6 : float; //velocidade do prefab das notas
+var velMus6p2 : float; //velocidade do prefab das notas
 var velMus7 : float; //velocidade do prefab das notas
 
 static var relog : float; //relogio para liberar a tela final; acessada em PorcentagemAcerto.js
@@ -168,7 +169,7 @@ function Start () {
 	if(!treino)
 		{
 		if(numMusica == 0)		
-			numMusica = 8; //primeira musica = 4
+			numMusica = 7; //primeira musica = 4
 			//puzzle = 1;
 		}
 	else if(numMusica == 0) //para nao chamar os nomes quando o jogador pressionar recomeçar no treino
@@ -298,6 +299,16 @@ function Update () {
 	
 	if(numMusica == 6)
 		VelPrefab.speed = velMus4; //define a velocidade do prefab das notas
+	
+	if(numMusica == 7)
+		{
+		if(relog < 43)
+			VelPrefab.speed = velMus6; //define a velocidade do prefab das notas
+		
+		else
+			VelPrefab.speed = velMus6p2; //define a velocidade do prefab das notas
+		}
+		
 	
 	if(numMusica == 8)
 		VelPrefab.speed = velMus7; //define a velocidade do prefab das notas
@@ -510,7 +521,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 	//fim
 	if(relog > 69 && puzzle == 0) //trava para nao ficar rodando o if de baixo sempre; nao funciona no modo puzzle
 		{
-		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 8 && relog > 120))
+		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 7 && relog > 97) || (numMusica == 8 && relog > 120))
 			{
 			//travar teclas do teclado para nao computar pontos
 			travaTeclas = true;			
@@ -658,6 +669,9 @@ if(!isPause && !derrota && animacaoIn > 0)
 			
 				else if(numMusica == 5)
 					PosMusicas.proximo = 56;
+					
+				else if(numMusica == 7)
+					MafiaNarrativa.proximo = 14;
 				
 				else if(numMusica == 8)
 					MafiaNarrativa.proximo = 40;
@@ -951,7 +965,7 @@ function SextaMusica() {
 	travaTeclas = false;
 	
 	//musica
-	position = Vector3 (400, -42.95, -3.1);
+	position = Vector3 (-8, -35.77, -3.1);
 	Instantiate(musica[5], position, Quaternion.identity);
 	audio.PlayOneShot(audios[6]);
 	planoPreto.transform.position.y = 50;
@@ -982,8 +996,8 @@ function SetimaMusica() {
 	
 	//musica
 	position = Vector3 (439, -42.95, -3.1); //444.77
-	Instantiate(musica[5], position, Quaternion.identity);
-	audio.PlayOneShot(audios[6]);
+	Instantiate(musica[6], position, Quaternion.identity);
+	audio.PlayOneShot(audios[7]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 

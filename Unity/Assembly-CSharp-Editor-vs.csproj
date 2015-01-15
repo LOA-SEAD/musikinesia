@@ -230,6 +230,7 @@
      <None Include="Assets\Resources\GM Bank\Accordion.sfz.txt" />
      <None Include="Assets\Resources\GM Bank\AltoSax.sfz.txt" />
      <None Include="Assets\Resources\Midis\mirror_speedeaters2.mid.txt" />
+     <None Include="Assets\Resources\Midis\Mus6.mid.txt" />
      <None Include="Assets\Resources\GM Bank\ReedOrgan.sfz.txt" />
      <None Include="Assets\Resources\GM Bank\PanFlute.sfz.txt" />
      <None Include="Assets\Resources\GM Bank\Seashore.sfz.txt" />

@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="984" Column="25" />
-      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="190" Column="29" />
-      <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="22" Column="4" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="172" Column="17" />
+      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="188" Column="9" />
+      <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="41" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
