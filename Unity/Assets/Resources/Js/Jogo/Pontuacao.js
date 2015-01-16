@@ -169,7 +169,7 @@ function Start () {
 	if(!treino)
 		{
 		if(numMusica == 0)		
-			numMusica = 7; //primeira musica = 4
+			numMusica = 4; //primeira musica = 4
 			//puzzle = 1;
 		}
 	else if(numMusica == 0) //para nao chamar os nomes quando o jogador pressionar recomeçar no treino
@@ -200,6 +200,19 @@ function Start () {
 	aniFase[10].GetComponent(Animator).enabled = false;
 	aniFase[11].GetComponent(SpriteRenderer).enabled = false;
 	aniFase[11].GetComponent(Animator).enabled = false;
+	aniFase[12].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[13].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[14].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[14].GetComponent(Animator).enabled = false;
+	aniFase[15].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[15].GetComponent(Animator).enabled = false;
+	aniFase[16].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[16].GetComponent(Animator).enabled = false;
+	aniFase[17].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[17].GetComponent(Animator).enabled = false;
+	aniFase[18].GetComponent(SpriteRenderer).enabled = false;
+	aniFase[18].GetComponent(Animator).enabled = false;
+	aniFase[19].GetComponent(Animator).enabled = false;
 	
 	//template de pontos
 	if(puzzle == 0)
@@ -492,29 +505,42 @@ if(!isPause && !derrota && animacaoIn > 0)
 	{	
 	if(numMusica == 0 && puzzle == 0 && treino)
 		{		
-		GUI.skin = btMusicas; //musica do Roger2(); - PRIMEIRA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.2, Screen.width*0.06, Screen.height*0.12), ""))
+		GUI.skin = btMusicas; //PRIMEIRA
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 4;
-			
-		//musica do Roger1(); - TERCEIRA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.6, Screen.width*0.06, Screen.height*0.12), ""))
+		
+		//SEGUNDA - PUZZLE 1
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.21, Screen.width*0.05, Screen.height*0.1), ""))
+			puzzle = 1;
+								
+		//TERCEIRA
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 3;
 		
-		//musica do RogerRock(); - QUARTA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.2, Screen.width*0.06, Screen.height*0.12), ""))
+		//QUARTA
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 6;
-		
-		//musica do Suki(); - BONUS
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.6, Screen.width*0.06, Screen.height*0.12), ""))
-			numMusica = 2;
 			
-		//musica do SukiRock(); - QUINTA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.4, Screen.width*0.06, Screen.height*0.12), ""))
+		//QUINTA
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.81, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 5;
-			
-		//puzzle do suburbio; - SEGUNDA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.4, Screen.width*0.06, Screen.height*0.12), ""))
-			puzzle = 1;
+		
+		//SEXTA
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), ""))
+			numMusica = 7;
+		
+		//SETIMA - PUZZLE 2
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.21, Screen.width*0.05, Screen.height*0.1), ""))
+			Application.LoadLevel("PuzzleMafia");
+		
+		//OITAVA
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
+			numMusica = 8;
+		
+		//musica do Suki - BONUS
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
+			numMusica = 2;	
+		
 		}
 	
 	
@@ -731,6 +757,14 @@ if(!isPause && !derrota && animacaoIn > 0)
 			aniFase[9].GetComponent(Animator).enabled = false;
 			aniFase[10].GetComponent(Animator).enabled = false;
 			aniFase[11].GetComponent(Animator).enabled = false;
+			aniFase[12].GetComponent(Animator).enabled = false;
+			aniFase[13].GetComponent(Animator).enabled = false;
+			aniFase[14].GetComponent(Animator).enabled = false;
+			aniFase[15].GetComponent(Animator).enabled = false;
+			aniFase[16].GetComponent(Animator).enabled = false;
+			aniFase[17].GetComponent(Animator).enabled = false;
+			aniFase[18].GetComponent(Animator).enabled = false;
+			aniFase[19].GetComponent(Animator).enabled = false;
 			}
 		}
 		
@@ -948,21 +982,37 @@ function SextaMusica() {
 
 	escolhaOK = true;
 	animacaoIn = 2;
-	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].transform.position.y = -7.34;
 	objAni[1].renderer.material.color.a = 0;
-	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
-	objAni[4].transform.localScale = Vector2(14, 14);
-	objAni[4].transform.position.y = 1.58;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[6];
+	objAni[5].renderer.enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
+	
+	//animacao da fase
+	aniFase[12].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[13].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[14].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[15].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[16].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[17].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[18].GetComponent(SpriteRenderer).enabled = true;
 
 	yield WaitForSeconds(3.1);
 	
 	animacaoIn = 3;
 	travaTeclas = false;
+	
+	//animacao da fase
+	aniFase[14].GetComponent(Animator).enabled = true;
+	aniFase[15].GetComponent(Animator).enabled = true;
+	aniFase[16].GetComponent(Animator).enabled = true;
+	aniFase[17].GetComponent(Animator).enabled = true;
+	aniFase[18].GetComponent(Animator).enabled = true;
 	
 	//musica
 	position = Vector3 (-8, -35.77, -3.1);
@@ -978,11 +1028,12 @@ function SetimaMusica() {
 
 	escolhaOK = true;
 	animacaoIn = 2;
-	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].transform.position.y = -7.34;	
 	objAni[1].renderer.material.color.a = 0;
-	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
-	objAni[4].transform.localScale = Vector2(14, 14);
-	objAni[4].transform.position.y = 1.58;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
+	objAni[5].transform.position.y = 10.047;
+	objAni[5].renderer.enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
@@ -990,6 +1041,9 @@ function SetimaMusica() {
 	audio.Stop();
 
 	yield WaitForSeconds(3.1);
+	
+	//animacao da fase
+	aniFase[19].GetComponent(Animator).enabled = true;
 	
 	animacaoIn = 3;
 	travaTeclas = false;
@@ -1070,27 +1124,39 @@ function NomesMusicas () { //Instanciar nome das musicas na tela de escolha - TR
 	yield WaitForSeconds(1);
 
 	//primeira
-	position = Vector3 (0.23, 0.76, 1);
+	position = Vector3 (0.23, 0.95, 1);
 	Instantiate(textoMusica[0], position, Quaternion.identity);
 	
-	//segunda
-	position = Vector3 (0.23, 0.56, 1);
+	//segunda - Puzzle
+	position = Vector3 (0.23, 0.75, 1);
 	Instantiate(textoMusica[5], position, Quaternion.identity);
 	
 	//terceira
-	position = Vector3 (0.23, 0.36, 1);
+	position = Vector3 (0.23, 0.55, 1);
 	Instantiate(textoMusica[1], position, Quaternion.identity);
 	
 	//quarta
-	position = Vector3 (0.58, 0.76, 1);
+	position = Vector3 (0.23, 0.35, 1);
 	Instantiate(textoMusica[2], position, Quaternion.identity);
 	
 	//quinta
-	position = Vector3 (0.58, 0.56, 1);
+	position = Vector3 (0.23, 0.15, 1);
 	Instantiate(textoMusica[3], position, Quaternion.identity);
 	
+	//sexta
+	position = Vector3 (0.58, 0.95, 1);
+	Instantiate(textoMusica[6], position, Quaternion.identity);
+	
+	//setima - Puzzle
+	position = Vector3 (0.58, 0.75, 1);
+	Instantiate(textoMusica[7], position, Quaternion.identity);
+	
+	//oitava
+	position = Vector3 (0.58, 0.55, 1);
+	Instantiate(textoMusica[8], position, Quaternion.identity);
+	
 	//bonus
-	position = Vector3 (0.58, 0.36, 1);
+	position = Vector3 (0.58, 0.35, 1);
 	Instantiate(textoMusica[4], position, Quaternion.identity);
 
 }

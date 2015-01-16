@@ -135,8 +135,17 @@ function Verificacao() {
 		
 	if(contadorMix == 4)
 		{
-		MafiaNarrativa.proximo = 33;
-		Application.LoadLevel("NarrativaMafia");
+		if(!Pontuacao.treino)
+			{
+			MafiaNarrativa.proximo = 33;
+			Application.LoadLevel("NarrativaMafia");
+			}
+		
+		else
+			{
+			Pontuacao.numMusica = 0;
+			Application.LoadLevel("Jogo");
+			}
 		}
 
 }

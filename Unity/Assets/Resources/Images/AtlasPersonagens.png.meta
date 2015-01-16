@@ -91,6 +91,15 @@ TextureImporter:
     21300172: AMacarroni7_velho0
     21300174: AMacarroni8_velho1
     21300176: AMacarroni9_velho2
+    21300178: AMacarraoBranco
+    21300180: AMacarraoVermelho
+    21300182: ACozinhaCopo
+    21300184: ACozinhaColher
+    21300186: ACozinhaPrato
+    21300188: ACozinhaGarfo
+    21300190: ACozinhaFaca
+    21300192: ACozinhaTaca
+    21300194: ACozinhaLouca
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1027,6 +1036,96 @@ TextureImporter:
         y: 619
         width: 97
         height: 101
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMacarraoBranco
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 221
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AMacarraoVermelho
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 221
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaCopo
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 216
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaColher
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 216
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaPrato
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 216
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaGarfo
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 216
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaFaca
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 217
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaTaca
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 216
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACozinhaLouca
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 577
+        width: 192
+        height: 39
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
