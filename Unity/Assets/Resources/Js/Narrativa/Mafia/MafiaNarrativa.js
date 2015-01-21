@@ -16,6 +16,10 @@ var btAvancar : Button;
 
 var sons : AudioClip[];
 
+//pause
+var pauseMenu : GameObject; //menu de pause
+static var isPause : boolean; //define se esta pausado
+
 function Start () {
 	
 	//TESTES
@@ -68,10 +72,31 @@ function Start () {
 		
 		Animacao();
 		}
+		
+	//pause
+	isPause = false;
+	Time.timeScale = 1;
+	AudioListener.pause = false;
 
 }
 
 function Update () {
+
+	if(Input.GetKeyDown(KeyCode.Escape) || botoesPauseIntro.menuVoltar) //aperta ESC
+		{
+		isPause = !isPause; //troca entre pausado e despausado
+		AudioListener.pause = !AudioListener.pause; //pausa e despausa o audio
+		botoesPauseIntro.menuVoltar = false;  //desativa a variavel
+		if(isPause)
+			{
+			Time.timeScale = 0; //congela toda a movimentacao
+			pauseMenu.transform.position.y = 0; //desce o menu de pause para o centro da tela
+			} else	{
+					Time.timeScale = 1; //tempo volta ao normal
+					pauseMenu.transform.position.y = 25; //menu de pause volta a se esconder acima do quadro
+					botoesPauseIntro.menuVoltar = false; //desativa a booleana que tira o pause
+					}
+		}
 
 	//botao de proximo
 	if(btProximo)

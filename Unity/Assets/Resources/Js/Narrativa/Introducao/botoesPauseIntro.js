@@ -37,7 +37,12 @@ function Escolha () {
 		Introducao.isPause = false;
 		AudioListener.pause = false;
 		Introducao.proximo = 0;
-		Application.LoadLevel("Introducao");
+		
+		if(Application.loadedLevel == "Introducao")
+			Application.LoadLevel("Introducao");
+		
+		if(Application.loadedLevel == "NarrativaMafia")
+			Application.LoadLevel("NarrativaMafia");
 		}
 			
 		

@@ -527,12 +527,10 @@ function Animacao () {
 	if(proximo == 64)
 		{
 		btProximoON = false;
-		posicao = Vector3(0.13, 0.30, 0);
-		Instantiate(continua, posicao, Quaternion.identity);
 		
-		yield WaitForSeconds(4);
+		MafiaNarrativa.proximo = 0;
 		
-		Application.LoadLevel("Menu");
+		Application.LoadLevel("NarrativaMafia");
 		}
 	
 	

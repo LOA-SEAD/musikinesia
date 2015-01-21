@@ -46,6 +46,7 @@ function Start () {
 	ChecaPuzzle.relogInt = 0;
 	ChecaPuzzle.pontos = 0;
 	
+	
 	//pause
 	Pontuacao.isPause = false; //desativa o pause do jogo (se estiver pausado)
 	Time.timeScale = 1; //tempo de andamento do jogo normalizado

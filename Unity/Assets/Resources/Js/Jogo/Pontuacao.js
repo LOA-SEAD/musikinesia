@@ -29,6 +29,8 @@ var velMus4 : float; //velocidade do prefab das notas
 var velMus6 : float; //velocidade do prefab das notas
 var velMus6p2 : float; //velocidade do prefab das notas
 var velMus7 : float; //velocidade do prefab das notas
+var velMus8 : float; //velocidade do prefab das notas
+var velMus9 : float; //velocidade do prefab das notas
 
 static var relog : float; //relogio para liberar a tela final; acessada em PorcentagemAcerto.js
 
@@ -325,6 +327,12 @@ function Update () {
 	
 	if(numMusica == 8)
 		VelPrefab.speed = velMus7; //define a velocidade do prefab das notas
+	
+	if(numMusica == 9)
+		VelPrefab.speed = velMus8; //define a velocidade do prefab das notas
+	
+	if(numMusica == 10)
+		VelPrefab.speed = velMus9; //define a velocidade do prefab das notas
 		
 	
 	//pontuacao
@@ -475,6 +483,16 @@ function Update () {
 	if(numMusica == 8)
 		if(!escolhaOK)
 			SetimaMusica(); //chama a funcao que roda a primeira musica da mafia
+			
+	//Primeira Musica Pirata - OITAVA
+	//if(numMusica == 9)
+		//if(!escolhaOK)
+			//OitavaMusica(); //chama a funcao que roda a primeira musica dos piratas
+	
+	//Segunda Musica Pirata - NONA
+	if(numMusica == 10)
+		if(!escolhaOK)
+			NonaMusica(); //chama a funcao que roda a segunda musica dos piratas
 		
 	//puzzle
 	if(puzzle == 1)
@@ -536,6 +554,18 @@ if(!isPause && !derrota && animacaoIn > 0)
 		//OITAVA
 		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 8;
+		
+		//NONA - PUZZLE 3
+		//if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
+			//numMusica = 8;
+		
+		//DECIMA
+		//if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
+			//numMusica = 9;
+		
+		//DECIMA PRIMEIRA
+		//if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
+			//numMusica = 10;
 		
 		//musica do Suki - BONUS
 		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
@@ -702,8 +732,19 @@ if(!isPause && !derrota && animacaoIn > 0)
 				else if(numMusica == 8)
 					MafiaNarrativa.proximo = 40;
 				
-				PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
-				PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
+				
+				
+				if(numMusica <= 6)
+					{
+					PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
+					PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
+					}
+					
+				if(numMusica > 6)
+					{
+					PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
+					PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
+					}
 				}
 			
 			
@@ -712,10 +753,10 @@ if(!isPause && !derrota && animacaoIn > 0)
 				{
 				if(!treino)
 					{
-					if(numMusica <= 5)
+					if(numMusica <= 6)
 						Application.LoadLevel("NarrativaSuburbio");
 					
-					if(numMusica > 5)
+					if(numMusica > 6)
 						Application.LoadLevel("NarrativaMafia");
 					}
 					
@@ -757,8 +798,8 @@ if(!isPause && !derrota && animacaoIn > 0)
 			aniFase[9].GetComponent(Animator).enabled = false;
 			aniFase[10].GetComponent(Animator).enabled = false;
 			aniFase[11].GetComponent(Animator).enabled = false;
-			aniFase[12].GetComponent(Animator).enabled = false;
-			aniFase[13].GetComponent(Animator).enabled = false;
+			//aniFase[12].GetComponent(Animator).enabled = false;
+			//aniFase[13].GetComponent(Animator).enabled = false;
 			aniFase[14].GetComponent(Animator).enabled = false;
 			aniFase[15].GetComponent(Animator).enabled = false;
 			aniFase[16].GetComponent(Animator).enabled = false;
@@ -1052,6 +1093,40 @@ function SetimaMusica() {
 	position = Vector3 (439, -42.95, -3.1); //444.77
 	Instantiate(musica[6], position, Quaternion.identity);
 	audio.PlayOneShot(audios[7]);
+	planoPreto.transform.position.y = 50;
+	ChecarTrigger.pontos = 0;
+
+}
+
+//funcao da segunda musica dos piratas (nona musica)
+function NonaMusica() {
+
+	escolhaOK = true;
+	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].transform.position.y = -7.34;	
+	objAni[1].renderer.material.color.a = 0;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
+	objAni[5].transform.position.y = 10.047;
+	objAni[5].renderer.enabled = true;
+
+	position = Vector3 (15.48, -1.17, -3);
+	Instantiate(regressiva, position, Quaternion.identity);
+
+	audio.Stop();
+
+	yield WaitForSeconds(3.1);
+	
+	//animacao da fase
+	//aniFase[19].GetComponent(Animator).enabled = true;
+	
+	animacaoIn = 3;
+	travaTeclas = false;
+	
+	//musica
+	position = Vector3 (5.594, -37.76, -3.1); //444.77
+	Instantiate(musica[8], position, Quaternion.identity);
+	audio.PlayOneShot(audios[9]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 

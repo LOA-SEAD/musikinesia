@@ -21,7 +21,7 @@ function Update () {
 		}
 	
 	else if(!Pontuacao.treino && Pontuacao.puzzle == 1)
-		myMesh.text = ChecaPuzzle.relogInt.ToString(); //relogio do puzzle
+		myMesh.text = "        " + ChecaPuzzle.relogInt.ToString(); //relogio do puzzle
 	
 	else
 		myMesh.text = "--";

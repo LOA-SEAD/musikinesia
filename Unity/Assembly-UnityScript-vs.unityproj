@@ -298,6 +298,7 @@
      <None Include="Assets\Resources\GM Bank\BottleBlow.sfz.txt" />
      <None Include="Assets\CreateScriptDialog\SmartScriptTemplates\Editor Window.js.txt" />
      <None Include="Assets\Resources\GM Bank\DistortionGtr.sfz.txt" />
+     <None Include="Assets\Resources\Midis\Mus11.mid.txt" />
      <None Include="Assets\Resources\GM Bank\SlapBass1.sfz.txt" />
      <None Include="Assets\Resources\GM Bank\Orchestra.sfz.txt" />
      <None Include="Assets\Resources\GM Bank\Helicopter.sfz.txt" />

@@ -94,6 +94,12 @@ function Jogo () {
 			PosMusicas.proximo = PlayerPrefs.GetInt("SaveGame");
 			Application.LoadLevel("NarrativaSuburbio");
 			}
+		
+		if(gameObject.tag == "bt2" && continuaOK == 2) //botao Continuar
+			{
+			MafiaNarrativa.proximo = PlayerPrefs.GetInt("SaveGame");
+			Application.LoadLevel("NarrativaMafia");
+			}
 	
 		if(gameObject.tag == "bt3") //botao Treino
 			{
