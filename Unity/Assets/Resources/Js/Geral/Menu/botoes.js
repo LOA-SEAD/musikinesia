@@ -14,10 +14,13 @@ var btVoltar : GameObject; //botao voltar
 
 var continuaOK : int; //habilita o botao continua
 
+var corBotao : Color; //cor dos botoes
+
 function Start () {
 	
 	planoPreto.renderer.enabled = false;
-	//transform.renderer.material.color.a = 0;
+	//renderer.material.color.a = 0;
+	corBotao.a = 0;	
 	btVoltar.transform.position.y = -10; //botao Voltar fora da tela
 	
 	//save game
@@ -27,8 +30,11 @@ function Start () {
 
 function Update () {
 	
-	//if(transform.renderer.material.color.a != 1)
-		//transform.renderer.material.color.a += 0.05;
+	/*renderer.material.color = corBotao;
+	
+	if(corBotao.a != 1)
+		corBotao.a += 0.05;*/
+		
 	
 	//if(gameObject.tag == "bt2" && savedGame == 0) //botao Continuar
 		//color = Color(0.7, 0.7, 0.7, 1); //botao fica cinza = inativo
@@ -38,12 +44,14 @@ function Update () {
 
 function OnMouseEnter() {
 
+	//corBotao = Color.Lerp(Color.white, Color.magenta, 0.5);
 	audio.PlayOneShot(efeitos[0]);
 
 }
 
 function OnMouseOver () {
 
+	
 	//renderer.material.color -= Color(0, 0.1, 0.1, 0); //botao fica vermelho
 
 	
@@ -54,7 +62,7 @@ function OnMouseOver () {
 
 function OnMouseExit () {
 
-	//renderer.material.color = Color(1, 1, 1, 1); //botao fica na cor original
+	//corBotao = Color.white;
 	guia.GetComponent(SpriteRenderer).enabled = false;
 	
 }
@@ -62,7 +70,10 @@ function OnMouseExit () {
 function OnMouseDown () {
 
 	Jogo();
-	audio.PlayOneShot(efeitos[1]);			
+	audio.PlayOneShot(efeitos[1]);
+	
+	//corBotao = Color.Lerp(Color.magenta, Color.blue, 0.5);
+	//renderer.material.color -= Color(0, 0, 0.1, 0); //botao fica amarelo	
 
 }
 

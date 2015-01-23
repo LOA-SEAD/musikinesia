@@ -1,16 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Narrativa\Introducao\Introducao.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="174" Column="17" />
-      <File FileName="Assets\Resources\Js\Geral\Menu\Menu.js" Line="47" Column="25" />
-      <File FileName="Assets\Resources\Js\Geral\Menu\botoes.js" Line="86" Column="5" />
-      <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="93" Column="38" />
-      <File FileName="Assets\Resources\Js\Narrativa\Mafia\btProximoMafia.js" Line="47" Column="36" />
-      <File FileName="Assets\Resources\Js\Narrativa\Suburbio\btProximoPM.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\botoesPause.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Narrativa\Introducao\botoesPauseIntro.js" Line="46" Column="4" />
-      <File FileName="Assets\Resources\Js\Narrativa\Introducao\Introducao.js" Line="34" Column="55" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="248" Column="40" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Geral\Menu\Menu.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Geral\Menu\botoes.js" Line="75" Column="4" />
+      <File FileName="Assets\Resources\Js\Jogo\botaoAvancar.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\DestruirNotas.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\ChecarTrigger.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\TextoFinal.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

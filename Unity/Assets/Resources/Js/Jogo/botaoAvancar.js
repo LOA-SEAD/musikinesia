@@ -39,12 +39,13 @@ function OnMouseExit() {
 
 function OnMouseDown() {
 
-	audio.PlayOneShot(efeitos[1]);
 	Acao();
 			
 }
 
 function Acao() {
+
+	audio.PlayOneShot(efeitos[1]);
 
 	if(transform.position.y > -25)
 		{

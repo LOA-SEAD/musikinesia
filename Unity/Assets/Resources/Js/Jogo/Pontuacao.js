@@ -37,7 +37,7 @@ static var relog : float; //relogio para liberar a tela final; acessada em Porce
 static var multiplicador : int; //acessada em ChecarTrigger.js e ChecarTriggerFull.js; serve para multiplicar os pontos do jogador
 static var combo : int; //acessada em ChecarTrigger.js; serve para somar 1 a cada nota acertada consecutiva, aumentando o multiplicador em valores especificos
 static var comboRestante : int; //acessada em comboMesh.js; indica quantos acertos faltam para um novo combo
-var pontuacaoFinal : int; //mostra a pontuaçao final, considerando todos os multiplicadores
+static var pontuacaoFinal : int; //mostra a pontuaçao final, considerando todos os multiplicadores
 
 var planoPreto : GameObject; //escurece o fundo em 70% para ressaltar alguma mensagem instanciada.
 
@@ -84,6 +84,7 @@ static var treino : boolean; //define que o jogador estah em modo de treino (tru
 
 
 //fim do jogo
+var textoVitoria : GameObject[];
 //as tres static var true ativam a animacao final
 static var musicaOK2 : boolean; //NAO ZERAR EM NENHUM MOMENTO; define que a musica ja foi tocada. 
 static var musicaOK3 : boolean; //NAO ZERAR EM NENHUM MOMENTO; define que a musica ja foi tocada.
@@ -244,7 +245,7 @@ function Update () {
 		relogTeste = 0;
 	
 	if(relogTeste > 3)
-		Application.LoadLevel("NarrativaSuburbio");
+		Application.LoadLevel("NarrativaMafia");
 
 
 	//animacao Inicial
@@ -579,34 +580,8 @@ if(!isPause && !derrota && animacaoIn > 0)
 		{
 		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 7 && relog > 97) || (numMusica == 8 && relog > 120))
 			{
-			//travar teclas do teclado para nao computar pontos
-			travaTeclas = true;			
-			
-			//arredondamento das vidas pra multiplicar pelos pontos
-			if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[1] || tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[0])
-				ChecarTrigger.vida = 1;
-			
-			else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[2])
-				ChecarTrigger.vida = 2; 
-			
-			else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[3])
-				ChecarTrigger.vida = 3;
-			
-			else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[4])
-				ChecarTrigger.vida = 4;
-			
-			else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[5])
-				ChecarTrigger.vida = 5;
-			
-			else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[6])
-				ChecarTrigger.vida = 6;
-				
-			else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[7])
-				ChecarTrigger.vida = 7;
-			
-			
-			//multiplicacao dos pontos pelas vidas
-			pontuacaoFinal = pontuacao * ChecarTrigger.vida;
+			if(!travaTeclas)
+				Final();
 			
 			
 			//ranking
@@ -699,53 +674,16 @@ if(!isPause && !derrota && animacaoIn > 0)
 				PlayerPrefs.SetInt("HScore3-5", hs[4]);
 			}*/
 			
+			//GUI.skin = finalSkin;
+			//GUI.Box(Rect(Screen.width*0.05,Screen.height*0.05,Screen.width*0.95,Screen.height*0.5), "Acerto: " + PorcentagemAcerto.porcentagem.ToString() + "%" + " (" + PorcentagemAcerto.acertos.ToString() + " / " + PorcentagemAcerto.totalNotas.ToString() + ")"); //porcentagem de acerto
 			
-			
-			planoPreto.renderer.material.color.a = 0.7; //plano preto de fundo 70%
-			planoPreto.transform.position.y = 0; //plano preto no centro da tela
-			
-			GUI.skin = finalSkin;
-			GUI.Box(Rect(Screen.width*0.05,Screen.height*0.05,Screen.width*0.95,Screen.height*0.5), "Acerto: " + PorcentagemAcerto.porcentagem.ToString() + "%" + " (" + PorcentagemAcerto.acertos.ToString() + " / " + PorcentagemAcerto.totalNotas.ToString() + ")"); //porcentagem de acerto
-			
-			if(!treino)
-				{
-				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.2,Screen.width*0.8,Screen.height*0.5), "Pontos: " + pontuacao.ToString()); //pontuacao regular
-				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.35,Screen.width*0.8,Screen.height*0.5), "Vidas: " + ChecarTrigger.vida.ToString()); //vidas no final da musica
-				GUI.Box(Rect(Screen.width*0.1,Screen.height*0.6,Screen.width*0.8,Screen.height*0.7), "Final: " + pontuacaoFinal.ToString()); //pontuacao * vidas
+			//if(!treino)
+				//{
+				//GUI.Box(Rect(Screen.width*0.1,Screen.height*0.2,Screen.width*0.8,Screen.height*0.5), "Pontos: " + pontuacao.ToString()); //pontuacao regular
+				//GUI.Box(Rect(Screen.width*0.1,Screen.height*0.35,Screen.width*0.8,Screen.height*0.5), "Vidas: " + ChecarTrigger.vida.ToString()); //vidas no final da musica
+				//GUI.Box(Rect(Screen.width*0.1,Screen.height*0.6,Screen.width*0.8,Screen.height*0.7), "Final: " + pontuacaoFinal.ToString()); //pontuacao * vidas
 				//GUI.Box(Rect(Screen.width*0.1,Screen.height*0.75,Screen.width*0.8,Screen.height*0.7), "Melhor: " + hs[0].ToString()); //melhor resultado
-				
-				if(numMusica == 4)
-					PosMusicas.proximo = 0;
-					
-				else if(numMusica == 3)
-					PosMusicas.proximo = 34;
-			
-				else if(numMusica == 6)
-					PosMusicas.proximo = 48;
-			
-				else if(numMusica == 5)
-					PosMusicas.proximo = 56;
-					
-				else if(numMusica == 7)
-					MafiaNarrativa.proximo = 14;
-				
-				else if(numMusica == 8)
-					MafiaNarrativa.proximo = 40;
-				
-				
-				
-				if(numMusica <= 6)
-					{
-					PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
-					PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
-					}
-					
-				if(numMusica > 6)
-					{
-					PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
-					PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
-					}
-				}
+				//}
 			
 			
 			GUI.skin = btSeguir;
@@ -769,7 +707,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 				travaTeclas = false;
 				}
 				
-			
+			/*
 			if(numMusica == 2)
 				musicaOK2 = true; //define que a musica 2 ja foi tocada
 			
@@ -783,29 +721,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 				musicaOK5 = true; //define que a musica 5 ja foi tocada
 				
 			if(numMusica == 6)
-				musicaOK6 = true; //define que a musica 5 ja foi tocada
-			
-			
-			//animacoes das fases
-			aniFase[1].GetComponent(Animator).enabled = false;
-			aniFase[2].GetComponent(Animator).enabled = false;
-			aniFase[3].GetComponent(Animator).enabled = false;
-			aniFase[4].GetComponent(Animator).enabled = false;
-			aniFase[5].GetComponent(Animator).enabled = false;
-			aniFase[6].GetComponent(Animator).enabled = false;
-			aniFase[7].GetComponent(Animator).enabled = false;
-			aniFase[8].GetComponent(Animator).enabled = false;
-			aniFase[9].GetComponent(Animator).enabled = false;
-			aniFase[10].GetComponent(Animator).enabled = false;
-			aniFase[11].GetComponent(Animator).enabled = false;
-			//aniFase[12].GetComponent(Animator).enabled = false;
-			//aniFase[13].GetComponent(Animator).enabled = false;
-			aniFase[14].GetComponent(Animator).enabled = false;
-			aniFase[15].GetComponent(Animator).enabled = false;
-			aniFase[16].GetComponent(Animator).enabled = false;
-			aniFase[17].GetComponent(Animator).enabled = false;
-			aniFase[18].GetComponent(Animator).enabled = false;
-			aniFase[19].GetComponent(Animator).enabled = false;
+				musicaOK6 = true; //define que a musica 5 ja foi tocada*/
 			}
 		}
 		
@@ -1233,5 +1149,113 @@ function NomesMusicas () { //Instanciar nome das musicas na tela de escolha - TR
 	//bonus
 	position = Vector3 (0.58, 0.35, 1);
 	Instantiate(textoMusica[4], position, Quaternion.identity);
+
+}
+
+function Final(){
+
+	//travar teclas do teclado para nao computar pontos
+	travaTeclas = true;			
+	
+	//arredondamento das vidas pra multiplicar pelos pontos
+	if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[1] || tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[0])
+		ChecarTrigger.vida = 1;
+	
+	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[2])
+		ChecarTrigger.vida = 2; 
+	
+	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[3])
+		ChecarTrigger.vida = 3;
+	
+	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[4])
+		ChecarTrigger.vida = 4;
+	
+	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[5])
+		ChecarTrigger.vida = 5;
+	
+	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[6])
+		ChecarTrigger.vida = 6;
+		
+	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[7])
+		ChecarTrigger.vida = 7;
+	
+	planoPreto.renderer.material.color.a = 0.7; //plano preto de fundo 70%
+	planoPreto.transform.position.y = 0; //plano preto no centro da tela
+	
+	//multiplicacao dos pontos pelas vidas
+	pontuacaoFinal = pontuacao * ChecarTrigger.vida;
+	
+	//animacoes das fases
+	aniFase[1].GetComponent(Animator).enabled = false;
+	aniFase[2].GetComponent(Animator).enabled = false;
+	aniFase[3].GetComponent(Animator).enabled = false;
+	aniFase[4].GetComponent(Animator).enabled = false;
+	aniFase[5].GetComponent(Animator).enabled = false;
+	aniFase[6].GetComponent(Animator).enabled = false;
+	aniFase[7].GetComponent(Animator).enabled = false;
+	aniFase[8].GetComponent(Animator).enabled = false;
+	aniFase[9].GetComponent(Animator).enabled = false;
+	aniFase[10].GetComponent(Animator).enabled = false;
+	aniFase[11].GetComponent(Animator).enabled = false;
+	aniFase[14].GetComponent(Animator).enabled = false;
+	aniFase[15].GetComponent(Animator).enabled = false;
+	aniFase[16].GetComponent(Animator).enabled = false;
+	aniFase[17].GetComponent(Animator).enabled = false;
+	aniFase[18].GetComponent(Animator).enabled = false;
+	aniFase[19].GetComponent(Animator).enabled = false;
+
+	//Desempenho
+	position = Vector3(0.12, 0.86, -4);
+	Instantiate(textoVitoria[0], position, Quaternion.identity);
+			
+	if(!treino)
+		{
+		yield WaitForSeconds(1);
+		
+		position = Vector3(0.12, 0.73, -4);
+		Instantiate(textoVitoria[1], position, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		position = Vector3(0.12, 0.60, -4);
+		Instantiate(textoVitoria[2], position, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		position = Vector3(0.12, 0.3, -4);
+		Instantiate(textoVitoria[3], position, Quaternion.identity);
+		
+		
+		if(numMusica == 4)
+			PosMusicas.proximo = 0;
+			
+		else if(numMusica == 3)
+			PosMusicas.proximo = 34;
+	
+		else if(numMusica == 6)
+			PosMusicas.proximo = 48;
+	
+		else if(numMusica == 5)
+			PosMusicas.proximo = 56;
+			
+		else if(numMusica == 7)
+			MafiaNarrativa.proximo = 14;
+		
+		else if(numMusica == 8)
+			MafiaNarrativa.proximo = 40;
+		
+		if(numMusica <= 6)
+			{
+			PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
+			PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
+			}
+			
+		if(numMusica > 6)
+			{
+			PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
+			PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
+			}
+	
+		}
 
 }

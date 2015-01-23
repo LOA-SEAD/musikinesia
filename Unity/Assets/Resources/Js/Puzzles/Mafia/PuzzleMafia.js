@@ -5,6 +5,7 @@ static var tempoCerto : boolean; //PuzzleMafiaTeclas.js
 var animTriggerPrefab : GameObject[];
 
 var metronomo : AudioClip[];
+var musica : AudioClip;
 
 static var perdeu : boolean;
 
@@ -48,6 +49,9 @@ function Start () {
 	visorTeclado[2].renderer.enabled = false;
 	fundoPanela.transform.position.x = -20;
 	fundoPanela.GetComponent(SpriteRenderer).color = Color(0.6, 0.2, 0.2, 1);
+	
+	audio.clip = musica;
+	audio.Play();
 
 }
 
@@ -203,7 +207,8 @@ function Animacao() {
 		visorTeclado[1].renderer.enabled = false;
 		visorTeclado[2].renderer.enabled = false;
 		fundoPanela.transform.position.x = -20;
-		audio.Stop();
+		audio.clip = musica;
+		audio.Play();
 		}
 	
 	if(proximo != 3 && proximo != 7 && proximo != 11)

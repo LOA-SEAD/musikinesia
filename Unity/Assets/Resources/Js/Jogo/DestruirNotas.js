@@ -19,6 +19,8 @@ function Update () {
 			{
 			ChecarTrigger.pontos -= 6; //subtrai 6 pontos da pontuacao geral
 			ChecarTrigger.vida--; //perde uma vida quando a nota passa
+			ChecarTrigger.combo = 0; //zera o combo
+			Pontuacao.multiplicador = 1; //volta pro valor inicial
 			}
 		}
 	

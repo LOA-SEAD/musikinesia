@@ -14,8 +14,11 @@ var canvasMenu : Canvas;
 
 function Start () {
 
+	//canvasMenu.GetComponent(Animator).enabled = true;
+
 	//zerar variaveis static
 	Pontuacao.pontuacao = 0;
+	Pontuacao.pontuacaoFinal = 0;
 	Pontuacao.numMusica = 0;
 	Pontuacao.numMusica2 = 0;
 	Pontuacao.puzzle = 0;
@@ -60,8 +63,6 @@ function Start () {
 	yield WaitForSeconds(0.9);
 	positionIns = Vector3(0, 0.5, 0);
 	Instantiate(efeito, positionIns, Quaternion.identity);
-	
-	canvasMenu.GetComponent(Animator).enabled = true;
 
 }
 
