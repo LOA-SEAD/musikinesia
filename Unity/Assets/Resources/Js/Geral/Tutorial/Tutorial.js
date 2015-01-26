@@ -38,7 +38,7 @@ var imgInterfaceSp : Sprite[];
 
 static var proximo : int; //define o estagio da animaçao
 static var voltar : int; ////acessado em mudaVoltar.js; destroi objetos quando apertado o botao de voltar
-var btProximo : boolean; //ativa ou desativa o botao proximo
+static var btProximo : boolean; //ativa ou desativa o botao proximo
 var btAvancar : GameObject; //botao avançar
 var botaoVoltar : GameObject; //botao voltar
 static var btVoltar : boolean; //acessado em mudaVoltar.js; ativa ou desativa o botao voltar

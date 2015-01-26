@@ -36,8 +36,6 @@ function OnMouseExit () {
 }
 
 function OnMouseDown () {
-
-	audio.PlayOneShot(efeitos[1]);
 	
 	if(gameObject.tag == "bt1")
 		Pular();
@@ -48,6 +46,8 @@ function OnMouseDown () {
 }
 
 function Acao() {
+	
+	audio.PlayOneShot(efeitos[1]);
 	
 	if(PosMusicas.proximo == 36)
 		{
@@ -76,6 +76,8 @@ function Acao() {
 }
 
 function Pular() {
+
+	audio.PlayOneShot(efeitos[1]);
 
 	PosMusicas.chamaAnimacao = true;
 

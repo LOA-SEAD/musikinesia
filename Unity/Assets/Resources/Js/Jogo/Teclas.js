@@ -27,6 +27,7 @@ var notas : AudioClip[]; //timbres
 var corBranca : boolean;
 
 var tecla : String = "a";
+private var animator : Animator; 
 
 //puzzle
 var x : float;
@@ -38,6 +39,8 @@ static var etapaPuzzle : int; //checa em qual momento o puzzle estah (narrativa)
 static var pontoNota : int;
 
 function Start () {
+	
+	animator = GetComponent(Animator);
 	
 	pontoNota = 0;
 	
@@ -52,14 +55,13 @@ function Update () {
 	if(corBranca)
 		renderer.material.color = Color(1, 1, 1, 1);
 	
-	if(!Pontuacao.travaTeclas)	
+	if(!Pontuacao.travaTeclas && !Pontuacao.isPause)	
 		{
 		if(Input.GetKeyDown(tecla) || csScript.GetKeyDown (channel, noteNumber))
 			teclaApertada();
 
 		if(Input.GetKeyUp(tecla) || csScript.GetKeyUp (channel, noteNumber))
 			teclaLevantada();
-
 		}
 		
 	if(Pontuacao.puzzle == 1)
@@ -85,7 +87,8 @@ function Update () {
 
 function OnMouseDown() {
 	
-	teclaApertada();
+	if(!Pontuacao.travaTeclas && !Pontuacao.isPause)
+		teclaApertada();
 	
 	//somente para o tutorial e para o puzzle
 	if(Tutorial.proximo == 22 || Pontuacao.puzzle != 0)
@@ -94,11 +97,14 @@ function OnMouseDown() {
 
 function OnMouseUp() {
 	
-	teclaLevantada();
+	if(!Pontuacao.travaTeclas && !Pontuacao.isPause)
+		teclaLevantada();
 	
 }
 
 function teclaApertada () {
+
+	animator.SetTrigger ("DoPress");
 
 //Puzzle
 	if(Pontuacao.puzzle == 1 && !ChecaPuzzle.quadroOK) //soh funciona no puzzle
@@ -243,6 +249,8 @@ function teclaApertada () {
 }
 
 function teclaLevantada () {
+
+	animator.SetTrigger ("UnPress");
 
 	if(Pontuacao.puzzle == 0) //soh funciona nas musicas
 		{

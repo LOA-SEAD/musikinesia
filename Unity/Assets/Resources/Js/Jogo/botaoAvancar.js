@@ -45,10 +45,10 @@ function OnMouseDown() {
 
 function Acao() {
 
-	audio.PlayOneShot(efeitos[1]);
-
 	if(transform.position.y > -25)
 		{
+		audio.PlayOneShot(efeitos[1]);
+		
 		if(ChecaPuzzle.proximo != 17)
 			{
 			ChecaPuzzle.proximo++;	

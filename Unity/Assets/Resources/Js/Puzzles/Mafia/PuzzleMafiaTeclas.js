@@ -196,13 +196,13 @@ function Verificacao2() {
 				yield WaitForSeconds (0.05);
 				
 				if(i == 1)
-					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[1];
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela2[1];
 				
 				if(i == 4)
-					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[4];
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela2[4];
 				
 				if(i == 7)
-					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[2];
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela2[2];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -226,13 +226,13 @@ function Verificacao2() {
 				yield WaitForSeconds (0.05);
 				
 				if(i == 2)
-					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[2];
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela2[2];
 				
 				if(i == 5)
-					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[0];
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela2[0];
 				
 				if(i == 8)
-					panelas[1].GetComponent(SpriteRenderer).sprite = panela1[3];
+					panelas[1].GetComponent(SpriteRenderer).sprite = panela2[3];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -258,10 +258,10 @@ function Verificacao2() {
 					yield WaitForSeconds (0.05);
 					
 					if(i == 3)
-						panelas[1].GetComponent(SpriteRenderer).sprite = panela1[3];
+						panelas[1].GetComponent(SpriteRenderer).sprite = panela2[3];
 				
 					if(i == 6)
-						panelas[1].GetComponent(SpriteRenderer).sprite = panela1[4];
+						panelas[1].GetComponent(SpriteRenderer).sprite = panela2[4];
 					
 					yield WaitForSeconds (0.2);
 				
@@ -301,13 +301,13 @@ function Verificacao3() {
 				yield WaitForSeconds (0.05);
 				
 				if(i == 1)
-					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[1];
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela3[1];
 				
 				if(i == 4)
-					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[4];
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela3[4];
 				
 				if(i == 7)
-					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[2];
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela3[2];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -331,13 +331,13 @@ function Verificacao3() {
 				yield WaitForSeconds (0.05);
 				
 				if(i == 2)
-					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[2];
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela3[2];
 				
 				if(i == 5)
-					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[0];
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela3[0];
 				
 				if(i == 8)
-					panelas[2].GetComponent(SpriteRenderer).sprite = panela1[3];
+					panelas[2].GetComponent(SpriteRenderer).sprite = panela3[3];
 				
 				yield WaitForSeconds (0.2);
 				
@@ -363,10 +363,10 @@ function Verificacao3() {
 					yield WaitForSeconds (0.05);
 					
 					if(i == 3)
-						panelas[2].GetComponent(SpriteRenderer).sprite = panela1[3];
+						panelas[2].GetComponent(SpriteRenderer).sprite = panela3[3];
 				
 					if(i == 6)
-						panelas[2].GetComponent(SpriteRenderer).sprite = panela1[4];
+						panelas[2].GetComponent(SpriteRenderer).sprite = panela3[4];
 					
 					yield WaitForSeconds (0.2);
 				

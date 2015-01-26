@@ -940,6 +940,40 @@ function SextaMusica() {
 	escolhaOK = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].transform.position.y = -7.34;	
+	objAni[1].renderer.material.color.a = 0;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
+	objAni[5].transform.position.y = 10.047;
+	objAni[5].renderer.enabled = true;
+
+	position = Vector3 (15.48, -1.17, -3);
+	Instantiate(regressiva, position, Quaternion.identity);
+
+	audio.Stop();
+
+	yield WaitForSeconds(3.1);
+	
+	//animacao da fase
+	aniFase[19].GetComponent(Animator).enabled = true;
+	
+	animacaoIn = 3;
+	travaTeclas = false;
+	
+	//musica
+	position = Vector3 (439, -42.95, -3.1); //444.77
+	Instantiate(musica[6], position, Quaternion.identity);
+	audio.PlayOneShot(audios[7]);
+	planoPreto.transform.position.y = 50;
+	ChecarTrigger.pontos = 0;
+
+}
+
+//funcao da segunda musica da mafia (setima musica)
+function SetimaMusica() {
+
+	escolhaOK = true;
+	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
 	objAni[1].renderer.material.color.a = 0;
 	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[6];
@@ -975,40 +1009,6 @@ function SextaMusica() {
 	position = Vector3 (-8, -35.77, -3.1);
 	Instantiate(musica[5], position, Quaternion.identity);
 	audio.PlayOneShot(audios[6]);
-	planoPreto.transform.position.y = 50;
-	ChecarTrigger.pontos = 0;
-
-}
-
-//funcao da segunda musica da mafia (setima musica)
-function SetimaMusica() {
-
-	escolhaOK = true;
-	animacaoIn = 2;
-	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
-	objAni[1].transform.position.y = -7.34;	
-	objAni[1].renderer.material.color.a = 0;
-	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
-	objAni[5].transform.position.y = 10.047;
-	objAni[5].renderer.enabled = true;
-
-	position = Vector3 (15.48, -1.17, -3);
-	Instantiate(regressiva, position, Quaternion.identity);
-
-	audio.Stop();
-
-	yield WaitForSeconds(3.1);
-	
-	//animacao da fase
-	aniFase[19].GetComponent(Animator).enabled = true;
-	
-	animacaoIn = 3;
-	travaTeclas = false;
-	
-	//musica
-	position = Vector3 (439, -42.95, -3.1); //444.77
-	Instantiate(musica[6], position, Quaternion.identity);
-	audio.PlayOneShot(audios[7]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
@@ -1210,22 +1210,6 @@ function Final(){
 			
 	if(!treino)
 		{
-		yield WaitForSeconds(1);
-		
-		position = Vector3(0.12, 0.73, -4);
-		Instantiate(textoVitoria[1], position, Quaternion.identity);
-		
-		yield WaitForSeconds(1);
-		
-		position = Vector3(0.12, 0.60, -4);
-		Instantiate(textoVitoria[2], position, Quaternion.identity);
-		
-		yield WaitForSeconds(1);
-		
-		position = Vector3(0.12, 0.3, -4);
-		Instantiate(textoVitoria[3], position, Quaternion.identity);
-		
-		
 		if(numMusica == 4)
 			PosMusicas.proximo = 0;
 			
@@ -1255,7 +1239,21 @@ function Final(){
 			PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
 			PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
 			}
-	
+		
+		yield WaitForSeconds(1);
+		
+		position = Vector3(0.12, 0.73, -4);
+		Instantiate(textoVitoria[1], position, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		position = Vector3(0.12, 0.60, -4);
+		Instantiate(textoVitoria[2], position, Quaternion.identity);
+		
+		yield WaitForSeconds(1);
+		
+		position = Vector3(0.12, 0.3, -4);
+		Instantiate(textoVitoria[3], position, Quaternion.identity);
 		}
 
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PressScript : MonoBehaviour {
-
+	/*
 	Animator animator;
 	public string key_1 = "a";
 
@@ -40,5 +40,5 @@ public class PressScript : MonoBehaviour {
 		animator.SetTrigger ("DoPress");
 			
 
-	}			
+	}	*/		
 }

@@ -1,16 +1,25 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Jogo\Pontuacao.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Geral\Tutorial\botoesTutorial.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="248" Column="40" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Geral\Menu\Menu.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Geral\Menu\botoes.js" Line="75" Column="4" />
-      <File FileName="Assets\Resources\Js\Jogo\botaoAvancar.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\DestruirNotas.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\ChecarTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\TextoFinal.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafia.js" Line="34" Column="9" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="386" Column="2" />
+      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaPause.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\mudaTextoPuzzle.js" Line="12" Column="27" />
+      <File FileName="Assets\Resources\Js\Jogo\Teclas.js" Line="30" Column="9" />
+      <File FileName="Assets\Resources\Js\Jogo\Pontuacao.js" Line="965" Column="31" />
+      <File FileName="Assets\Resources\Js\Geral\Tutorial\teclasTutorial.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PressScript.cs" Line="45" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Jogo\botaoAvancar.js" Line="49" Column="4" />
+      <File FileName="Assets\Resources\Js\Geral\Tutorial\Tutorial.js" Line="796" Column="2" />
       <File FileName="Assets\Resources\Js\Narrativa\Mafia\MafiaNarrativa.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Geral\Tutorial\guiScale.cs" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Narrativa\Introducao\Introducao.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Narrativa\Introducao\botoesIntro.js" Line="68" Column="2" />
+      <File FileName="Assets\Resources\Js\Narrativa\Suburbio\PosMusicas.js" Line="1" Column="1" />
+      <File FileName="Assets\Resources\Js\Narrativa\Suburbio\btProximoPM.js" Line="96" Column="2" />
+      <File FileName="Assets\Resources\Js\Geral\Tutorial\botoesTutorial.js" Line="54" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

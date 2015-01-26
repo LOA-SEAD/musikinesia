@@ -6,7 +6,7 @@ var efeitos : AudioClip[];
 
 function Start () {
 
-	if(transform.position.y > 17) //botao Pular
+	if(gameObject.tag == "bt1") //botao Pular
 		{
 		if(Pontuacao.numMusica == 0)
 			transform.position.y = 19.42;
@@ -18,8 +18,8 @@ function Start () {
 
 function Update () {
 
-	if(Input.GetKeyDown("space"))
-		Acao();
+	if(Input.GetKeyDown("space") && Tutorial.btProximo)
+		Acao1();
 
 }
 
@@ -43,7 +43,28 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
+	if(gameObject.tag == "bt2") //botao avançar
+		Acao1();
+	
+	else
+		Acao2();
+	
+}
+
+function Acao1() {
+
 	audio.PlayOneShot(efeitos[1]);
+
+	Tutorial.proximo++;
+	Tutorial.chamarAnimacao = true;
+	Tutorial.btProximo = true;
+
+}
+
+function Acao2() {
+
+	audio.PlayOneShot(efeitos[1]);
+
 	if(gameObject.tag == "bt1") //botao Pular
 		{
 		if(!Pontuacao.treino)
@@ -54,23 +75,9 @@ function OnMouseDown () {
 			
 		else
 			Application.LoadLevel("Jogo");
-			
 		}
 	
 	if(gameObject.tag == "bt3") //botao voltar
 		Tutorial.chamarVoltar = true;
-	
-	if(transform.position.y < -10) //botao avançar
-		Acao();
-	
-}
 
-function Acao() {
-
-	if(gameObject.tag == "bt2") //botao avançar
-		{
-		Tutorial.proximo++;
-		Tutorial.chamarAnimacao = true;
-		}
-	
 }

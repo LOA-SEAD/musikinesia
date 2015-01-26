@@ -45,7 +45,6 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
-	audio.PlayOneShot(efeitos[1]);
 	if(transform.position.y > 0)
 		{
 		if(gameObject.tag == "bt1") //26 eh o numero de troca da tela de tutorial para a segunda parte da introduçao
@@ -60,6 +59,8 @@ function OnMouseDown () {
 }
 
 function Acao() {
+	
+	audio.PlayOneShot(efeitos[1]);
 
 	Introducao.proximo++;
 	Introducao.chamaAnimacao = true;

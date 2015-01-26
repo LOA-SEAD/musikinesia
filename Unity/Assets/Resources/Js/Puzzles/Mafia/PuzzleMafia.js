@@ -36,9 +36,19 @@ function Start () {
 	Time.timeScale = 1;
 	AudioListener.pause = false;
 	
+	//var statics
+	proximo = 0;
+	chamaFuncao = false;
+	tempoCerto = false;
+	perdeu = false;
+	PuzzleMafiaPause.menuVoltar = false;
+	PuzzleMafiaTeclas.etapa = 0;
+	PuzzleMafiaTeclas.etapaOK = false;
+	PuzzleMafiaTeclas.chamaFuncao = false;
+	PuzzleMafiaTeclas.combo = 0;
+	PuzzleMafiaTeclas.i = 0;
 
 	Animacao();
-	chamaFuncao = false;
 	btProximo.transform.position.y = -20;
 	
 	panela[0].GetComponent(Animator).enabled = false;
@@ -58,11 +68,11 @@ function Start () {
 function Update () {
 	
 	//TESTES
-	if(Input.GetKeyDown("q"))
+	/*if(Input.GetKeyDown("q"))
 		chamaFuncao = true;
 		
 	if(Input.GetKeyDown("w"))
-		print(proximo);
+		print(proximo);*/
 		
 	
 	//pause
