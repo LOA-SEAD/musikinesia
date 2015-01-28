@@ -192,11 +192,11 @@ function teclaApertada () {
 			audio.PlayOneShot(notas[6]);
 		
 		//mus6
-		if(Pontuacao.numMusica2 == 7)
+		if(Pontuacao.numMusica2 == 8)
 			audio.PlayOneShot(notas[7]);
 		
 		//mus7
-		if(Pontuacao.numMusica2 == 8)
+		if(Pontuacao.numMusica2 == 7)
 			audio.PlayOneShot(notas[8]);
 		
 	

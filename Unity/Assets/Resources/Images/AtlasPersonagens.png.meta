@@ -100,6 +100,11 @@ TextureImporter:
     21300190: ACozinhaFaca
     21300192: ACozinhaTaca
     21300194: ACozinhaLouca
+    21300196: APirataCanhao
+    21300198: APirataFumacaCanhao
+    21300200: APirataBolaCanhao
+    21300202: APirataCarroCanhao
+    21300204: APirataAlvo
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1126,6 +1131,56 @@ TextureImporter:
         y: 577
         width: 192
         height: 39
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataCanhao
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 548
+        width: 87
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataFumacaCanhao
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 522
+        width: 60
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataBolaCanhao
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 524
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataCarroCanhao
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 544
+        width: 88
+        height: 28
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataAlvo
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 503
+        width: 36
+        height: 40
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

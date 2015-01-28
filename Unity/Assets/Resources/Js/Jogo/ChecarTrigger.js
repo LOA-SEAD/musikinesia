@@ -18,7 +18,7 @@ static var vida : int; //numero que, de acordo com uma tabela de conversao, repr
 
 //mostrador de pontos feitos quando uma nota eh acertada
 var mostraPontos : GameObject;
-var posicao : Vector3; //determina a posicao dos instantiates
+//var posicao : Vector3; //determina a posicao dos instantiates
 
 //variavel usada para mostrar os pontos feitos por cada nota acertada
 static var pontosFeitos: int; //acessado em ChecarTriggerFull e pontosFeitosMesh; 
@@ -29,7 +29,7 @@ function Start () {
 	combo = 0;
 	maisPontos = false;
 	vida = 30;
-	posicao = Vector3(-6.5, 11.32382, -2); //posicao para instanciar um objeto.
+	//posicao = Vector3(-6.5, 11.32382, -2); //posicao para instanciar um objeto.
 
 }
 
@@ -75,7 +75,7 @@ function Verificacao() {
 			pontosFeitos += 5*Pontuacao.multiplicador; //soma a pontuacao 10 vezes o multiplicador definido em Pontuacao.js
 			
 			if(Tutorial.proximo != 22)
-				Instantiate(mostraPontos, posicao, Quaternion.identity); //instancia os pontos feitos pelo jogador ao acertar a nota;
+				Instantiate(mostraPontos); //instancia os pontos feitos pelo jogador ao acertar a nota;
 			
 			if(vida < 45)
 				vida++;//se a vida for menor que 45 (relativo 7 vidas), soma-se 1 ao contador de vidas a cada acerto

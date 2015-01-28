@@ -4,6 +4,9 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: ACenarioFundoCozinha
     21300002: ACenarioFundoRestaurante
+    21300004: ACenarioPirataPuzzle
+    21300006: ACenarioPirataBarco
+    21300008: ACenarioPirataPraia
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -62,6 +65,36 @@ TextureImporter:
         y: 608
         width: 640
         height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACenarioPirataPuzzle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 136
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACenarioPirataBarco
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACenarioPirataPraia
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 360
+        width: 640
+        height: 360
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

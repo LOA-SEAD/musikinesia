@@ -108,6 +108,9 @@
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaPause.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTrigger.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Pirata\Canhao.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Pirata\MovBola.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirata.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\corTeclasPuzzle.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\mudaTextoPuzzle.js" />

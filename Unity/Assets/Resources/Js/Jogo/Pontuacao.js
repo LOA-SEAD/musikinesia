@@ -316,7 +316,7 @@ function Update () {
 	if(numMusica == 6)
 		VelPrefab.speed = velMus4; //define a velocidade do prefab das notas
 	
-	if(numMusica == 7)
+	if(numMusica == 8)
 		{
 		if(relog < 43)
 			VelPrefab.speed = velMus6; //define a velocidade do prefab das notas
@@ -326,7 +326,7 @@ function Update () {
 		}
 		
 	
-	if(numMusica == 8)
+	if(numMusica == 7)
 		VelPrefab.speed = velMus7; //define a velocidade do prefab das notas
 	
 	if(numMusica == 9)
