@@ -10,6 +10,8 @@ static var novaBola : boolean;
 
 function Start () {
 
+	rigidbody2D.gravityScale = 0;
+
 }
 
 function Update ()
@@ -45,18 +47,23 @@ function Update ()
 
 function PositionUp()
 {
-	transform.Translate(Vector3.up * Time.deltaTime * 7);
+	/*transform.Translate(Vector3.up * Time.deltaTime * 7);
 	
-	yield WaitForSeconds (0.2);
+	yield WaitForSeconds (0.2);*/
+	
+	rigidbody2D.gravityScale = -0.45;
 	
 	callFunction = 0;	
 }
 
 function PositionDown()
 {
-	transform.Translate(Vector3.down * Time.deltaTime * 7);
+	/*transform.Translate(Vector3.down * Time.deltaTime * 7);
 	
-	yield WaitForSeconds (0.2);
+	
+	yield WaitForSeconds (0.2);*/
+	
+	rigidbody2D.gravityScale = 0.45;
 	
 	callFunction = 0;
 }
