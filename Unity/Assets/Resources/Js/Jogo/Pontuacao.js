@@ -578,7 +578,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 	//fim
 	if(relog > 69 && puzzle == 0) //trava para nao ficar rodando o if de baixo sempre; nao funciona no modo puzzle
 		{
-		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 7 && relog > 97) || (numMusica == 8 && relog > 120))
+		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 7 && relog > 120) || (numMusica == 8 && relog > 97))
 			{
 			if(!travaTeclas)
 				Final();
@@ -942,22 +942,35 @@ function SextaMusica() {
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;	
 	objAni[1].renderer.material.color.a = 0;
-	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
-	objAni[5].transform.position.y = 10.047;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[6];
 	objAni[5].renderer.enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
 	audio.Stop();
+	
+	//animacao da fase
+	aniFase[12].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[13].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[14].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[15].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[16].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[17].GetComponent(SpriteRenderer).enabled = true;
+	aniFase[18].GetComponent(SpriteRenderer).enabled = true;
+
 
 	yield WaitForSeconds(3.1);
 	
-	//animacao da fase
-	aniFase[19].GetComponent(Animator).enabled = true;
-	
 	animacaoIn = 3;
 	travaTeclas = false;
+	
+	//animacao da fase
+	aniFase[14].GetComponent(Animator).enabled = true;
+	aniFase[15].GetComponent(Animator).enabled = true;
+	aniFase[16].GetComponent(Animator).enabled = true;
+	aniFase[17].GetComponent(Animator).enabled = true;
+	aniFase[18].GetComponent(Animator).enabled = true;
 	
 	//musica
 	position = Vector3 (439, -42.95, -3.1); //444.77
@@ -976,7 +989,8 @@ function SetimaMusica() {
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
 	objAni[1].renderer.material.color.a = 0;
-	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[6];
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
+	objAni[5].transform.position.y = 10.047;
 	objAni[5].renderer.enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
@@ -984,26 +998,13 @@ function SetimaMusica() {
 
 	audio.Stop();
 	
-	//animacao da fase
-	aniFase[12].GetComponent(SpriteRenderer).enabled = true;
-	aniFase[13].GetComponent(SpriteRenderer).enabled = true;
-	aniFase[14].GetComponent(SpriteRenderer).enabled = true;
-	aniFase[15].GetComponent(SpriteRenderer).enabled = true;
-	aniFase[16].GetComponent(SpriteRenderer).enabled = true;
-	aniFase[17].GetComponent(SpriteRenderer).enabled = true;
-	aniFase[18].GetComponent(SpriteRenderer).enabled = true;
-
 	yield WaitForSeconds(3.1);
+	
+	//animacao da fase
+	aniFase[19].GetComponent(Animator).enabled = true;
 	
 	animacaoIn = 3;
 	travaTeclas = false;
-	
-	//animacao da fase
-	aniFase[14].GetComponent(Animator).enabled = true;
-	aniFase[15].GetComponent(Animator).enabled = true;
-	aniFase[16].GetComponent(Animator).enabled = true;
-	aniFase[17].GetComponent(Animator).enabled = true;
-	aniFase[18].GetComponent(Animator).enabled = true;
 	
 	//musica
 	position = Vector3 (-8, -35.77, -3.1);

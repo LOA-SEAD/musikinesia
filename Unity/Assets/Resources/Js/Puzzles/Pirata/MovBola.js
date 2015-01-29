@@ -16,6 +16,14 @@ function Start () {
 
 function Update ()
 {	
+/*
+	if(transform.position.y > 10 || transform.position.y < -10 || transform.position.x > 10)
+		{
+		Destroy(gameObject);
+		Destroy(GameObject.FindWithTag("Alvo"));
+		novaBola = true;
+		}*/
+	
 	if(Input.GetKeyDown("z"))
 		velBola = 1;
 	
@@ -31,11 +39,17 @@ function Update ()
     
     if(callFunction == 0)
     	{
-    	if(Input.GetKeyDown(KeyCode.Q))
+    	if(PuzzlePirataTeclas.sustenido)
+    		{
     		callFunction = 1;
+    		PuzzlePirataTeclas.sustenido = false;
+    		}
    	
-   		if(Input.GetKeyDown(KeyCode.E))
+   		if(PuzzlePirataTeclas.bemol)
+   			{
     		callFunction = 2;
+    		PuzzlePirataTeclas.bemol = false;
+    		}
     	}
     	
     if(callFunction == 1)
@@ -46,24 +60,19 @@ function Update ()
 }
 
 function PositionUp()
-{
-	/*transform.Translate(Vector3.up * Time.deltaTime * 7);
-	
-	yield WaitForSeconds (0.2);*/
-	
+{	
 	rigidbody2D.gravityScale = -0.45;
+	
+	yield WaitForSeconds (0.2);
 	
 	callFunction = 0;	
 }
 
 function PositionDown()
-{
-	/*transform.Translate(Vector3.down * Time.deltaTime * 7);
-	
-	
-	yield WaitForSeconds (0.2);*/
-	
+{	
 	rigidbody2D.gravityScale = 0.45;
+	
+	yield WaitForSeconds (0.2);
 	
 	callFunction = 0;
 }
@@ -72,8 +81,28 @@ function OnTriggerEnter2D (other: Collider2D) {
 
 	print("entrou no collider");
 	
-	Destroy(gameObject);
-	Destroy(other.gameObject);
-	novaBola = true;
+	if(other.tag == "Alvo")
+		{
+		Destroy(gameObject);
+		Destroy(other.gameObject);
+		novaBola = true;
+		PuzzlePirata.pontos += 10;
+		PuzzlePirata.chances ++; 
+		}
+		
+}
+
+function OnTriggerExit2D (other: Collider2D) {
+
+	print("saiu do collider");
+	
+	if(other.name == "ColliderFora")
+		{
+		Destroy(gameObject);
+		Destroy(GameObject.FindWithTag("Alvo"));
+		novaBola = true;
+		PuzzlePirata.pontos -= 6;
+		PuzzlePirata.chances ++;
+		}
 		
 }

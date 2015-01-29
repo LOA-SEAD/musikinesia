@@ -4,6 +4,8 @@ import UnityEngine.UI;
 static var proximo : int; //define as etapas das falas; acessado em mudaTextoMafia.js
 
 var personagem : Image[];
+var cenario : Image;
+var cenarioSprite : Sprite[];
 var spriteP : Sprite[];
 var objeto : GameObject[];
 
@@ -29,6 +31,8 @@ function Start () {
 
 	if(proximo == 0)
 		{
+		cenario.sprite = cenarioSprite[0];
+		
 		yield WaitForSeconds (0.5);
 		
 		personagem[0].sprite = spriteP[5];
@@ -69,6 +73,7 @@ function Start () {
 		personagem[0].sprite = spriteP[0];
 		personagem[0].rectTransform.rotation.y = 180;
 		personagem[3].rectTransform.localPosition.x = -300;
+		cenario.sprite = cenarioSprite[1];
 		
 		Animacao();
 		}

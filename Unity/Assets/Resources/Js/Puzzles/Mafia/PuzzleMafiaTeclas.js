@@ -21,7 +21,11 @@ var panela3 : Sprite[];
 
 static var i : int; //valor de cada sprite
 
+private var animator : Animator;
+
 function Start () {
+
+	animator = GetComponent(Animator);
 
 	chamaFuncao = false;
 	i = 0;
@@ -33,17 +37,29 @@ function Update () {
 	if(Input.GetKeyDown(tecla))
 		{
 		if(PuzzleMafia.proximo == 3 || PuzzleMafia.proximo == 15)
+			{
 			Verificacao1();
+			TeclaApertada();
+			}
 		
 		if(PuzzleMafia.proximo == 7 || PuzzleMafia.proximo == 16)
+			{
 			Verificacao2();
+			TeclaApertada();
+			}
 		
 		if(PuzzleMafia.proximo == 11 || PuzzleMafia.proximo == 17)
-			Verificacao3();	
+			{
+			Verificacao3();
+			TeclaApertada();
+			}
 			
 		teclaDown = true;
 		}
 	
+	if(Input.GetKeyUp(tecla))
+		TeclaLevantada();
+		
 	if(PuzzleMafia.perdeu)
 		{
 		etapa = 0;
@@ -58,21 +74,28 @@ function Update () {
 function OnMouseDown(){
 
 	if(PuzzleMafia.proximo == 3 || PuzzleMafia.proximo == 15)
+		{
 		Verificacao1();
+		TeclaApertada();
+		}
 		
 	if(PuzzleMafia.proximo == 7 || PuzzleMafia.proximo == 16)
+		{
 		Verificacao2();
+		TeclaApertada();
+		}
 		
 	if(PuzzleMafia.proximo == 11 || PuzzleMafia.proximo == 17)
+		{
 		Verificacao3();
+		TeclaApertada();
+		}
 			
 	teclaDown = true;
 
 }
 
 function Verificacao1() {
-
-	audio.PlayOneShot(notas);
 
 	if(etapa == 0 || etapa == 3 || etapa == 6)
 		if(numTecla == 2) //Re
@@ -177,8 +200,6 @@ function Verificacao1() {
 
 function Verificacao2() {
 
-	audio.PlayOneShot(notas);
-
 	if(etapa == 0 || etapa == 3 || etapa == 6)
 		if(numTecla == 6) //La
 			if(PuzzleMafia.tempoCerto)
@@ -282,8 +303,6 @@ function Verificacao2() {
 
 function Verificacao3() {
 
-	audio.PlayOneShot(notas);
-
 	if(etapa == 0 || etapa == 3 || etapa == 6)
 		if(numTecla == 3) //Mi
 			if(PuzzleMafia.tempoCerto)
@@ -382,5 +401,17 @@ function Verificacao3() {
 					}
 				}
 				
+}
+
+function TeclaApertada() {
+
+	animator.SetTrigger ("DoPress");
+	audio.PlayOneShot(notas);
+
+}
+
+function TeclaLevantada() {
+
+	animator.SetTrigger ("UnPress");
 
 }

@@ -6,6 +6,6 @@ function Start () {
 
 function Update () {
 
-	Destroy(gameObject, 3);
+	Destroy(gameObject, 2.5);
 
 }

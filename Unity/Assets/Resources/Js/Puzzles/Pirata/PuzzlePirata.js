@@ -3,20 +3,32 @@
 var alvo : GameObject;
 var canhao : GameObject;
 var bola : GameObject;
+static var etapa : int; //define em qual parte esta o puzzle
 
+static var pontos: int;
+static var chances : int; //define quantas vezes o jogador vai poder acertar o alvo em cada parte do puzzle
 
 function Start () {
 
 	novosObjetos();
 	canhao.GetComponent(Animator).enabled = true;
 	
+	etapa = 1;
+	pontos = 0;
+	
 }
 
 function Update() {
 
-	if(MovBola.novaBola)
+	if(MovBola.novaBola && chances <= 5)
 		novosObjetos();
 		
+}
+
+function ControleFase() { //determina o que acontece em cada etapa
+
+	
+
 }
 
 function novosObjetos() {
@@ -27,27 +39,27 @@ function novosObjetos() {
 	
 	var respawn = GameObject.FindGameObjectWithTag("Respawn");	
 	
-	var val = Random.Range(0,2);
+	var val = Random.Range(0,3);
 	
-	if(val == 0)
+	if(val < 1)
 		Instantiate(alvo, Vector3(6.45, 1.6, 3), Quaternion.identity);
 		
 	else if(val == 1)
 		Instantiate(alvo, Vector3(6.45, 0, 3), Quaternion.identity);
 	
-	else if(val == 2)
+	else if(val > 1)
 		Instantiate(alvo, Vector3(6.45, -0.9, 3), Quaternion.identity);
 		
 	
-	var val2 = Random.Range(0,2);
+	var val2 = Random.Range(0,3);
 	
-	if(val2 == 0)
+	if(val2 < 1)
 		Instantiate(canhao, Vector2(-6.45, 2), Quaternion.identity);
 		
 	else if(val2 == 1)
 		Instantiate(canhao, Vector2(-6.45, 0.5), Quaternion.identity);
 	
-	else if(val2 == 2)
+	else if(val2 > 1)
 		Instantiate(canhao, Vector2(-6.45, -1), Quaternion.identity);
 		
 	yield WaitForSeconds (0.5);
