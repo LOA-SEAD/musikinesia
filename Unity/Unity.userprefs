@@ -1,13 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Pirata\TesteTexto.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataTexto.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Puzzles\Pirata\TesteTexto.js" Line="13" Column="4" />
-      <File FileName="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirata.js" Line="29" Column="1" />
-      <File FileName="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataTeclas.js" Line="48" Column="34" />
-      <File FileName="Assets\Resources\Js\Puzzles\Mafia\PuzzleMafiaTeclas.js" Line="1" Column="1" />
-      <File FileName="Assets\Resources\Js\Jogo\pontosMesh.js" Line="15" Column="48" />
+      <File FileName="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirata.js" Line="41" Column="27" />
+      <File FileName="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataTeclas.js" Line="57" Column="33" />
       <File FileName="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataPontos.js" Line="6" Column="1" />
+      <File FileName="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataTexto.js" Line="103" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

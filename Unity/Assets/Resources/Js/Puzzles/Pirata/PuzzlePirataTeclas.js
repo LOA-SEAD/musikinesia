@@ -48,6 +48,17 @@ function TeclaApertada() {
 	animator.SetTrigger ("DoPress");
 	audio.PlayOneShot(notas);
 	
+	if(PuzzlePirata.etapa == 0)
+		{
+		if(PuzzlePirataTexto.pausaAcao)
+			if((numTecla == 3 && PuzzlePirataTexto.i == 7) || (numTecla == 4 && PuzzlePirataTexto.i == 9) || (numTecla == 2 && PuzzlePirataTexto.i == 11))
+				{
+				PuzzlePirataTexto.liberaAcao = true;
+				PuzzlePirataTexto.passaTexto = true;
+				PuzzlePirataTexto.pausaAcao = false;
+				}
+		}
+	
 	if(PuzzlePirata.etapa == 1)
 		{
 		if(numTecla == 2)

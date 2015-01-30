@@ -10,17 +10,22 @@ static var chances : int; //define quantas vezes o jogador vai poder acertar o a
 
 function Start () {
 
-	novosObjetos();
-	canhao.GetComponent(Animator).enabled = true;
-	
-	etapa = 1;
+	etapa = 0;
 	pontos = 0;
+
+	if(etapa == 1)
+		{
+		novosObjetos();
+		canhao.GetComponent(Animator).enabled = true;
+		}
+	
+	
 	
 }
 
 function Update() {
 
-	if(MovBola.novaBola && chances <= 5)
+	if(MovBola.novaBola && chances <= 5 && etapa == 1)
 		novosObjetos();
 		
 }

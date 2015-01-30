@@ -113,7 +113,7 @@
      <Compile Include="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirata.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataPontos.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataTeclas.js" />
-     <Compile Include="Assets\Resources\Js\Puzzles\Pirata\TesteTexto.js" />
+     <Compile Include="Assets\Resources\Js\Puzzles\Pirata\PuzzlePirataTexto.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\ChecaPuzzle.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\corTeclasPuzzle.js" />
      <Compile Include="Assets\Resources\Js\Puzzles\Suburbio\mudaTextoPuzzle.js" />
