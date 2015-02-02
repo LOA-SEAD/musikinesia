@@ -51,7 +51,7 @@ function TeclaApertada() {
 	if(PuzzlePirata.etapa == 0)
 		{
 		if(PuzzlePirataTexto.pausaAcao)
-			if((numTecla == 3 && PuzzlePirataTexto.i == 7) || (numTecla == 4 && PuzzlePirataTexto.i == 9) || (numTecla == 2 && PuzzlePirataTexto.i == 11))
+			if((numTecla == 15 && PuzzlePirataTexto.i == 7) || (numTecla == 16 && PuzzlePirataTexto.i == 9) || (numTecla == 14 && PuzzlePirataTexto.i == 11))
 				{
 				PuzzlePirataTexto.liberaAcao = true;
 				PuzzlePirataTexto.passaTexto = true;

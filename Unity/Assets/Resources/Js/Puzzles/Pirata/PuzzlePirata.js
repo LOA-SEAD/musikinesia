@@ -13,11 +13,11 @@ function Start () {
 	etapa = 0;
 	pontos = 0;
 
-	if(etapa == 1)
+	/*if(etapa == 1)
 		{
 		novosObjetos();
 		canhao.GetComponent(Animator).enabled = true;
-		}
+		}*/
 	
 	
 	
@@ -25,15 +25,23 @@ function Start () {
 
 function Update() {
 
-	if(MovBola.novaBola && chances <= 5 && etapa == 1)
-		novosObjetos();
+	if(etapa == 1) {
+		if(MovBola.novaBola && chances <= 5)
+			novosObjetos();
 		
-}
-
-function ControleFase() { //determina o que acontece em cada etapa
-
-	
-
+		if(chances > 5) {
+			etapa = 0;
+			PuzzlePirataTexto.passaTexto = true;
+			PuzzlePirataTexto.liberaAcao = true;
+			PuzzlePirataTexto.pausaAcao = false;
+			
+			if(pontos > 30)
+				if(PuzzlePirataTexto.i == 17 || PuzzlePirataTexto.i == 21 || PuzzlePirataTexto.i == 25)
+					PuzzlePirataTexto.i++;
+		}
+		
+	}
+		
 }
 
 function novosObjetos() {

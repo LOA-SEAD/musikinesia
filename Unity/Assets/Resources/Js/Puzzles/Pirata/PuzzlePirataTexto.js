@@ -31,19 +31,21 @@ function Awake() {
 		otherTexts[11] = "MAELZEL: Agora toque Ré4b.";
 		otherTexts[12] = "MAELZEL: Isso, você tocou Ré♭.";
 		otherTexts[13] = "MAELZEL: Agora vamos dar um susto nesse pirata sujo.";
-		otherTexts[14] = "MAELZEL: Vê aquele canhou ali? Tente acertar os alvos que aparecerem.";
+		otherTexts[14] = "MAELZEL: Tente acertar os alvos que aparecerem.";
 		otherTexts[15] = "MAELZEL: Atire usando Ré3 e controle a direção da bola movendo-a para cima (Ré3#) ou baixo (Ré3b).";
 		otherTexts[16] = "MAELZEL: Preparar, tocar… FOGO!";
 		otherTexts[17] = "MAELZEL: Ré3: disparar | Ré# mover pra cima | Réb mover para baixo.";
-		otherTexts[18] = "MAELZEL: Maelzel: Na mosca!";
-		otherTexts[19] = "MAELZEL: Vamos utilizar outra tecla, agora com mais velocidade.";
-		otherTexts[20] = "MAELZEL: Si3 disparar | Si# mover pra cima | Sib mover para baixo";
-		otherTexts[21] = "MAELZEL: Muito bem, filho. Um autêntico Diapasão fazendo seu trabalho digno.";
-		otherTexts[22] = "MAELZEL: Agora deixe esse pirata com vontade de caminhar em sua própria prancha.";
-		otherTexts[23] = "MAELZEL: Fá4 disparar | Fá# mover pra cima | Fáb mover para baixo";
-		otherTexts[24] = "MAELZEL: Bom trabalho, filho. Você é mais competente do que pensei.";
-
-
+		otherTexts[18] = "MAELZEL: Hum... vamos tentar de novo.";
+		//otherTexts[19] = espaço vazio
+		otherTexts[20] = "MAELZEL: Na mosca!";
+		otherTexts[21] = "MAELZEL: Vamos utilizar outra tecla, agora com mais velocidade.";
+		otherTexts[22] = "MAELZEL: Si3 disparar | Si# mover pra cima | Sib mover para baixo";
+		//otherTexts[23] = espaço vazio
+		otherTexts[24] = "MAELZEL: Muito bem, rapaz. Um autêntico Diapasão fazendo seu trabalho digno.";
+		otherTexts[25] = "MAELZEL: Agora deixe esse pirata com vontade de caminhar em sua própria prancha.";
+		otherTexts[26] = "MAELZEL: Fá4 disparar | Fá# mover pra cima | Fáb mover para baixo";
+		//otherTexts[27] = espaço vazio
+		otherTexts[28] = "MAELZEL: Bom trabalho, filho. Você é mais competente do que pensei.";
 
 		}
 	
@@ -77,7 +79,11 @@ function Start(){
 function Update () {
 
 		if ((Input.GetKeyDown("space") || passaTexto) && !pausaAcao && liberaAcao){
-			i++;
+			if(i == 18 || i == 22 || i == 26)
+				i--;
+			else
+				i++;
+				
 			TrocaTexto();
 			passaTexto = false;
 		}
@@ -91,15 +97,17 @@ function TrocaTexto() {
 
 		Text = otherTexts[i];
 		
-		if(i == 7 || i == 9 || i == 11 || i == 16)
+		if(i == 7 || i == 9 || i == 11 || i == 17 || i == 21 || i == 25)
 			{
 			pausaAcao = true;
 			liberaAcao = false;
 			}
 		
-		if(i == 16)
+		if(i == 17 || i == 21 || i == 25)
 			{
 			PuzzlePirata.etapa = 1;
+			PuzzlePirata.chances = 0;
+			PuzzlePirata.pontos = 0;
 			MovBola.novaBola = true;
 			}
 
