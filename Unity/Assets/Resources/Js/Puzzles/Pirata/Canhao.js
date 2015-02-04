@@ -2,10 +2,16 @@
 
 function Start () {
 
+	gameObject.GetComponent(Animator).enabled = false;
+
 }
 
 function Update () {
 
-	Destroy(gameObject, 2.5);
+	if(transform.position.x < -10.4)
+		Destroy(gameObject);
+
+	if(PuzzlePirata.atiraBala)
+		gameObject.GetComponent(Animator).enabled = true;
 
 }

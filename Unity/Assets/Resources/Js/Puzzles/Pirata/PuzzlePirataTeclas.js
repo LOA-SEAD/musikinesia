@@ -59,12 +59,45 @@ function TeclaApertada() {
 				}
 		}
 	
-	if(PuzzlePirata.etapa == 1)
+	if(PuzzlePirataTexto.i == 17)
 		{
 		if(numTecla == 2)
 			bemol = true;
 		
+		if(numTecla == 3) {
+			PuzzlePirata.atiraBala = true;
+			PuzzlePirataBala.velBola = 3;
+			}
+		
 		if(numTecla == 4)
+			sustenido = true;
+		}
+	
+	else if(PuzzlePirataTexto.i == 22)
+		{
+		if(numTecla == 9)
+			bemol = true;
+		
+		if(numTecla == 10) {
+			PuzzlePirata.atiraBala = true;
+			PuzzlePirataBala.velBola = 4;
+			}
+		
+		if(numTecla == 11)
+			sustenido = true;
+		}
+	
+	else if(PuzzlePirataTexto.i == 27)
+		{
+		if(numTecla == 19)
+			bemol = true;
+		
+		if(numTecla == 20) {
+			PuzzlePirata.atiraBala = true;
+			PuzzlePirataBala.velBola = 5;
+			}
+		
+		if(numTecla == 21)
 			sustenido = true;
 		}
 

@@ -4,13 +4,13 @@ private var posicaoX : float;
 
 var callFunction : int; //0 none; //1 Up; //2 Down;
 
-var velBola : int;
+static var velBola : int;
 
 static var novaBola : boolean;
 
 function Start () {
 
-	rigidbody2D.gravityScale = 0;
+	rigidbody2D.gravityScale = 0.3;
 
 }
 
@@ -23,15 +23,6 @@ function Update ()
 		Destroy(GameObject.FindWithTag("Alvo"));
 		novaBola = true;
 		}*/
-	
-	if(Input.GetKeyDown("z"))
-		velBola = 1;
-	
-	if(Input.GetKeyDown("x"))
-		velBola = 3;
-	
-	if(Input.GetKeyDown("c"))
-		velBola = 5;
 
     transform.position.x += Time.deltaTime * velBola;
     
