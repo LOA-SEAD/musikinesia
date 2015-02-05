@@ -42,8 +42,8 @@ function Awake() {
 		otherTexts[22] = "MAELZEL: La3 disparar | La# mover pra cima | Lab mover para baixo. \nTente fazer acima de 30 pontos";
 		otherTexts[23] = "MAELZEL: Quase lá! Vamos mais uma vez.";
 		//otherTexts[24] = espaço vazio
-		otherTexts[25] = "MAELZEL: Muito bem, rapaz. Um autêntico Diapasão fazendo seu trabalho digno.";
-		otherTexts[26] = "MAELZEL: Agora deixe esse pirata com vontade de caminhar em sua própria prancha.";
+		otherTexts[25] = "MAELZEL: Muito bem, rapaz. Um autêntico Diapasão fazendo seu \ntrabalho digno.";
+		otherTexts[26] = "MAELZEL: Agora deixe esse pirata com vontade de caminhar em \nsua própria prancha.";
 		otherTexts[27] = "MAELZEL: Sol4 disparar | Sol# mover pra cima | Solb mover para baixo. \nTente fazer acima de 30 pontos";
 		otherTexts[28] = "MAELZEL: Você precisa treinar melhor esses acidentes.";
 		//otherTexts[29] = espaço vazio
@@ -62,12 +62,6 @@ function Awake() {
 		}
 		
 }
-/*
-function WriteText(aText : String) {
-    guiText.text = "";
-    currentPosition = 0;
-    Text = aText;
-}*/
  
 function Start(){
 	
@@ -80,10 +74,10 @@ function Start(){
 
 function Update () {
 
-		if ((Input.GetKeyDown("space") || passaTexto) && !pausaAcao && liberaAcao){
+		if (passaTexto && !pausaAcao && liberaAcao){
 			if(i == 18 || i == 23 || i == 28)
 				i--;
-			else
+			else if(i < 30) //tirar if dps que a cena seguinte estiver pronta
 				i++;
 				
 			TrocaTexto();

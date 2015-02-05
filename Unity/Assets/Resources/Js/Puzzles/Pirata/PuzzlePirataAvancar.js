@@ -10,6 +10,9 @@ function Start () {
 
 function Update () {
 	
+	if(Input.GetKeyDown("space"))
+		Acao();
+	
 	if(PuzzlePirataTexto.liberaAcao)
 		transform.position.y = -4;
 	
@@ -19,14 +22,21 @@ function Update () {
 
 }
 
-function OnMouseDown () {
+function Acao () {
 	
-	audio.PlayOneShot(audios[1]);
-	
-	gameObject.GetComponent(SpriteRenderer).color = Color(0.6, 0.1, 0.1, 1);
-
-	if(PuzzlePirataTexto.liberaAcao)
+	if(PuzzlePirataTexto.liberaAcao) {
 		PuzzlePirataTexto.passaTexto = true;
+		audio.PlayOneShot(audios[1]);
+		}
+
+}
+
+function OnMouseDown () {
+
+	gameObject.GetComponent(SpriteRenderer).color = Color(0.6, 0.1, 0.1, 1);
+	
+	Acao();
+
 }
 
 function OnMouseUp () {
@@ -35,9 +45,14 @@ function OnMouseUp () {
 
 }
 
-function OnMouseOver ()	{
+function OnMouseEnter () {
 
 	audio.PlayOneShot(audios[0]);
+
+}
+
+function OnMouseOver ()	{
+
 	gameObject.GetComponent(SpriteRenderer).color -= Color(0, 0.1, 0.1, 0) * Time.deltaTime * 8;
 
 }

@@ -3,10 +3,18 @@
 
 function Start () {
 	
+	yield WaitForSeconds (1.5);
+	
+	Desativar();
+	
 }
 
 function Update () {
 
-	Destroy(gameObject, 1.5); //Destroi a explosao de cada nota 1,5s depois de instanciada
+}
+
+function Desativar () {
+
+	gameObject.SetActive(false);
 
 }

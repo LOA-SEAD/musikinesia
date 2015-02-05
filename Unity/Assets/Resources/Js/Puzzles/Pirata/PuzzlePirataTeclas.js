@@ -13,7 +13,7 @@ private var animator : Animator;
 
 static var sustenido : boolean; //faz a bala do canhao ir pra cima
 static var bemol : boolean; //faz a bala do canhao ir pra baixo
-
+static var liberaTiro : boolean; //permite que o jogador atire
 
 function Start () {
 
@@ -64,9 +64,10 @@ function TeclaApertada() {
 		if(numTecla == 2)
 			bemol = true;
 		
-		if(numTecla == 3) {
+		if(numTecla == 3 && liberaTiro) {
 			PuzzlePirata.atiraBala = true;
 			PuzzlePirataBala.velBola = 3;
+			liberaTiro = false;
 			}
 		
 		if(numTecla == 4)
@@ -78,9 +79,10 @@ function TeclaApertada() {
 		if(numTecla == 9)
 			bemol = true;
 		
-		if(numTecla == 10) {
+		if(numTecla == 10 && liberaTiro) {
 			PuzzlePirata.atiraBala = true;
 			PuzzlePirataBala.velBola = 4;
+			liberaTiro = false;
 			}
 		
 		if(numTecla == 11)
@@ -92,9 +94,10 @@ function TeclaApertada() {
 		if(numTecla == 19)
 			bemol = true;
 		
-		if(numTecla == 20) {
+		if(numTecla == 20 && liberaTiro) {
 			PuzzlePirata.atiraBala = true;
 			PuzzlePirataBala.velBola = 5;
+			liberaTiro = false;
 			}
 		
 		if(numTecla == 21)

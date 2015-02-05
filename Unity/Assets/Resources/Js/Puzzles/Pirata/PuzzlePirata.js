@@ -2,17 +2,21 @@
 
 var alvo : GameObject;
 var canhao : GameObject[];
-var bola : GameObject;
+var bala : GameObject;
 static var etapa : int; //define em qual parte esta o puzzle
 
 static var pontos: int;
 static var chances : int; //define quantas vezes o jogador vai poder acertar o alvo em cada parte do puzzle
 
 static var atiraBala : boolean; //permite que o jogador atire a bala do canhao
+var audios : AudioClip[];
 
 //Pause
 static var isPause : boolean;
 var pauseMenu : GameObject;
+
+//teste
+static var canhaoAtivo : boolean;
 
 function Start () {
 
@@ -23,6 +27,12 @@ function Start () {
 
 	etapa = 0;
 	pontos = 0;
+	
+	alvo.SetActive(false);
+	bala.SetActive(false);
+	canhao[0].SetActive(false);
+	canhao[1].SetActive(false);
+	canhao[2].SetActive(false);
 
 }
 
@@ -55,7 +65,7 @@ function Update() {
 			PuzzlePirataTexto.pausaAcao = false;
 			
 			if(pontos < 30) {
-				if(PuzzlePirataTexto.i == 17 || PuzzlePirataTexto.i == 21 || PuzzlePirataTexto.i == 25){
+				if(PuzzlePirataTexto.i == 17 || PuzzlePirataTexto.i == 22 || PuzzlePirataTexto.i == 27){
 					PuzzlePirataTexto.passaTexto = true;
 				}
 			}
@@ -66,9 +76,12 @@ function Update() {
 				
 		}
 		
-		if(atiraBala){
-			Instantiate(bola, GameObject.FindGameObjectWithTag("Respawn").transform.position, Quaternion.identity);
-			atiraBala = false;
+		if(atiraBala)
+			Bala();
+		
+		if(PuzzlePirataBala.somImpacto) {
+			audio.PlayOneShot(audios[1]);
+			PuzzlePirataBala.somImpacto = false;
 		}
 		
 	}
@@ -88,30 +101,53 @@ function novosObjetos() {
 
 function Alvo() {
 
-	var val : int = Random.Range(0,2);
+	var val : int = Random.Range(0,3);
 	
-	if(val < 1)
-		Instantiate(alvo, Vector3(6.45, 1.6, 3), Quaternion.identity);
+	print("alvo " + val);
+	
+	if(val == 0) {
+		alvo.transform.position.y = 1.6;
+		alvo.SetActive(true);
+		}
 		
-	else if(val == 1)
-		Instantiate(alvo, Vector3(6.45, 0, 3), Quaternion.identity);
+	else if(val == 1) {
+		alvo.transform.position.y = 0;
+		alvo.SetActive(true);
+		}
 	
-	else if(val > 1)
-		Instantiate(alvo, Vector3(6.45, -0.9, 3), Quaternion.identity);
+	else if(val == 2) {
+		alvo.transform.position.y = -0.9;
+		alvo.SetActive(true);
+		}
 
 }
 
 function Canhao() {
 	
-	var val2 : int = Random.Range(0,2);
+	var val2 : int = Random.Range(0,3);
 	
-	if(val2 < 1)
-		Instantiate(canhao[0]);
+	print("canhao " + val2);
+	
+	if(val2 == 0)
+		canhao[0].SetActive(true);
 		
 	else if(val2 == 1)
-		Instantiate(canhao[1]);
+		canhao[1].SetActive(true);
 	
-	else if(val2 > 1)
-		Instantiate(canhao[2]);
+	else if(val2 == 2)
+		canhao[2].SetActive(true);
+		
+	PuzzlePirataTeclas.liberaTiro = true;
 
 }
+
+function Bala() {
+	
+	bala.transform.position = GameObject.FindGameObjectWithTag("Respawn").transform.position;
+	bala.SetActive(true);
+	atiraBala = false;
+	audio.PlayOneShot(audios[0]);
+	
+
+}
+

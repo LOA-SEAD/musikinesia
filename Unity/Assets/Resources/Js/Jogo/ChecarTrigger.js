@@ -30,6 +30,7 @@ function Start () {
 	maisPontos = false;
 	vida = 30;
 	//posicao = Vector3(-6.5, 11.32382, -2); //posicao para instanciar um objeto.
+	explosao.SetActive(false);
 
 }
 
@@ -38,8 +39,12 @@ function Start () {
 function OnTriggerEnter(other : Collider) {
 
 		maisPontos = true; //impede o acesso ao "if" que subtrai pontos
-		Destroy(other.gameObject); //destroi a nota acertada
-		Instantiate(explosao, other.transform.position, other.transform.rotation); //instancia a explosao da nota acertada (no mesmo local da nota)
+		//Destroy(other.gameObject); //destroi a nota acertada
+		other.gameObject.SetActive(false);
+		//Instantiate(explosao, other.transform.position, other.transform.rotation); //instancia a explosao da nota acertada (no mesmo local da nota)
+		explosao.transform.position = other.transform.position;
+		explosao.SetActive(true);
+		DesativarExplosao();
 
 }
 
@@ -96,5 +101,13 @@ function Verificacao() {
 	yield WaitForSeconds(0.1);
 	
 	maisPontos = false;
+
+}
+
+function DesativarExplosao() {
+
+	yield WaitForSeconds (0.5);
+	
+	explosao.SetActive(false);
 
 }

@@ -5,6 +5,8 @@
 
 function Start () {
 
+	gameObject.SetActive(true);
+
 }
 
 function Update () {
@@ -12,7 +14,8 @@ function Update () {
 	//destruir as notas que nao foram acertadas
 	if(transform.position.x <= -10)
 		{
-		Destroy(gameObject); //destroi a nota
+		//Destroy(gameObject); //destroi a nota
+		gameObject.SetActive(false);
 		PorcentagemAcerto.totalNotas++; //soma 1 nota ao total de notas da musica
 		
 		if(!Pontuacao.treino)

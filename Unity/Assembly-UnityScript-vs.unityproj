@@ -49,6 +49,7 @@
      <Compile Include="Assets\Resources\Js\Geral\Derrota\Derrota.js" />
      <Compile Include="Assets\Resources\Js\Geral\Derrota\botoesDerrota.js" />
      <Compile Include="Assets\Resources\Js\Geral\Menu\Menu.js" />
+     <Compile Include="Assets\Resources\Js\Geral\Menu\abrirCena.js" />
      <Compile Include="Assets\Resources\Js\Geral\Menu\botoes.js" />
      <Compile Include="Assets\Resources\Js\Geral\Ranking\RMesh.js" />
      <Compile Include="Assets\Resources\Js\Geral\Ranking\RMesh3.js" />

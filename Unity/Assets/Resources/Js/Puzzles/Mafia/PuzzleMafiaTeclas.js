@@ -95,6 +95,12 @@ function OnMouseDown(){
 
 }
 
+function OnMouseUp() {
+
+	TeclaLevantada();
+
+}
+
 function Verificacao1() {
 
 	if(etapa == 0 || etapa == 3 || etapa == 6)

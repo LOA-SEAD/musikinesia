@@ -7,6 +7,8 @@ var callFunction : int; //0 none; //1 Up; //2 Down;
 static var velBola : int;
 
 static var novaBola : boolean;
+static var somImpacto : boolean;
+
 
 function Start () {
 
@@ -74,11 +76,12 @@ function OnTriggerEnter2D (other: Collider2D) {
 	
 	if(other.tag == "Alvo")
 		{
-		Destroy(gameObject);
-		Destroy(other.gameObject);
+		somImpacto = true;
+		gameObject.SetActive(false);
+		other.gameObject.SetActive(false);
 		novaBola = true;
 		PuzzlePirata.pontos += 10;
-		PuzzlePirata.chances ++; 
+		PuzzlePirata.chances ++;
 		}
 		
 }
@@ -89,8 +92,8 @@ function OnTriggerExit2D (other: Collider2D) {
 	
 	if(other.name == "ColliderFora")
 		{
-		Destroy(gameObject);
-		Destroy(GameObject.FindWithTag("Alvo"));
+		gameObject.SetActive(false);
+		GameObject.FindWithTag("Alvo").SetActive(false);
 		novaBola = true;
 		PuzzlePirata.pontos -= 6;
 		PuzzlePirata.chances ++;
