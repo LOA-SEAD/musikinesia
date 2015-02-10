@@ -106,6 +106,15 @@ TextureImporter:
     21300202: APirataCarroCanhao
     21300204: APirataAlvo
     21300206: AMaezelFala
+    21300208: APirataCapanga0
+    21300210: APirataCapanga1
+    21300212: APirataMorgan1
+    21300214: APirataMorgan0
+    21300216: APirataMorgan2
+    21300218: APirataMorgan3
+    21300220: APirataSereia
+    21300222: APirataNariz0
+    21300224: APirataNariz1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1192,6 +1201,96 @@ TextureImporter:
         y: 327
         width: 66
         height: 57
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataCapanga0
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 515
+        width: 80
+        height: 85
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataCapanga1
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 515
+        width: 58
+        height: 89
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorgan1
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 401
+        width: 107
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorgan0
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 401
+        width: 107
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorgan2
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 401
+        width: 107
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorgan3
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 401
+        width: 107
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataSereia
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 619
+        width: 71
+        height: 89
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataNariz0
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 619
+        width: 96
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataNariz1
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 618
+        width: 96
+        height: 100
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
