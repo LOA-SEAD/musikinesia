@@ -10,7 +10,7 @@ function Start () {
 
 function Update () {
 	
-	if(Input.GetKeyDown("space"))
+	if(Input.GetKeyDown("space") && NarrativaPirataTexto.liberaTexto)
 		Acao();
 	
 	if(NarrativaPirataTexto.liberaTexto)
@@ -23,25 +23,24 @@ function Update () {
 }
 
 function Acao () {
-	
-	if(NarrativaPirataTexto.liberaTexto) {
-		PuzzlePirataTexto.passaTexto = true;
-		audio.PlayOneShot(audios[1]);
-		}
 
+	NarrativaPirataTexto.passaTexto = true;
+	NarrativaPirataTexto.liberaTexto = false;
+	audio.PlayOneShot(audios[1]);
+	print("Proximo " + NarrativaPirata.proximo);
 }
 
 function OnMouseDown () {
 
 	gameObject.GetComponent(SpriteRenderer).color = Color(0.6, 0.1, 0.1, 1);
-	
-	Acao();
 
 }
 
 function OnMouseUp () {
 
 	gameObject.GetComponent(SpriteRenderer).color = Color(0.969, 0.647, 0.169, 1);
+	
+	Acao();
 
 }
 
