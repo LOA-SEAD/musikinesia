@@ -5,6 +5,7 @@ var audios : AudioClip[];
 function Start () {
 
 	gameObject.GetComponent(SpriteRenderer).color = Color(0.969, 0.647, 0.169, 1);
+	transform.position.y = -20;
 
 }
 
@@ -13,11 +14,13 @@ function Update () {
 	if(Input.GetKeyDown("space") && NarrativaPirataTexto.liberaTexto)
 		Acao();
 	
-	if(NarrativaPirataTexto.liberaTexto)
-		transform.position.y = -4;
-	
-	else
-		transform.position.y = -20;
+	if(NarrativaPirata.proximo > 1) {
+		if(NarrativaPirataTexto.liberaTexto)
+			transform.position.y = -4;
+		
+		else
+			transform.position.y = -20;
+	}
 	
 
 }
@@ -28,6 +31,7 @@ function Acao () {
 	NarrativaPirataTexto.liberaTexto = false;
 	audio.PlayOneShot(audios[1]);
 	print("Proximo " + NarrativaPirata.proximo);
+	
 }
 
 function OnMouseDown () {

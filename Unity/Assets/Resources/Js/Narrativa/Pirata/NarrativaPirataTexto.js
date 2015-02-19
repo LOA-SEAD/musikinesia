@@ -37,20 +37,20 @@ function Awake () {
 	otherTexts[21] = "???: Arrrrrrgh!!!";
 	otherTexts[22] = "TOM: Hmm? O que disse?";
 	otherTexts[23] = "MAELZEL: Nada.";
-	otherTexts[25] = "TOM: Então quem foi?";
-	otherTexts[26] = "???: Como ousam invadir as águas de Morgan montados naquele diabo \nverde? Cêis precisam pagar pedágio!";
-	otherTexts[27] = "TOM: Pedágio? Diabo? Do que está falando?";
-	otherTexts[28] = "MAELZEL: Ele está falando de quando viajamos no tempo. Viemos levitando \nnuma redoma verde luminosa.";
-	otherTexts[29] = "TOM: Ah… foi mal, chefe. Não vimos a cancela.";
-	otherTexts[30] = "???: Tudo bem. Por que não sentam-se na popa e aproveitam a viagem?";
-	otherTexts[31] = "TOM: O que?";
-	otherTexts[32] = "MORGAN: Errrgh….. digo… yar, joguem essas bestas aos tubarões! Yar! Yar!";
-	otherTexts[33] = "MAELZEL: Eu não faria isso se fosse você.";
-	otherTexts[34] = "MORGAN: Arrrrrrrrrrrrrrr…. como ousa desafiar Morgan, o Grande Pirata \ndos 7 Mares e Meio? Tu não tem reputação pra isso, rato de fossa.";
-	otherTexts[35] = "MAELZEL: Esse garoto tem poderes especiais e não queremos lhe causar \nnenhum acidente.";
-	otherTexts[36] = "MORGAN: O que insinua, almofadinha? Cê me cheira a sereia velha.";
-	otherTexts[37] = "MAELZEL: Tom, vê aqueles canhões? Mostre pra esse marujo de água doce \ndo que é capaz.";
-	//otherTexts[38] = espaço vazio
+	otherTexts[24] = "TOM: Então quem foi?";
+	otherTexts[25] = "???: Como ousam invadir as águas de Morgan montados naquele diabo \nverde? Cêis precisam pagar pedágio!";
+	otherTexts[26] = "TOM: Pedágio? Diabo? Do que está falando?";
+	otherTexts[27] = "MAELZEL: Ele está falando de quando viajamos no tempo. Viemos levitando \nnuma redoma verde luminosa.";
+	otherTexts[28] = "TOM: Ah… foi mal, chefe. Não vimos a cancela.";
+	otherTexts[29] = "???: Tudo bem. Por que não sentam-se na popa e aproveitam a viagem?";
+	otherTexts[30] = "TOM: O que?";
+	otherTexts[31] = "MORGAN: Errrgh….. digo… yar, joguem essas bestas aos tubarões! Yar! Yar!";
+	otherTexts[32] = "MAELZEL: Eu não faria isso se fosse você.";
+	otherTexts[33] = "MORGAN: Arrrrrrrrrrrrrrr…. como ousa desafiar Morgan, o Grande Pirata \ndos 7 Mares e Meio? Tu não tem reputação pra isso, rato de fossa.";
+	otherTexts[34] = "MAELZEL: Esse garoto tem poderes especiais e não queremos lhe causar \nnenhum acidente.";
+	otherTexts[35] = "MORGAN: O que insinua, almofadinha? Cê me cheira a sereia velha.";
+	otherTexts[36] = "MAELZEL: Tom, vê aqueles canhões? Mostre pra esse marujo de água doce \ndo que é capaz.";
+	//otherTexts[37] = espaço vazio
 	otherTexts[39] = "MORGAN: Arrrrrrrrgh!!!!";
 	otherTexts[40] = "MORGAN: ARRRRRRRR!!!!";
 	otherTexts[41] = "MAELZEL: O que foi? Não existem palavras em seu vocabulário rebuscado \npara expressar sua indignação?";
@@ -108,7 +108,8 @@ function Awake () {
 function Start () {
 
 	Text = otherTexts[i];
-	chamaFuncao = false;	
+	chamaFuncao = false;
+	liberaTexto = false;	
     //FirstStep();
 
 }
@@ -130,13 +131,19 @@ function Update () {
 
 function TrocaTexto() {
 
-	NarrativaPirata.proximo = i;
+	if(NarrativaPirata.proximo >= 1) {
+		NarrativaPirata.proximo = i;
+	}
+	
 	NarrativaPirata.chamaSprite = true;
 	
 	if(i == 20)
 		NarrativaPirata.atiraCanhao = true;
+	
+	if(i == 22 || i == 25 || i == 27 || i == 28)
+		NarrativaPirata.chamaPosicao = true;		
 
-	if(i == 38)
+	if(i == 37)
 		Application.LoadLevel("PuzzlePirata");
 
 	guiText.text = "";
@@ -147,7 +154,8 @@ function TrocaTexto() {
 	
 	yield WaitForSeconds (0.2);
 	
-	liberaTexto = true;
+	if(i != 20 && i != 25)
+		liberaTexto = true;
 		
 }
 
