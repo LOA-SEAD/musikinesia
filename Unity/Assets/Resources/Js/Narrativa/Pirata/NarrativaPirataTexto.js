@@ -13,15 +13,15 @@ var otherTexts : String[];
 
 function Awake () {
 
-	otherTexts[0] = "TOM: Onde diabos estamos? Pra onde foi o Seu Macarrão? Que lugar é esse?";
+	otherTexts[0] = "TOM: Onde diabos estamos? Pra onde foi o Seu Macarrão? \nQue lugar é esse?";
 	otherTexts[1] = "MAELZEL: Uma praia.";
-	otherTexts[2] = "TOM: Ora essa, eu sei que é uma praia. Mas como viemos parar aqui?";
+	otherTexts[2] = "TOM: Ora essa, eu sei que é uma praia. Mas como viemos \nparar aqui?";
 	otherTexts[3] = "MAELZEL: Provavelmente quando você usou seu teclado para impedir \n meu metrônomo, provocando um deslocamento de tempo e espaço.";
 	otherTexts[4] = "TOM: Então quer dizer que viajamos no tempo?";
 	otherTexts[5] = "MAELZEL: Sim.";
-	otherTexts[6] = "TOM: E quando a musikinésis é combinada com outro poder ela pode gerar \nalgo mais do que levitação?";
+	otherTexts[6] = "TOM: E quando a musikinésis é combinada com outro poder ela pode \ngerar algo mais do que levitação?";
 	otherTexts[7] = "MAELZEL: Sim.";
-	otherTexts[8] = "TOM: Ok, então me empresta seu metrônomo maluco pra nos levar de volta?";
+	otherTexts[8] = "TOM: Ok, então me empresta seu metrônomo maluco pra nos levar \nde volta?";
 	otherTexts[9] = "MAELZEL: Não.";
 	otherTexts[10] = "TOM: Não?!";
 	otherTexts[11] = "MAELZEL: Não.";
@@ -40,11 +40,11 @@ function Awake () {
 	otherTexts[24] = "TOM: Então quem foi?";
 	otherTexts[25] = "???: Como ousam invadir as águas de Morgan montados naquele diabo \nverde? Cêis precisam pagar pedágio!";
 	otherTexts[26] = "TOM: Pedágio? Diabo? Do que está falando?";
-	otherTexts[27] = "MAELZEL: Ele está falando de quando viajamos no tempo. Viemos levitando \nnuma redoma verde luminosa.";
-	otherTexts[28] = "TOM: Ah… foi mal, chefe. Não vimos a cancela.";
-	otherTexts[29] = "???: Tudo bem. Por que não sentam-se na popa e aproveitam a viagem?";
+	otherTexts[27] = "MAELZEL: Ele está falando de quando viajamos no tempo. Viemos \nlevitando numa redoma verde luminosa.";
+	otherTexts[28] = "TOM: Foi mal, chefe. Não vimos a cancela.";
+	otherTexts[29] = "???: Ah, tudo bem. Por que não sentam-se na popa e aproveitam a \nviagem?";
 	otherTexts[30] = "TOM: O que?";
-	otherTexts[31] = "MORGAN: Errrgh….. digo… yar, joguem essas bestas aos tubarões! Yar! Yar!";
+	otherTexts[31] = "MORGAN: Errrgh….. digo… yar, joguem essas bestas aos tubarões! \nYar! Yar!";
 	otherTexts[32] = "MAELZEL: Eu não faria isso se fosse você.";
 	otherTexts[33] = "MORGAN: Arrrrrrrrrrrrrrr…. como ousa desafiar Morgan, o Grande Pirata \ndos 7 Mares e Meio? Tu não tem reputação pra isso, rato de fossa.";
 	otherTexts[34] = "MAELZEL: Esse garoto tem poderes especiais e não queremos lhe causar \nnenhum acidente.";

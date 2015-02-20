@@ -11,6 +11,8 @@ var cenarioSprites : Sprite[];
 var balaCanhao : GameObject;
 var tiroCanhao : AudioClip;
 
+var musicas : AudioClip[];
+
 static var atiraCanhao : boolean;
 static var proximo : int;
 static var chamaPosicao : boolean;
@@ -21,6 +23,9 @@ function Start () {
 
 	balaCanhao.SetActive(false);
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[0];
+	
+	audio.clip = musicas[0];
+	audio.Play();
 
 }
 
@@ -142,7 +147,7 @@ function MudaSprite() {
 	
 	switch (proximo) {
 	
-		case 12 || 16: //Tom normal
+		case 12 || 16 || 20: //Tom normal
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[0];
 			break;
 		
@@ -158,16 +163,34 @@ function MudaSprite() {
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[4];
 			break;
 		
-		case 1 || 10 || 14: //Tom assustado
+		case 1 || 10 || 14 || 19: //Tom assustado
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[5];
+			print ("Tom assustado");
 			break;
 		
 		case 10 || 16:
 			personagens[1].GetComponent(SpriteRenderer).sprite = maelzelSprites[0];
 			break;
 			
-		case 9 || 15: //Maelzel de olhos fechados
+		case 9 || 15 || 32: //Maelzel de olhos fechados
 			personagens[1].GetComponent(SpriteRenderer).sprite = maelzelSprites[1];
+			break;
+		
+		case 34: //Maelzel de braços levantados
+			personagens[1].GetComponent(SpriteRenderer).sprite = maelzelSprites[4];
+			break;
+		
+		case 29: //Morgan com a mao levantada
+			personagens[4].GetComponent(SpriteRenderer).sprite = morganSprites[1];
+			break;
+		
+		case 31: //Morgan com o punho levantado e Tom assustado
+			personagens[4].GetComponent(SpriteRenderer).sprite = morganSprites[3];
+			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[5];
+			break;
+		
+		case 35: //Morgan cruzando os braços
+			personagens[4].GetComponent(SpriteRenderer).sprite = morganSprites[2];
 			break;
 			
 		default:
@@ -210,6 +233,9 @@ function MudaSprite() {
 function MudaCenario() {
 
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[1];
+	
+	audio.clip = musicas[1];
+	audio.Play();
 	
 	personagens[0].transform.position.x = -1;
 	personagens[0].transform.rotation.y = 0;
