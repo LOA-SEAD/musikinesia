@@ -8,7 +8,7 @@ static var liberaTexto : boolean;
 var currentPosition : int = 0;
 var delay : float = 0.1;  // 10 characters per sec.
 var Text : String = "";
-var additionalLines : String[];
+//var additionalLines : String[];
 var otherTexts : String[];
 
 function Awake () {
@@ -108,10 +108,16 @@ function Awake () {
 function Start () {
 
 	Text = otherTexts[i];
+	
+	if(i == 38)
+		passaTexto = true;
+	
+	else
+		passaTexto = false;
+	
 	chamaFuncao = false;
-	liberaTexto = false;	
-    //FirstStep();
-
+	liberaTexto = false;
+	
 }
 
 function Update () {
@@ -130,7 +136,7 @@ function Update () {
 }
 
 function TrocaTexto() {
-
+/*
 	if(NarrativaPirata.proximo >= 1) {
 		NarrativaPirata.proximo = i;
 	}
@@ -140,29 +146,32 @@ function TrocaTexto() {
 	if(i == 20)
 		NarrativaPirata.atiraCanhao = true;
 	
-	if(i == 22 || i == 25 || i == 27 || i == 28)
+	if(i == 22 || i == 25 || i == 27 || i == 28 || i == 39)
 		NarrativaPirata.chamaPosicao = true;		
-
+*/
 	if(i == 37)
 		Application.LoadLevel("PuzzlePirata");
-
-	guiText.text = "";
-	currentPosition = 0;
-	Text = otherTexts[i];
 	
-	FirstStep();
-	
+	else {
+		guiText.text = "";
+		currentPosition = 0;
+		Text = otherTexts[i];
+		delay = 0.01;
+		
+		FirstStep();
+	}
+	/*
 	yield WaitForSeconds (0.2);
 	
 	if(i != 20 && i != 25)
-		liberaTexto = true;
+		liberaTexto = true;*/
 		
 }
 
 function FirstStep() {
 
-	for ( var S : String in additionalLines )
-        	Text += "\n" + S;
+	//for ( var S : String in additionalLines )
+        	//Text += "\n" + S;
 	while (true) {
 		if (currentPosition < Text.Length)
 	    	guiText.text += Text[currentPosition++];

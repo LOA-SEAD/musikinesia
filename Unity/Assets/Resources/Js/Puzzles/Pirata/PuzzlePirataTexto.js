@@ -64,7 +64,7 @@ function Update () {
 		if (passaTexto && !pausaAcao && liberaAcao){
 			if(i == 18 || i == 23 || i == 28)
 				i--;
-			else if(i < 30) //tirar if dps que a cena seguinte estiver pronta
+			else //if(i < 30) //tirar if dps que a cena seguinte estiver pronta
 				i++;
 				
 			TrocaTexto();
@@ -94,8 +94,10 @@ function TrocaTexto() {
 			PuzzlePirataBala.novaBola = true;
 			}
 		
-		//if(i == 31)
-			//açao
+		if(i == 31){
+			NarrativaPirataTexto.i = 38;
+			Application.LoadLevel("NarrativaPirata");
+		}
 
 		FirstStep();
 }

@@ -97,6 +97,7 @@
      <Compile Include="Assets\Resources\Js\Narrativa\Mafia\btProximoMafia.js" />
      <Compile Include="Assets\Resources\Js\Narrativa\Mafia\mudaTextoMafia.js" />
      <Compile Include="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirata.js" />
+     <Compile Include="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAnim.js" />
      <Compile Include="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAvancar.js" />
      <Compile Include="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataTexto.js" />
      <Compile Include="Assets\Resources\Js\Narrativa\Suburbio\PosMusicas.js" />

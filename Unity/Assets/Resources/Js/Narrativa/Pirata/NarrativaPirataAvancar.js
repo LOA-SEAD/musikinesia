@@ -9,24 +9,26 @@ function Start () {
 
 }
 
-function Update () {
+function FixedUpdate () {
 	
-	if(Input.GetKeyDown("space") && NarrativaPirataTexto.liberaTexto)
+	if(Input.GetKeyDown("space") && transform.position.y == -4)
 		Acao();
-	
+	/*
 	if(NarrativaPirata.proximo > 1) {
 		if(NarrativaPirataTexto.liberaTexto)
 			transform.position.y = -4;
 		
 		else
 			transform.position.y = -20;
-	}
+	}*/
 	
 
 }
 
 function Acao () {
 
+	transform.position.y = -20;
+	NarrativaPirataAnim.soltaAnimacao = true;
 	NarrativaPirataTexto.passaTexto = true;
 	NarrativaPirataTexto.liberaTexto = false;
 	audio.PlayOneShot(audios[1]);

@@ -21,10 +21,19 @@ static var travaMudaPosicao : boolean;
 
 function Start () {
 
-	balaCanhao.SetActive(false);
-	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[0];
+	//balaCanhao.SetActive(false);
 	
-	audio.clip = musicas[0];
+	if (NarrativaPirataTexto.i == 38 || NarrativaPirataTexto.i == 39) {
+		audio.clip = musicas[1];
+		cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[1];
+		proximo = NarrativaPirataTexto.i;
+	}
+	
+	else {
+		audio.clip = musicas[0];
+		cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[0];
+	}
+	
 	audio.Play();
 
 }
@@ -134,24 +143,22 @@ function MudaPosicao() {
 	}
 	
 	if(proximo == 22 || proximo == 27)
-		personagens[0].transform.rotation.y = 180;
+		personagens[0].transform.rotation.y = 180; //Tom olhando pra esquerda
 	
-	if(proximo == 25 || proximo == 28)
-		personagens[0].transform.rotation.y = 0;
+	if(proximo == 25 || proximo == 28 || proximo == 39)
+		personagens[0].transform.rotation.y = 0; // Tom olhando pra direita
 
 }
 
 function MudaSprite() {
 	
-	//TOM
-	
 	switch (proximo) {
 	
-		case 12 || 16 || 20: //Tom normal
+		case 12 || 16 || 20 || 30: //Tom normal
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[0];
 			break;
 		
-		case 2 || 17: //Tom braço cruzado
+		case 2 || 17 || 28 || 39: //Tom braço cruzado
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[1];
 			break;
 			
@@ -163,12 +170,12 @@ function MudaSprite() {
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[4];
 			break;
 		
-		case 1 || 10 || 14 || 19: //Tom assustado
+		case 1 || 10 || 14 || 19 || 31: //Tom assustado
 			personagens[0].GetComponent(SpriteRenderer).sprite = tomSprites[5];
 			print ("Tom assustado");
 			break;
 		
-		case 10 || 16:
+		case 10 || 16 || 39: //Maelzel normal
 			personagens[1].GetComponent(SpriteRenderer).sprite = maelzelSprites[0];
 			break;
 			
