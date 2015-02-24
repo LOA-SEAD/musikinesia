@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+var testeDebug : boolean[];
+
 var botaoAvancar : GameObject;
 
 var personagens : GameObject[];
@@ -12,15 +14,29 @@ var cenarioSprites : Sprite[];
 
 var musicas : AudioClip[];
 
+var animacao : AnimationClip[];
+
+var efeitosSonoros : AudioClip[];
+
 static var soltaAnimacao : boolean;
 
 function Start () {
 
 	soltaAnimacao = false;
 	
-	//debug
-	CenarioBarco();
-	NarrativaPirataTexto.i = 20;
+	//Teste
+	NarrativaPirataTexto.i = 58;
+	
+	if(NarrativaPirataTexto.i < 37)
+		animation.clip = animacao[0];
+	
+	if(NarrativaPirataTexto.i > 37 && NarrativaPirataTexto.i < 58)
+		animation.clip = animacao[1];
+	
+	if(NarrativaPirataTexto.i >= 58 && NarrativaPirataTexto.i < 77)
+		animation.clip = animacao[2];
+	
+	animation.Play();
 
 }
 
@@ -28,14 +44,33 @@ function FixedUpdate () {
 
 	if(soltaAnimacao) {
 		animation["AnimNarrativaPirata"].speed = 1;
+		animation["AnimNarrativaPirata2"].speed = 1;
 		soltaAnimacao = false;
 	}
+	
+	//debug
+	if(testeDebug[0]) {
+		animation.clip = animacao[0];
+		animation.Play();
+		CenarioBarco();
+		Marcacao1();
+		NarrativaPirataTexto.i = 20;
+		testeDebug[0] = false;
+	}
+	
+	if(testeDebug[1]) {
+		animation.clip = animacao[1];
+		animation.Play();
+		testeDebug[1] = false;
+	}		
 
 }
 
 function Geral() {
 
 	animation["AnimNarrativaPirata"].speed = 0;
+	animation["AnimNarrativaPirata2"].speed = 0;
+	animation["AnimNarrativaPirata3"].speed = 0;
 	
 	yield WaitForSeconds (0.5);
 	
@@ -96,9 +131,16 @@ function MorganPunho() {
 
 function CenarioBarco() {
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[1];
-	animation["AnimNarrativaPirata"].time = 12;
 	NarrativaPirataTexto.passaTexto = true;
 	audio.clip = musicas[1];
 	audio.Play();
 	audio.loop = true;
+}
+
+function Marcacao1() {
+	animation["AnimNarrativaPirata"].time = 12;
+}
+
+function EfeitoSonoro() {
+	audio.PlayOneShot(efeitosSonoros[0]);
 }

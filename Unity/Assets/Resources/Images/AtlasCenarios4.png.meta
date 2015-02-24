@@ -7,6 +7,8 @@ TextureImporter:
     21300004: ACenarioPirataPuzzle
     21300006: ACenarioPirataBarco
     21300008: ACenarioPirataPraia
+    21300010: ACenarioPirataBarco1
+    21300012: ACenarioPirataCeu
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -95,6 +97,26 @@ TextureImporter:
         y: 360
         width: 640
         height: 360
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACenarioPirataBarco1
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 165
+        width: 166
+        height: 50
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ACenarioPirataCeu
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 640
+        height: 113
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

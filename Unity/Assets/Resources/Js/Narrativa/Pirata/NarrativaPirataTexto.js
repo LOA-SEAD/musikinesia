@@ -107,9 +107,11 @@ function Awake () {
 
 function Start () {
 
+	yield WaitForSeconds(0.2);
+
 	Text = otherTexts[i];
 	
-	if(i == 38)
+	if(i == 38 || i == 58)
 		passaTexto = true;
 	
 	else

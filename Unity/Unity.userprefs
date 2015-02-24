@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\SancaVentures\GrandShooter\GrandShooterUnity\Assets\_Lucas\_Scripts\Reposition.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAnim.js">
     <Files>
-      <File FileName="..\..\..\..\SancaVentures\GrandShooter\GrandShooterUnity\Assets\_Lucas\_Scripts\Reposition.cs" Line="12" Column="3" />
+      <File FileName="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAnim.js" Line="28" Column="29" />
+      <File FileName="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataTexto.js" Line="112" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -115,6 +115,10 @@ TextureImporter:
     21300220: APirataSereia
     21300222: APirataNariz0
     21300224: APirataNariz1
+    21300226: ANavioBranco0
+    21300228: ANavioBranco1
+    21300230: ANavioEscuro0
+    21300232: ANavioEscuro1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1291,6 +1295,46 @@ TextureImporter:
         y: 618
         width: 96
         height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANavioBranco0
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 513
+        width: 132
+        height: 97
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANavioBranco1
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 514
+        width: 132
+        height: 97
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANavioEscuro0
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 300
+        width: 132
+        height: 97
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ANavioEscuro1
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 300
+        width: 132
+        height: 97
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

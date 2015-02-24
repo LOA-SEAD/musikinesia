@@ -9,7 +9,7 @@ function Start () {
 
 }
 
-function FixedUpdate () {
+function Update () {
 	
 	if(Input.GetKeyDown("space") && transform.position.y == -4)
 		Acao();
