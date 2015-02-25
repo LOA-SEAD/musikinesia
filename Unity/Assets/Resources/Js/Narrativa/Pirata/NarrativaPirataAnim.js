@@ -11,6 +11,9 @@ var morganSprites : Sprite[];
 var narizSprites : Sprite[];
 var cenario : GameObject;
 var cenarioSprites : Sprite[];
+var barcoBranco : GameObject;
+var barcoEscuro : GameObject;
+var barcoSprites : Sprite[];
 
 var musicas : AudioClip[];
 
@@ -37,6 +40,9 @@ function Start () {
 		animation.clip = animacao[2];
 	
 	animation.Play();
+	
+	barcoBranco.GetComponent(SpriteRenderer).sprite = barcoSprites[0];
+	barcoEscuro.GetComponent(SpriteRenderer).sprite = barcoSprites[3];
 
 }
 
@@ -137,10 +143,27 @@ function CenarioBarco() {
 	audio.loop = true;
 }
 
+function BarcoBranco() {
+	if(barcoBranco.GetComponent(SpriteRenderer).sprite == barcoSprites[0])
+		barcoBranco.GetComponent(SpriteRenderer).sprite = barcoSprites[1];
+	else
+		barcoBranco.GetComponent(SpriteRenderer).sprite = barcoSprites[0];
+}
+
+function BarcoEscuro() {
+
+}
+
 function Marcacao1() {
 	animation["AnimNarrativaPirata"].time = 12;
 }
 
 function EfeitoSonoro() {
-	audio.PlayOneShot(efeitosSonoros[0]);
+	if(NarrativaPirataTexto.i > 58) {
+		audio.PlayOneShot(efeitosSonoros[0]);
+	}
+	
+	else {
+		audio.PlayOneShot(efeitosSonoros[1]);
+	}
 }

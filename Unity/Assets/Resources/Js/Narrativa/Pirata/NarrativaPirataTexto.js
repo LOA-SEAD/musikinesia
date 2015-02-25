@@ -111,7 +111,7 @@ function Start () {
 
 	Text = otherTexts[i];
 	
-	if(i == 38 || i == 58)
+	if(i == 38)
 		passaTexto = true;
 	
 	else
