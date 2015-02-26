@@ -51,6 +51,7 @@ function FixedUpdate () {
 	if(soltaAnimacao) {
 		animation["AnimNarrativaPirata"].speed = 1;
 		animation["AnimNarrativaPirata2"].speed = 1;
+		animation["AnimNarrativaPirata3"].speed = 1;
 		soltaAnimacao = false;
 	}
 	
@@ -84,6 +85,9 @@ function Geral() {
 	
 	if(NarrativaPirataTexto.i == 0)
 		NarrativaPirataTexto.chamaFuncao = true;
+	
+	if(NarrativaPirataTexto.i == 58)
+		NarrativaPirataTexto.passaTexto = true;
 
 }
 
@@ -133,6 +137,14 @@ function MorganBracoCruzado() {
 
 function MorganPunho() {
 	personagens[2].GetComponent(SpriteRenderer).sprite = morganSprites[3];
+}
+
+function NarizNormal() {
+	personagens[3].GetComponent(SpriteRenderer).sprite = narizSprites[0];
+}
+
+function NarizMetronomo() {
+	personagens[3].GetComponent(SpriteRenderer).sprite = narizSprites[1];
 }
 
 function CenarioBarco() {
