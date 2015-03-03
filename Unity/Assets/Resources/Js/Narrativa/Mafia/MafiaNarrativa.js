@@ -405,9 +405,9 @@ function Animacao() {
 		btProximo = true;
 		}
 	
-	/*if(proximo == 64)
+	if(proximo == 64)
 		{		
-		Mundo Piratas
-		}*/
+		Application.LoadLevel("Continua");
+		}
 
 }

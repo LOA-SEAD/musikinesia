@@ -8,7 +8,11 @@ function Start () {
 
 function Update () {
 
-	
+	if(Input.GetKeyDown("space")) {
+		if(transform.position.y > -5) {
+			Acao();
+		}
+	}
 
 }
 
@@ -32,9 +36,13 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
-	audio.PlayOneShot(efeitos[1]);
-	
 	if(transform.position.y > -5)
-		PuzzleMafia.chamaFuncao = true;
-		
+		Acao();	
+}
+
+function Acao() {
+	
+	audio.PlayOneShot(efeitos[1]);
+	PuzzleMafia.chamaFuncao = true;
+	
 }

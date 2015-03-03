@@ -16,6 +16,8 @@ var continuaOK : int; //habilita o botao continua
 
 var corBotao : Color; //cor dos botoes
 
+var travaBotao : boolean;
+
 function Start () {
 	
 	planoPreto.renderer.enabled = false;
@@ -23,8 +25,12 @@ function Start () {
 	corBotao.a = 0;	
 	btVoltar.transform.position.y = -10; //botao Voltar fora da tela
 	
+	travaBotao = false;
+	
 	//save game
-	continuaOK = PlayerPrefs.GetInt("Continua"); //botao Continua ativo
+	if(PlayerPrefs.HasKey("Continua")) {
+		continuaOK = PlayerPrefs.GetInt("Continua"); //botao Continua ativo
+	}
 	
 }
 
@@ -69,7 +75,9 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
-	Jogo();
+	if(!travaBotao) {
+		Jogo();
+	}
 	audio.PlayOneShot(efeitos[1]);
 	
 	//corBotao = Color.Lerp(Color.magenta, Color.blue, 0.5);
@@ -79,8 +87,9 @@ function OnMouseDown () {
 
 function Jogo () {
 
-	if(gameObject.tag == "bt1" || (gameObject.tag == "bt2" && continuaOK == 1) || gameObject.tag == "bt3")
-		{
+	travaBotao = true;
+
+	if(gameObject.tag == "bt1" || (gameObject.tag == "bt2" && continuaOK != 0) || gameObject.tag == "bt3") {
 		//guia.transform.renderer.material.color = Color(0, 0, 0, 1); //Guia fica preto ao clicar
 
 		yield WaitForSeconds(0.2);
@@ -100,17 +109,22 @@ function Jogo () {
 			Application.LoadLevel("Introducao");
 			}
 		
-		if(gameObject.tag == "bt2" && continuaOK == 1) //botao Continuar
-			{
-			PosMusicas.proximo = PlayerPrefs.GetInt("SaveGame");
-			Application.LoadLevel("NarrativaSuburbio");
+		if(gameObject.tag == "bt2") { //botao Continuar
+			switch (continuaOK) {
+			case 1:
+				PosMusicas.proximo = PlayerPrefs.GetInt("SaveGame");
+				Application.LoadLevel("NarrativaSuburbio");
+				break;
+				
+			case 2:
+				MafiaNarrativa.proximo = PlayerPrefs.GetInt("SaveGame");
+				Application.LoadLevel("NarrativaMafia");
+				break;
+				
+			default:
+				break;
 			}
-		
-		if(gameObject.tag == "bt2" && continuaOK == 2) //botao Continuar
-			{
-			MafiaNarrativa.proximo = PlayerPrefs.GetInt("SaveGame");
-			Application.LoadLevel("NarrativaMafia");
-			}
+		}
 	
 		if(gameObject.tag == "bt3") //botao Treino
 			{

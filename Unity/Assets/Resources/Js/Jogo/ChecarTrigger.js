@@ -106,7 +106,7 @@ function Verificacao() {
 
 function DesativarExplosao() {
 
-	yield WaitForSeconds (0.5);
+	yield WaitForSeconds (0.2);
 	
 	explosao.SetActive(false);
 

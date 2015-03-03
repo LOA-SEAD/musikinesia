@@ -47,5 +47,13 @@ function Escolha () {
 		
 	if(gameObject.tag == "bt3") //botao Voltar
 		menuVoltar = true;
+	
+	if(gameObject.tag == "bt4") //botao Treino
+		{
+		Pontuacao.treino = true;
+		Pontuacao.numMusica = 0;
+		Pontuacao.puzzle = 0;
+		Application.LoadLevel("Jogo");
+		}
 
 }

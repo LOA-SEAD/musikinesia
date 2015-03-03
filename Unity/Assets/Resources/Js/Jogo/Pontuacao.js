@@ -769,7 +769,7 @@ function PrimeiraMusica() {
 	travaTeclas = false;
 	
 	//musica
-	position = Vector3 (55.2, -2.9372, 0); //55.3
+	position = Vector3 (55.1, -2.9372, 0); //55.3
 	Instantiate(musica[0], position, Quaternion.identity);
 	audio.PlayOneShot(audios[0]);
 	planoPreto.transform.position.y = 50;

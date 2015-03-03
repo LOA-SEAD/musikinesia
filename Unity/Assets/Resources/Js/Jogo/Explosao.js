@@ -3,7 +3,7 @@
 
 function Start () {
 	
-	yield WaitForSeconds (1.5);
+	yield WaitForSeconds (0.2);
 	
 	Desativar();
 	

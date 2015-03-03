@@ -119,6 +119,18 @@ TextureImporter:
     21300228: ANavioBranco1
     21300230: ANavioEscuro0
     21300232: ANavioEscuro1
+    21300234: APirataTomSp2
+    21300236: APirataTomSp1
+    21300238: APirataTomSp0
+    21300240: APirataMorganSp2
+    21300242: APirataMorganSp1
+    21300244: APirataMorganSp0
+    21300246: APirataMaelzelSp1
+    21300248: APirataMaelzelSp2
+    21300250: APirataMaelzelSp0
+    21300252: APirataNarizSp2
+    21300254: APirataNarizSp1
+    21300256: APirataNarizSp0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1335,6 +1347,126 @@ TextureImporter:
         y: 300
         width: 132
         height: 97
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTomSp2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 376
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTomSp1
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 376
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTomSp0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 376
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorganSp2
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 376
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorganSp1
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 376
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMorganSp0
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 376
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMaelzelSp1
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 377
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMaelzelSp2
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 377
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataMaelzelSp0
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 377
+        width: 13
+        height: 24
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataNarizSp2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 377
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataNarizSp1
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 377
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataNarizSp0
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 377
+        width: 17
+        height: 26
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

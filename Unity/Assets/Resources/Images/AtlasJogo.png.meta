@@ -66,6 +66,8 @@ TextureImporter:
     21300122: AVisorPuzzle
     21300124: APuzzleMafiaFundoPanela
     21300126: ANotaSustenido
+    21300128: AIsaacPB0
+    21300130: AIsaacPB1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -702,6 +704,26 @@ TextureImporter:
         y: 137
         width: 31
         height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AIsaacPB0
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 400
+        width: 140
+        height: 124
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: AIsaacPB1
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 400
+        width: 140
+        height: 124
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

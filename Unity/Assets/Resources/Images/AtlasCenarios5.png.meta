@@ -3,6 +3,7 @@ guid: ec2ab6e31baa50145956fd70518713fb
 TextureImporter:
   fileIDToRecycleName:
     21300000: ACenarioRestaurante
+    21300002: APirataFundoNavioSombrio
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -48,6 +49,16 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 360
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataFundoNavioSombrio
+      rect:
+        serializedVersion: 2
+        x: 640
         y: 360
         width: 640
         height: 360

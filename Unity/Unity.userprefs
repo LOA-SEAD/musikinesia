@@ -1,9 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataTexto.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAnim.js">
     <Files>
-      <File FileName="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAnim.js" Line="147" Column="69" />
-      <File FileName="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataTexto.js" Line="146" Column="29" />
+      <File FileName="Assets\Resources\Js\Narrativa\Pirata\NarrativaPirataAnim.js" Line="192" Column="61" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
