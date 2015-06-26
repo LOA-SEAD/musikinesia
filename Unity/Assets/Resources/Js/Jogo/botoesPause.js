@@ -19,13 +19,13 @@ function Update () {
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0);
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0);
 
 }
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
 }
 

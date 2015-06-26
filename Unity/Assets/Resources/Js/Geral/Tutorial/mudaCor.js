@@ -12,10 +12,10 @@ function Start () {
 function Update () {
 
 	if(Tutorial.proximo == proximo)
-		transform.renderer.material.color = Color(0.9, 0.9, 0, 1); //troca para verde
+		transform.GetComponent.<Renderer>().material.color = Color(0.9, 0.9, 0, 1); //troca para verde
 	
 	if(Tutorial.proximo != proximo)
-		transform.renderer.material.color = Color(1, 1, 1, 1); //volta a cor original
+		transform.GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1); //volta a cor original
 	
 	if(Tutorial.proximo >= 17) //Destroi o teclado quando termina a exibiçao das teclas
 		Destroy(gameObject);

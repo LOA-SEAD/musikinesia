@@ -12,7 +12,7 @@ static var somImpacto : boolean;
 
 function Start () {
 
-	rigidbody2D.gravityScale = 0.3;
+	GetComponent.<Rigidbody2D>().gravityScale = 0.3;
 
 }
 
@@ -54,7 +54,7 @@ function Update ()
 
 function PositionUp()
 {	
-	rigidbody2D.gravityScale = -0.45;
+	GetComponent.<Rigidbody2D>().gravityScale = -0.45;
 	
 	yield WaitForSeconds (0.2);
 	
@@ -63,7 +63,7 @@ function PositionUp()
 
 function PositionDown()
 {	
-	rigidbody2D.gravityScale = 0.45;
+	GetComponent.<Rigidbody2D>().gravityScale = 0.45;
 	
 	yield WaitForSeconds (0.2);
 	

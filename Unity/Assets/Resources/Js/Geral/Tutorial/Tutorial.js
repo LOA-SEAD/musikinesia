@@ -57,22 +57,22 @@ function Start () {
 	proximo = 0;
 	btProximo = false;
 	objeto[2].transform.position.x = -80;
-	objeto[5].renderer.enabled = false;
-	objeto[5].renderer.material.color.a = 0;
-	objeto[9].renderer.enabled = false;
+	objeto[5].GetComponent.<Renderer>().enabled = false;
+	objeto[5].GetComponent.<Renderer>().material.color.a = 0;
+	objeto[9].GetComponent.<Renderer>().enabled = false;
 	objeto[11].transform.position.y = -24;
 	objeto[12].transform.position.y = -24;
-	objeto[14].renderer.enabled = false;
-	objeto[15].renderer.material.color.a = 0;
-	objeto[17].renderer.enabled = false;
-	objeto[17].renderer.material.color.a = 0;
+	objeto[14].GetComponent.<Renderer>().enabled = false;
+	objeto[15].GetComponent.<Renderer>().material.color.a = 0;
+	objeto[17].GetComponent.<Renderer>().enabled = false;
+	objeto[17].GetComponent.<Renderer>().material.color.a = 0;
 	//objeto[21].renderer.enabled = false;
-	objeto[25].renderer.enabled = false;
-	objeto[25].renderer.material.color.a = 0;
+	objeto[25].GetComponent.<Renderer>().enabled = false;
+	objeto[25].GetComponent.<Renderer>().material.color.a = 0;
 	objeto[26].transform.position.y = -40;
-	objeto[27].renderer.material.color.a = 0;
+	objeto[27].GetComponent.<Renderer>().material.color.a = 0;
 	
-	imgInterface.renderer.enabled = false;
+	imgInterface.GetComponent.<Renderer>().enabled = false;
 	
 	pauseMenu.transform.position.y = 55;
 
@@ -82,7 +82,7 @@ function Start () {
 	Instantiate(objeto[0], positionIns, Quaternion.identity);
 	
 	yield WaitForSeconds(1.2);
-	positionIns = Vector3(0.15, 0.83, 0);
+	positionIns = Vector3(0.14, 0.83, 0);
 	Instantiate(objeto[1], positionIns, Quaternion.identity);
 	
 	yield WaitForSeconds(3);
@@ -159,29 +159,29 @@ function Update () {
 	
 	if(proximo == 18)
 		{
-		if(objeto[25].renderer.material.color.a != 1)
+		if(objeto[25].GetComponent.<Renderer>().material.color.a != 1)
 			{
-			objeto[25].renderer.enabled = true;
-			objeto[25].renderer.material.color.a += Time.deltaTime;
+			objeto[25].GetComponent.<Renderer>().enabled = true;
+			objeto[25].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
 			}
 		
-		if(objeto[27].renderer.material.color.a != 1)
+		if(objeto[27].GetComponent.<Renderer>().material.color.a != 1)
 			{
-			objeto[27].renderer.enabled = true;
-			objeto[27].renderer.material.color.a += Time.deltaTime;
+			objeto[27].GetComponent.<Renderer>().enabled = true;
+			objeto[27].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
 			}
 		
-		if(objeto[25].renderer.material.color.a >= 0.9)
+		if(objeto[25].GetComponent.<Renderer>().material.color.a >= 0.9)
 			btProximo = true;
 		}
 	
 	//fade in da clave de sol
-	if(objeto[5].renderer.enabled && objeto[5].renderer.material.color.a != 1)
-		objeto[5].renderer.material.color.a += Time.deltaTime;
+	if(objeto[5].GetComponent.<Renderer>().enabled && objeto[5].GetComponent.<Renderer>().material.color.a != 1)
+		objeto[5].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
 	
 	//fade in das notas do teclado
-	if(objeto[17].renderer.enabled && objeto[17].renderer.material.color.a != 1)
-		objeto[17].renderer.material.color.a += Time.deltaTime;
+	if(objeto[17].GetComponent.<Renderer>().enabled && objeto[17].GetComponent.<Renderer>().material.color.a != 1)
+		objeto[17].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
 		
 }
 
@@ -195,7 +195,7 @@ function Animacao () {
 		Instantiate(objeto[0], positionIns, Quaternion.identity);
 	
 		yield WaitForSeconds(1.2);
-		positionIns = Vector3(0.15, 0.83, 0);
+		positionIns = Vector3(0.14, 0.83, 0);
 		Instantiate(objeto[1], positionIns, Quaternion.identity);
 	
 		yield WaitForSeconds(3);
@@ -209,11 +209,11 @@ function Animacao () {
 		Instantiate(objeto[3], positionIns, Quaternion.identity);
 	
 		yield WaitForSeconds(1.2);
-		positionIns = Vector3(0.15, 0.83, 0);
+		positionIns = Vector3(0.14, 0.83, 0);
 		Instantiate(objeto[4], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(3);
-		objeto[5].renderer.enabled = true;
+		objeto[5].GetComponent.<Renderer>().enabled = true;
 		
 		yield WaitForSeconds(2);
 		proximo = 3;
@@ -245,7 +245,7 @@ function Animacao () {
 		{
 		btProximo = false;
 		btVoltar = false;		
-		positionIns = Vector3(0.15, 0.83, 0);
+		positionIns = Vector3(0.14, 0.83, 0);
 		Instantiate(objeto[7], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(2.5);
@@ -374,7 +374,7 @@ function Animacao () {
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(0.7);
-		objeto[9].renderer.enabled = true;
+		objeto[9].GetComponent.<Renderer>().enabled = true;
 		btProximo = true;
 		btVoltar = true;
 		}
@@ -383,9 +383,9 @@ function Animacao () {
 		{
 		btProximo = false;
 		btVoltar = false;
-		objeto[9].renderer.enabled = false;
+		objeto[9].GetComponent.<Renderer>().enabled = false;
 		
-		positionIns = Vector3(0.15, 0.83, 0);
+		positionIns = Vector3(0.14, 0.83, 0);
 		Instantiate(objeto[10], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(8);
@@ -404,7 +404,7 @@ function Animacao () {
 		Instantiate(objeto[13], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(0.8);
-		objeto[14].renderer.enabled = true;
+		objeto[14].GetComponent.<Renderer>().enabled = true;
 		btProximo = true;
 		btVoltar = true;
 		}
@@ -421,10 +421,10 @@ function Animacao () {
 	if(proximo == 10)
 		{		
 		yield WaitForSeconds(1.2);
-		positionIns = Vector3(0.15, 0.83, 0);
+		positionIns = Vector3(0.14, 0.83, 0);
 		Instantiate(objeto[16], positionIns, Quaternion.identity);
 		
-		objeto[17].renderer.enabled = true;
+		objeto[17].GetComponent.<Renderer>().enabled = true;
 		
 		yield WaitForSeconds(1);
 		
@@ -537,7 +537,7 @@ function Animacao () {
 	//como jogar
 	if(proximo == 17)
 		{
-		objeto[17].renderer.enabled = false;
+		objeto[17].GetComponent.<Renderer>().enabled = false;
 		btProximo = false;
 		btVoltar = false;
 		
@@ -546,7 +546,7 @@ function Animacao () {
 		
 		yield WaitForSeconds(1);
 		
-		positionIns = Vector3(0.15, 0.83, 0);
+		positionIns = Vector3(0.14, 0.83, 0);
 		Instantiate(objeto[24], positionIns, Quaternion.identity);
 		
 		yield WaitForSeconds(3);
@@ -557,8 +557,8 @@ function Animacao () {
 	//treino
 	if(proximo == 19)
 		{
-		objeto[25].renderer.enabled = false;
-		objeto[27].renderer.enabled = false; //ESC-pause
+		objeto[25].GetComponent.<Renderer>().enabled = false;
+		objeto[27].GetComponent.<Renderer>().enabled = false; //ESC-pause
 		
 		btProximo = false;
 		
@@ -580,19 +580,19 @@ function Animacao () {
 		btProximo = false;
 		btVoltar = false;
 		
-		objeto[5].renderer.enabled = false;
+		objeto[5].GetComponent.<Renderer>().enabled = false;
 		objeto[2].transform.position.x = 18.1;
 		objeto[2].transform.localScale.x = 12.60802;
-		objeto[15].renderer.enabled = true;
-		objeto[15].renderer.material.color.a = 0.7;
-		objeto[28].renderer.enabled = false;
+		objeto[15].GetComponent.<Renderer>().enabled = true;
+		objeto[15].GetComponent.<Renderer>().material.color.a = 0.7;
+		objeto[28].GetComponent.<Renderer>().enabled = false;
 		
 		yield WaitForSeconds(0.2);
 		
 		//loading
 		positionIns = Vector3(0.4, 0.5, -8.1);
 		Instantiate(objeto[19], positionIns, Quaternion.identity);
-		audio.Stop();
+		GetComponent.<AudioSource>().Stop();
 		
 		yield WaitForSeconds(1.5);
 		proximo = 22;
@@ -600,7 +600,7 @@ function Animacao () {
 	
 	if(proximo == 22)
 		{
-		objeto[15].renderer.material.color.a = 0;
+		objeto[15].GetComponent.<Renderer>().material.color.a = 0;
 		
 		//musica
 		positionIns = Vector3(50, 0, 0);
@@ -639,9 +639,9 @@ function Voltar(){
 		{
 		objeto[2].transform.position.x = -70;
 		voltar = 4; //limpa a cena atual
-		objeto[5].renderer.enabled = false;
+		objeto[5].GetComponent.<Renderer>().enabled = false;
 		objeto[5].transform.position.x = 14.321;
-		objeto[5].renderer.material.color.a = 0;
+		objeto[5].GetComponent.<Renderer>().material.color.a = 0;
 		
 		yield WaitForSeconds(0.1);
 		
@@ -655,7 +655,7 @@ function Voltar(){
 	if(proximo == 6 && btProximo)
 		{
 		voltar = 6;
-		objeto[9].renderer.enabled = false;
+		objeto[9].GetComponent.<Renderer>().enabled = false;
 		
 		yield WaitForSeconds(0.1);
 		
@@ -669,7 +669,7 @@ function Voltar(){
 	if(proximo == 8 && btProximo)
 		{
 		voltar = 8;
-		objeto[14].renderer.enabled = false;
+		objeto[14].GetComponent.<Renderer>().enabled = false;
 		
 		yield WaitForSeconds(0.1);
 		
@@ -688,7 +688,7 @@ function Voltar(){
 	if(proximo == 16 && btProximo)
 		{
 		voltar = 16;
-		objeto[17].renderer.enabled = false;
+		objeto[17].GetComponent.<Renderer>().enabled = false;
 		
 		yield WaitForSeconds(0.1);
 		
@@ -702,10 +702,10 @@ function Voltar(){
 	if(proximo == 20 && btProximo)
 		{
 		voltar = 20;
-		objeto[25].renderer.enabled = true;
-		objeto[25].renderer.material.color.a = 0;
-		objeto[27].renderer.enabled = true;
-		objeto[27].renderer.material.color.a = 0;
+		objeto[25].GetComponent.<Renderer>().enabled = true;
+		objeto[25].GetComponent.<Renderer>().material.color.a = 0;
+		objeto[27].GetComponent.<Renderer>().enabled = true;
+		objeto[27].GetComponent.<Renderer>().material.color.a = 0;
 		
 		yield WaitForSeconds(0.1);
 		

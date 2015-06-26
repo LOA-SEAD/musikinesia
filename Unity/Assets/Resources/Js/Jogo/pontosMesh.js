@@ -9,7 +9,7 @@ function Start () {
 function Update () {
 
 	var myMesh = GetComponent(TextMesh);
-	renderer.material.color = Color.black;
+	GetComponent.<Renderer>().material.color = Color.black;
 	
 	if(!Pontuacao.treino && Pontuacao.puzzle == 0)
 		myMesh.text = Pontuacao.pontuacao.ToString();

@@ -74,13 +74,13 @@ function Update () {
 			{
 			volMus1 += 0.2 * Time.deltaTime;
 			volume = volMus1;
-			audio.volume = volMus1;
+			GetComponent.<AudioSource>().volume = volMus1;
 			}
 		
 	if(fadeOut)
 		if(volMus0 > 0)
 			{
-			audio.volume = volMus0;
+			GetComponent.<AudioSource>().volume = volMus0;
 			volume = volMus0;
 			volMus0 -= 0.4 * Time.deltaTime;
 			}
@@ -94,11 +94,11 @@ function Update () {
 
 	if(proximo == 0) //|| proximo == 2
 		{
-		if(personagem[0].renderer.material.color.a != 1)
-			personagem[0].renderer.material.color.a += 0.03;
+		if(personagem[0].GetComponent.<Renderer>().material.color.a != 1)
+			personagem[0].GetComponent.<Renderer>().material.color.a += 0.03;
 		
-		if(cenario[4].renderer.material.color.a != 1)
-			cenario[4].renderer.material.color.a += 0.03;
+		if(cenario[4].GetComponent.<Renderer>().material.color.a != 1)
+			cenario[4].GetComponent.<Renderer>().material.color.a += 0.03;
 		}
 /*	
 	if(proximo == 1 || proximo == 4)
@@ -111,20 +111,20 @@ function Update () {
 		}*/
 	
 	if(proximo == 10)
-		if(logo.renderer.material.color.a != 1)
-			logo.renderer.material.color.a += 0.5*Time.deltaTime;
+		if(logo.GetComponent.<Renderer>().material.color.a != 1)
+			logo.GetComponent.<Renderer>().material.color.a += 0.5*Time.deltaTime;
 							
 	if(proximo == 11)
-		if(cenario[0].renderer.material.color.a != 1)
-			cenario[0].renderer.material.color.a += 0.4*Time.deltaTime;
+		if(cenario[0].GetComponent.<Renderer>().material.color.a != 1)
+			cenario[0].GetComponent.<Renderer>().material.color.a += 0.4*Time.deltaTime;
 	
 	if(proximo == 12)
 		{
-		if(cenario[0].renderer.material.color.a > 0)
-			cenario[0].renderer.material.color.a -= 0.4*Time.deltaTime;
+		if(cenario[0].GetComponent.<Renderer>().material.color.a > 0)
+			cenario[0].GetComponent.<Renderer>().material.color.a -= 0.4*Time.deltaTime;
 		
-		if(cenario[1].renderer.material.color.a != 1)
-			cenario[1].renderer.material.color.a += 0.4*Time.deltaTime;	
+		if(cenario[1].GetComponent.<Renderer>().material.color.a != 1)
+			cenario[1].GetComponent.<Renderer>().material.color.a += 0.4*Time.deltaTime;	
 		}
 	
 	if(proximo == 13)
@@ -133,8 +133,8 @@ function Update () {
 			
 	if(proximo == 17)
 		{
-		if(cenario[3].renderer.material.color.a != 1)
-			cenario[3].renderer.material.color.a += 0.6*Time.deltaTime;
+		if(cenario[3].GetComponent.<Renderer>().material.color.a != 1)
+			cenario[3].GetComponent.<Renderer>().material.color.a += 0.6*Time.deltaTime;
 		
 		if(cenario[3].transform.position.y < 0.2)
 			cenario[3].transform.position.y += 3*Time.deltaTime;
@@ -153,20 +153,20 @@ function Animacao() {
 		//volume = 0.5;
 		pausar = false;
 		btProximo = false;
-		audio.clip = musica[0];
+		GetComponent.<AudioSource>().clip = musica[0];
 		fadeIn = false;
 		fadeOut = false;
 	
-		personagem[0].renderer.material.color.a = 0;
-		logo.renderer.material.color.a = 0;
-		cenario[0].renderer.material.color.a = 0;
-		cenario[1].renderer.material.color.a = 0;
-		cenario[2].renderer.enabled = false;
-		cenario[3].renderer.material.color.a = 0;
-		cenario[4].renderer.material.color.a = 0;
+		personagem[0].GetComponent.<Renderer>().material.color.a = 0;
+		logo.GetComponent.<Renderer>().material.color.a = 0;
+		cenario[0].GetComponent.<Renderer>().material.color.a = 0;
+		cenario[1].GetComponent.<Renderer>().material.color.a = 0;
+		cenario[2].GetComponent.<Renderer>().enabled = false;
+		cenario[3].GetComponent.<Renderer>().material.color.a = 0;
+		cenario[4].GetComponent.<Renderer>().material.color.a = 0;
 		cenario[4].GetComponent(Animator).enabled = false;
-		planoPreto.renderer.material.color.a = 0;
-		personagem[2].renderer.enabled = false;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0;
+		personagem[2].GetComponent.<Renderer>().enabled = false;
 		
 		posicao = Vector3(0, -3.22, 0);
 		Instantiate(baseTexto, posicao, Quaternion.identity);
@@ -188,7 +188,7 @@ function Animacao() {
 		//personagem[0].renderer.material.color.a = 0;
 		//cenario[4].renderer.material.color.a = 0;
 	
-		audio.PlayOneShot(sons[5]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[5]);
 		
 		yield WaitForSeconds(0.5);
 		
@@ -220,7 +220,7 @@ function Animacao() {
 		{
 		btProximo = false;
 		cenario[4].GetComponent(Animator).enabled = true;
-		audio.PlayOneShot(sons[6]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[6]);
 		
 		yield WaitForSeconds(1);
 		
@@ -231,7 +231,7 @@ function Animacao() {
 		Instantiate(texto[3], posicao, Quaternion.identity);
 	
 		yield WaitForSeconds(1);
-		audio.PlayOneShot(sons[7]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[7]);
 	
 		btProximo = true; //proximo = 4;
 		}
@@ -239,8 +239,8 @@ function Animacao() {
 	if(proximo == 4)
 		{
 		btProximo = false;
-		personagem[0].renderer.material.color.a = 0;
-		cenario[4].renderer.material.color.a = 0;
+		personagem[0].GetComponent.<Renderer>().material.color.a = 0;
+		cenario[4].GetComponent.<Renderer>().material.color.a = 0;
 		cenario[4].GetComponent(Animator).enabled = false;
 		
 		yield WaitForSeconds(2);
@@ -251,7 +251,7 @@ function Animacao() {
 	
 		yield WaitForSeconds(3);
 		
-		audio.clip = musica[1];
+		GetComponent.<AudioSource>().clip = musica[1];
 		fadeOut = false;
 		fadeIn = true;
 		volMus1 = 0;
@@ -261,7 +261,7 @@ function Animacao() {
 	
 		yield WaitForSeconds(1);
 		
-		audio.Play();
+		GetComponent.<AudioSource>().Play();
 	
 		btProximo = true; //proximo = 11;
 		}
@@ -293,7 +293,7 @@ function Animacao() {
 		{
 		volume = 0.5;
 	
-		audio.PlayOneShot(sons[0]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[0]);
 	
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[5], posicao, Quaternion.identity);
@@ -307,10 +307,10 @@ function Animacao() {
 		{
 		btProximo = false;
 		
-		audio.PlayOneShot(sons[1]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[1]);
 	
-		personagem[1].renderer.enabled = false;
-		cenario[2].renderer.enabled = true;
+		personagem[1].GetComponent.<Renderer>().enabled = false;
+		cenario[2].GetComponent.<Renderer>().enabled = true;
 		cenario[1].transform.position.y = 4.022;
 		cenario[1].transform.localScale.x = 5;
 		cenario[1].transform.localScale.y = 5;
@@ -324,7 +324,7 @@ function Animacao() {
 		{
 		btProximo = false;
 		
-		personagem[1].renderer.enabled = true;
+		personagem[1].GetComponent.<Renderer>().enabled = true;
 		cenario[1].transform.position.y = 0;
 		cenario[1].transform.localScale.x = 2.8;
 		cenario[1].transform.localScale.y = 2.8;
@@ -346,7 +346,7 @@ function Animacao() {
 		{
 		btProximo = false;
 	
-		audio.PlayOneShot(sons[2]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[2]);
 	
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[7], posicao, Quaternion.identity);
@@ -360,9 +360,9 @@ function Animacao() {
 		{
 		btProximo = false;
 	
-		audio.PlayOneShot(sons[3]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[3]);
 	
-		planoPreto.renderer.material.color.a = 0.6;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0.6;
 	
 		yield WaitForSeconds(1);
 	
@@ -378,13 +378,13 @@ function Animacao() {
 		{
 		btProximo = false;
 		
-		audio.PlayOneShot(sons[4]);
+		GetComponent.<AudioSource>().PlayOneShot(sons[4]);
 	
-		planoPreto.renderer.material.color.a = 0;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0;
 		posicao = Vector3(0.045, 0.32, 0);
 		Instantiate(texto[9], posicao, Quaternion.identity);
 	
-		personagem[2].renderer.enabled = true;
+		personagem[2].GetComponent.<Renderer>().enabled = true;
 	
 		yield WaitForSeconds(3);
 	
@@ -470,20 +470,20 @@ function Animacao() {
 		volume = 0.5;
 		pausar = false;
 		btProximo = false;
-		audio.clip = musica[1];
+		GetComponent.<AudioSource>().clip = musica[1];
 		fadeIn = false;
 		fadeOut = false;
-		audio.Play();
+		GetComponent.<AudioSource>().Play();
 	
-		personagem[0].renderer.material.color.a = 0;
-		logo.renderer.material.color.a = 0;
-		cenario[0].renderer.material.color.a = 0;
-		cenario[1].renderer.material.color.a = 1;
-		cenario[2].renderer.enabled = false;
-		cenario[3].renderer.material.color.a = 0;
-		cenario[4].renderer.material.color.a = 0;
-		planoPreto.renderer.material.color.a = 0;
-		personagem[2].renderer.enabled = true;
+		personagem[0].GetComponent.<Renderer>().material.color.a = 0;
+		logo.GetComponent.<Renderer>().material.color.a = 0;
+		cenario[0].GetComponent.<Renderer>().material.color.a = 0;
+		cenario[1].GetComponent.<Renderer>().material.color.a = 1;
+		cenario[2].GetComponent.<Renderer>().enabled = false;
+		cenario[3].GetComponent.<Renderer>().material.color.a = 0;
+		cenario[4].GetComponent.<Renderer>().material.color.a = 0;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0;
+		personagem[2].GetComponent.<Renderer>().enabled = true;
 		personagem[3].transform.position.x = 5;
 		
 		posicao = Vector3(0, -3.22, 0);

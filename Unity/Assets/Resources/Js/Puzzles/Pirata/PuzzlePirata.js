@@ -55,10 +55,10 @@ function Update() {
 	}	
 
 	if(etapa == 1) {
-		if(PuzzlePirataBala.novaBola && chances <= 5)
+		if(PuzzlePirataBala.novaBola && chances <= 5 && pontos < 30)
 			novosObjetos();
 		
-		if(chances > 5) {
+		if(chances > 5 || pontos >= 30) {
 			etapa = 0;
 			
 			PuzzlePirataTexto.liberaAcao = true;
@@ -80,7 +80,7 @@ function Update() {
 			Bala();
 		
 		if(PuzzlePirataBala.somImpacto) {
-			audio.PlayOneShot(audios[1]);
+			GetComponent.<AudioSource>().PlayOneShot(audios[1]);
 			PuzzlePirataBala.somImpacto = false;
 		}
 		
@@ -145,8 +145,7 @@ function Bala() {
 	
 	bala.transform.position = GameObject.FindGameObjectWithTag("Respawn").transform.position;
 	bala.SetActive(true);
-	atiraBala = false;
-	audio.PlayOneShot(audios[0]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[0]);
 	
 
 }

@@ -1,6 +1,4 @@
 ﻿#pragma strict
-//script do botao que aparece apos as 3 musicas terem sido tocadas
-
 
 var efeitos : AudioClip[]; //sons de quando o mouse entra e quando o botao eh clicado
 
@@ -21,23 +19,23 @@ function Update () {
 
 function OnMouseOver() {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0);
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0);
 
 }
 
 function OnMouseEnter() {
 
-	audio.PlayOneShot(efeitos[0]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[0]);
 
 }
 
 function OnMouseExit() {
 
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 
 }
 
-function OnMouseDown() {
+function OnMouseUp() {
 
 	Acao();
 			
@@ -47,7 +45,7 @@ function Acao() {
 
 	if(transform.position.y > -25)
 		{
-		audio.PlayOneShot(efeitos[1]);
+		GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 		
 		if(ChecaPuzzle.proximo != 17)
 			{

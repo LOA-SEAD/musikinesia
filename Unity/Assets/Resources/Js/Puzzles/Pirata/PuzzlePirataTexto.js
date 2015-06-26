@@ -32,17 +32,17 @@ function Awake() {
 	otherTexts[14] = "MAELZEL: Tente acertar os alvos que aparecerem.";
 	otherTexts[15] = "MAELZEL: Atire usando Ré3 e controle a direção da bola \nmovendo-a para cima (Ré3#) ou baixo (Ré3b).";
 	otherTexts[16] = "MAELZEL: Preparar, tocar… FOGO!";
-	otherTexts[17] = "MAELZEL: Ré3: disparar | Ré# mover pra cima | Réb mover para baixo. \nTente fazer acima de 30 pontos";
+	otherTexts[17] = "MAELZEL: Ré3: disparar | Ré# mover pra cima | Réb mover para baixo. \nTente fazer 30 pontos ou mais.";
 	otherTexts[18] = "MAELZEL: Hum... vamos tentar de novo.";
 	//otherTexts[19] = espaço vazio
-	otherTexts[20] = "MAELZEL: Na mosca!";
-	otherTexts[21] = "MAELZEL: Vamos utilizar outra tecla, agora com mais velocidade.";
-	otherTexts[22] = "MAELZEL: La3 disparar | La# mover pra cima | Lab mover para baixo. \nTente fazer acima de 30 pontos";
+	otherTexts[20] = "MAELZEL: Na mosca! Vamos utilizar outra tecla, agora com mais \nvelocidade.";
+	otherTexts[21] = "MAELZEL: Mas atenção! Lembre-se que entre os pares mi/fá e si/dó \nnão existe uma tecla preta, a altura sonora entre elas é naturalmente \num semitom.";
+	otherTexts[22] = "MAELZEL: Si3 disparar | Si# mover pra cima | Sib mover para baixo. \nTente fazer 30 pontos ou mais.";
 	otherTexts[23] = "MAELZEL: Quase lá! Vamos mais uma vez.";
 	//otherTexts[24] = espaço vazio
 	otherTexts[25] = "MAELZEL: Muito bem, rapaz. Um autêntico Diapasão fazendo seu \ntrabalho digno.";
 	otherTexts[26] = "MAELZEL: Agora deixe esse pirata com vontade de caminhar em \nsua própria prancha.";
-	otherTexts[27] = "MAELZEL: Sol4 disparar | Sol# mover pra cima | Solb mover para baixo. \nTente fazer acima de 30 pontos";
+	otherTexts[27] = "MAELZEL: Fá4 disparar | Fá# mover pra cima | Fáb mover para baixo. \nTente fazer 30 pontos ou mais.";
 	otherTexts[28] = "MAELZEL: Você precisa treinar melhor esses acidentes.";
 	//otherTexts[29] = espaço vazio
 	otherTexts[30] = "MAELZEL: Bom trabalho, filho. Você é mais competente do que pensei.";
@@ -64,7 +64,7 @@ function Update () {
 		if (passaTexto && !pausaAcao && liberaAcao){
 			if(i == 18 || i == 23 || i == 28)
 				i--;
-			else //if(i < 30) //tirar if dps que a cena seguinte estiver pronta
+			else if(i < 31) //tirar if dps que a cena seguinte estiver pronta
 				i++;
 				
 			TrocaTexto();
@@ -74,7 +74,7 @@ function Update () {
 }
 
 function TrocaTexto() {
-		guiText.text = "";
+		GetComponent.<GUIText>().text = "";
 		currentPosition = 0;
 		//delay = 0.1;
 
@@ -108,7 +108,7 @@ function FirstStep() {
         	Text += "\n" + S;
     	while (true){
         	if (currentPosition < Text.Length)
-            	guiText.text += Text[currentPosition++];
+            	GetComponent.<GUIText>().text += Text[currentPosition++];
         	yield WaitForSeconds (Delay);
     				}
 

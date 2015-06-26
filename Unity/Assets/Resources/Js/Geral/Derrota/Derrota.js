@@ -9,11 +9,11 @@ function Start () {
 	
 	yield WaitForSeconds(0.1);	
 
-	audio.PlayOneShot(som[0]);
+	GetComponent.<AudioSource>().PlayOneShot(som[0]);
 	
 	yield WaitForSeconds(1.5);
 	
-	audio.PlayOneShot(som[1]);
+	GetComponent.<AudioSource>().PlayOneShot(som[1]);
 
 }
 

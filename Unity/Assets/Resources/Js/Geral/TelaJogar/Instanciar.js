@@ -16,12 +16,12 @@ var btAvancar : GameObject; //botao Avançar
 var telaIns : GameObject; //tela de instrucoes
 
 function Start () {
-
-	planoPreto.renderer.material.color.a = 0;
+	
+	planoPreto.GetComponent.<Renderer>().material.color.a = 0;
 	btJogar.transform.position.y = -4; //botao jogar ta fora de quadro
 	btAvancar.transform.position.y = -4; //botao avançar ta fora de quadro
 	baseTexto.GetComponent(Animator).enabled = true;
-	telaIns.renderer.enabled = false;
+	telaIns.GetComponent.<Renderer>().enabled = false;
 	
 	yield WaitForSeconds(2.5);
 	
@@ -46,16 +46,16 @@ function Update () {
 
 function Loading() {
 	
-	if(!telaIns.renderer.enabled)
+	if(!telaIns.GetComponent.<Renderer>().enabled)
 		{
 		btJogar.transform.position.y = -4;
 		btAvancar.transform.position.y = -0.81;
-		telaIns.renderer.enabled = true;
+		telaIns.GetComponent.<Renderer>().enabled = true;
 		}
 		
 	else
 		{
-		planoPreto.renderer.material.color.a = 0.7;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0.7;
 	
 		positionIns = Vector3(0.4, 0.5, -8.1);
 		Instantiate(loading, positionIns, Quaternion.identity);

@@ -9,8 +9,8 @@ var positionIns : Vector3; //posicao de instantiate
 
 var efeitos : AudioClip[];
 
-var creditos : GameObject; //tela de credito
-var btVoltar : GameObject; //botao voltar
+//var creditos : GameObject; //tela de credito
+//var btVoltar : GameObject; //botao voltar
 
 var continuaOK : int; //habilita o botao continua
 
@@ -18,12 +18,17 @@ var corBotao : Color; //cor dos botoes
 
 var travaBotao : boolean;
 
+function Awake() {
+	guia.SetActive(false);
+}
+
+
 function Start () {
 	
-	planoPreto.renderer.enabled = false;
+	planoPreto.GetComponent.<Renderer>().enabled = false;
 	//renderer.material.color.a = 0;
 	corBotao.a = 0;	
-	btVoltar.transform.position.y = -10; //botao Voltar fora da tela
+	//btVoltar.transform.position.y = -10; //botao Voltar fora da tela
 	
 	travaBotao = false;
 	
@@ -51,10 +56,11 @@ function Update () {
 function OnMouseEnter() {
 
 	//corBotao = Color.Lerp(Color.white, Color.magenta, 0.5);
-	audio.PlayOneShot(efeitos[0]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[0]);
+	guia.SetActive(true);
 
 }
-
+/*
 function OnMouseOver () {
 
 	
@@ -62,14 +68,14 @@ function OnMouseOver () {
 
 	
 	//guia aparece ao lado do escrito
-	guia.GetComponent(SpriteRenderer).enabled = true;
+	
 
-}
+}*/
 
 function OnMouseExit () {
 
 	//corBotao = Color.white;
-	guia.GetComponent(SpriteRenderer).enabled = false;
+	guia.SetActive(false);
 	
 }
 
@@ -78,7 +84,7 @@ function OnMouseDown () {
 	if(!travaBotao) {
 		Jogo();
 	}
-	audio.PlayOneShot(efeitos[1]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 	
 	//corBotao = Color.Lerp(Color.magenta, Color.blue, 0.5);
 	//renderer.material.color -= Color(0, 0, 0.1, 0); //botao fica amarelo	
@@ -93,8 +99,8 @@ function Jogo () {
 		//guia.transform.renderer.material.color = Color(0, 0, 0, 1); //Guia fica preto ao clicar
 
 		yield WaitForSeconds(0.2);
-		planoPreto.renderer.enabled = true;
-		planoPreto.renderer.material.color.a = 0.7;
+		planoPreto.GetComponent.<Renderer>().enabled = true;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0.7;
 
 		positionIns = Vector3(0.4, 0.5, -3);
 		Instantiate(loading, positionIns, Quaternion.identity);
@@ -135,10 +141,12 @@ function Jogo () {
 		}
 	
 	if(gameObject.tag == "bt4") //botao Creditos
-		Application.LoadLevel("Creditos");
+		Application.LoadLevel("CreditosFinais");
 		
-	if(gameObject.tag == "bt5") //botao Sair
+	if(gameObject.tag == "bt5") { //botao Sair
 		Application.Quit();	//botao Sair
+		//print("sair");
+		}
 	
 		
 }

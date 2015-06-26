@@ -12,26 +12,26 @@ function Update () {
 		if(transform.position.y > -25 && transform.position.y < 0)
 			Acao();
 			
-	if(gameObject.tag == "bt1" && PosMusicas.proximo >= 56)
-		transform.position.y = 40;
+	//if(gameObject.tag == "bt1" && PosMusicas.proximo >= 56)
+		//transform.position.y = 40;
 
 }
 
 function OnMouseEnter() {
 
-	audio.PlayOneShot(efeitos[0]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[0]);
 
 }
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0);
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0);
 
 }
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
 }
 
@@ -47,7 +47,7 @@ function OnMouseDown () {
 
 function Acao() {
 	
-	audio.PlayOneShot(efeitos[1]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 	
 	if(PosMusicas.proximo == 36)
 		{
@@ -77,7 +77,7 @@ function Acao() {
 
 function Pular() {
 
-	audio.PlayOneShot(efeitos[1]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 
 	PosMusicas.chamaAnimacao = true;
 
@@ -92,5 +92,8 @@ function Pular() {
 	
 	else if(PosMusicas.proximo > 47 && PosMusicas.proximo <= 54)
 		PosMusicas.proximo = 55;
+		
+	else if(PosMusicas.proximo > 54)
+		Application.LoadLevel("NarrativaMafia");
 
 }

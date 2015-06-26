@@ -14,7 +14,7 @@ function Update () {
 function OnMouseDown() {
 
 	GetComponent(SpriteRenderer).sprite = imagem[1];
-	ajuda.renderer.enabled = !ajuda.renderer.enabled;
+	ajuda.GetComponent.<Renderer>().enabled = !ajuda.GetComponent.<Renderer>().enabled;
 
 }
 

@@ -53,45 +53,45 @@ function Awake () {
 	//otherTexts[37] = espaço vazio
 	otherTexts[39] = "MORGAN: Arrrrrrrrgh!!!!";
 	otherTexts[40] = "MORGAN: ARRRRRRRR!!!!";
-	otherTexts[41] = "MAELZEL: O que foi? Não existem palavras em seu vocabulário rebuscado \npara expressar sua indignação?";
+	otherTexts[41] = "MAELZEL: O que foi? Não existem palavras em seu vocabulário \nrebuscado para expressar sua indignação?";
 	otherTexts[42] = "MORGAN: …";
-	otherTexts[43] = "MORGAN: Seus feiticeiros imundos! Tentando impressionar Morgan com esse \nmonte de truque barato.";
-	otherTexts[44] = "MORGAN: Se são mágicos mesmo, capturem um barata podre que não tá pagando \nmeus pedágios. Depois liberto ocêis.";
+	otherTexts[43] = "MORGAN: Seus feiticeiros imundos! Tentando impressionar Morgan com \nesse monte de truque barato.";
+	otherTexts[44] = "MORGAN: Se são mágicos mesmo, capturem um barata podre que não tá \npagando meus pedágios. Depois liberto ocêis.";
 	otherTexts[45] = "TOM: Caramba, até aqui tem.";
-	otherTexts[46] = "MORGAN: O navio daquele miserável é tão rápido que ninguém consegue parar, \naye.";
-	otherTexts[47] = "MORGAN: E o danado consegue invadir nossas águas, pescar todo peixe fresco \ne sair sem nenhum arranhão. Ladrão grotesco!";
+	otherTexts[46] = "MORGAN: O navio daquele miserável é tão rápido que ninguém consegue \nparar, aye.";
+	otherTexts[47] = "MORGAN: E o danado consegue invadir nossas águas, pescar todo peixe \nfresco e sair sem nenhum arranhão. \nLadrão grotesco!";
 	otherTexts[48] = "TOM: Ok pirata cabelo-azul, fale logo o que quer da gente.";
 	otherTexts[49] = "MORGAN: Que usem esse treco mágico docêis para alcançar o barco dele.";
 	otherTexts[50] = "TOM: Olha! É o ladrão que está procurando?";
-	otherTexts[51] = "MORGAN: É ele! Verme! Macaco adestrado! Rato imundo! Volta aqui com minha \nparte do pedágio!";
+	otherTexts[51] = "MORGAN: É ele! Verme! Macaco adestrado! Rato imundo! \nVolta aqui com minha parte do pedágio!";
 	otherTexts[52] = "MAELZEL: Será que o meu metrônomo caiu nas mãos desse sujeito?";
-	otherTexts[53] = "TOM: O quê??? Então é por isso que ele está atingindo essa velocidade? Ele \ndeve estar acelerando o tempo.";
-	otherTexts[54] = "TOM: Com tanto lugar pro metrônomo cair e ele foi parar justo no barco de um \npirata caloteiro? Não acredito.";
+	otherTexts[53] = "TOM: O quê??? Então é por isso que ele está atingindo essa \nvelocidade? Ele deve estar acelerando o tempo.";
+	otherTexts[54] = "TOM: Com tanto lugar pro metrônomo cair e ele foi parar justo no \nbarco de um pirata caloteiro? Não acredito.";
 	otherTexts[55] = "MAELZEL: Ao menos agora sabemos onde ele está.";
-	otherTexts[56] = "MORGAN: Calem-se! Chega de conversar feito duas sereias e icem as velas com \na magia docêis.";
-	otherTexts[57] = "MORGAN: Lá vem ele de novo! Façam o casco dele tremer! Yaaaaaaaaaaaaar!!!!";
+	otherTexts[56] = "MORGAN: Calem-se! Chega de conversar feito duas sereias e icem \nas velas com a magia docêis.";
+	otherTexts[57] = "MORGAN: Lá vem ele de novo! Façam o casco dele tremer! \nYaaaaaaaaaaaaar!!!!";
 	//otherTexts[58] = espaço vazio
 	otherTexts[59] = "MORGAN: Arrrrrgh pegamos esse lagarto liso!";
 	otherTexts[60] = "MORGAN: Tripulação, mover navio a bombordo.";
 	otherTexts[61] = "MORGAN: ATACAR!!!";
-	otherTexts[62] = "MORGAN: Então é tu que tá se metendo nas minhas águas e roubando todo nosso \npeixe? Abelhudo fominha!";
-	otherTexts[63] = "PIRATA NARIZ-RUIVO: Hohoho, tú que me forçaste a tomar tal atitude quando \nresolveste aumentar o pedágio das águas dos 7 Mares e Meio, mentecapto.";
-	otherTexts[64] = "MORGAN: Cale-se filhote de monstro marinho! Me pague logo sua parte do \npedágio que poupo teu destino de perna de pau.";
+	otherTexts[62] = "MORGAN: Então é tu que tá se metendo nas minhas águas e roubando \ntodo nosso peixe? \nAbelhudo fominha!";
+	otherTexts[63] = "PIRATA NARIZ-RUIVO: Hohoho, tú que me forçaste a tomar tal atitude \nquando resolveste aumentar o pedágio das águas dos \n7 Mares e Meio, mentecapto.";
+	otherTexts[64] = "MORGAN: Cale-se filhote de monstro marinho! Me pague logo sua parte \ndo pedágio que poupo teu destino de perna de pau.";
 	otherTexts[65] = "PIRATA NARIZ-RUIVO: Pirata grotesco, consigo sentir teu bafo daqui.";
 	otherTexts[66] = "TOM: É… com licença senhores…";
-	otherTexts[67] = "TOM: Desculpem por interromper essa conversa tão cordial entre vocês, mas \napenas queria pedir nosso metrônomo de volta.";
-	otherTexts[68] = "PIRATA NARIZ-RUIVO: Metrômimo? O quê? Falas de minha bússola de Poseidon? \nJAMAIS!";
-	otherTexts[69] = "PIRATA NARIZ-RUIVO: Foste o deus supremo dos mares que me trouxeste essa \ndádiva. Agora meu barco és o mais veloz de todo oceano e tenho todo peixe que quero.";
-	otherTexts[70] = "PIRATA NARIZ-RUIVO: Apenas não consigo entender porque essa bússola apenas \nindica leste-oeste…";
-	otherTexts[71] = "MAELZEL: Porque não é uma bússola e não foi presente nenhum de Poseidon… \num relez luthier quem o fez!";
+	otherTexts[67] = "TOM: Desculpem por interromper essa conversa tão cordial entre vocês, \nmas apenas queria pedir nosso metrônomo de volta.";
+	otherTexts[68] = "PIRATA NARIZ-RUIVO: Metrômimo? O quê? Falas de minha bússola de \nPoseidon? JAMAIS!";
+	otherTexts[69] = "PIRATA NARIZ-RUIVO: Foste o deus supremo dos mares que me \ntrouxeste essa dádiva. Agora meu barco és o mais veloz de todo oceano \ne tenho todo peixe que quero.";
+	otherTexts[70] = "PIRATA NARIZ-RUIVO: Apenas não consigo entender porque essa bússola \napenas indica leste-oeste…";
+	otherTexts[71] = "MAELZEL: Porque não é uma bússola e não foi presente nenhum de \nPoseidon… um relez luthier quem o fez!";
 	otherTexts[72] = "MAELZEL: E sabe o quê mais? Ela pertence a mim! Devolva-o agora!";
 	otherTexts[73] = "PIRATA NARIZ-RUIVO: Não entendi nada do que disseste.";
-	otherTexts[74] = "PIRATA NARIZ-RUIVO: E não irei devolver pois agora a bússola é minha. \nPoseidon me escolheu para ser o novo Grande Pirata dos 7 Mares e Meio!";
+	otherTexts[74] = "PIRATA NARIZ-RUIVO: E não irei devolver pois agora a bússola é minha. \nPoseidon me escolheu para ser o novo Grande Pirata dos 7 Mares e \nMeio!";
 	otherTexts[75] = "PIRATA NARIZ-RUIVO: Hooooohohohoho";
 	otherTexts[76] = "MORGAN: Ele tá subindo pelo mastro! Atrás dele!";
 	//otherTexts[77] = espaço vazio
 	otherTexts[78] = "TOM: Não consigo levitá-los até ele. O navio está chacoalhando muito.";
-	otherTexts[79] = "MAELZEL: Tom, então use a musikinésis e vire o barco de cabeça pra baixo \npara que ele derrube o metrônomo.";
+	otherTexts[79] = "MAELZEL: Tom, então use a musikinésis e vire o barco de cabeça pra \nbaixo para que ele derrube o metrônomo.";
 	otherTexts[80] = "MORGAN: Se segurem!";
 	otherTexts[81] = "MORGAN: Yar!!! Aquele macaco caiu no mar!";
 	otherTexts[82] = "MAELZEL: Nós vamos bater!!! Faça alguma coisa Tom!";
@@ -120,27 +120,27 @@ function Awake () {
 	otherTexts[105] = "TOM: Mas…";
 	otherTexts[106] = "MAELZEL: Venha logo, pegue seu teclado e ajuste a musikinésis com o \nmeu metrônomo.";
 	otherTexts[107] = "TOM: Tá…";
-	otherTexts[108] = "TOM: Mas espera aí… não saio daqui antes de você me contar sobre como \nconheceu meu avô.";
+	otherTexts[108] = "TOM: Mas espera aí… não saio daqui antes de você me contar sobre \ncomo conheceu meu avô.";
 	otherTexts[109] = "MAELZEL: Outra hora, garoto. Preciso voltar logo ao meu restaurante. \nProvavelmente aquele guloso do Macarroni já deve ter roubado toda \nminha clientela.";
 	otherTexts[110] = "TOM: Tudo bem, não me importo de passar o resto de minha vida aqui. \nHey sereia… espere!";
 	otherTexts[111] = "MAELZEL: Ahhhh tudo bem, garoto teimoso.";
-	otherTexts[112] = "MAELZEL: Cansado de viver em Viena, me mudei para Paris com a esperança \nde que meus inventos musicais fossem mais reconhecidos.";
-	otherTexts[113] = "MAELZEL: Como estava precisando comprar peças para produzir meu mais novo \ninvento, o metrônomo, fui até uma loja de materiais musicais de um tal \nde Isaac Diapasão. Foi aí que conheci seu avô.";
+	otherTexts[112] = "MAELZEL: Cansado de viver em Viena, me mudei para Paris com a \nesperança de que meus inventos musicais fossem mais \nreconhecidos.";
+	otherTexts[113] = "MAELZEL: Como estava precisando comprar peças para produzir meu mais novo \ninvento, o metrônomo, fui até uma loja de materiais musicais de um \ntal de Isaac Diapasão. Foi aí que conheci seu avô.";
 	otherTexts[114] = "MAELZEL: Tínhamos muitos interesses em comum sobre música e ciência, e \nem pouco tempo nos tornarmos grandes amigos.";
-	otherTexts[115] = "MAELZEL: Ele havia me contado que estava trabalhando em um invento que \nrevolucionaria o mundo da música por meio da influência das \nfrequências sonoras no espaço-tempo.";
-	otherTexts[116] = "MAELZEL: Foi aí que criou um teclado capaz de manipular objetos através \ndos sons emitidos pelo instrumento. Este mesmo que agora está com você.";
+	otherTexts[115] = "MAELZEL: Ele havia me contado que estava trabalhando em um invento \nque revolucionaria o mundo da música por meio da influência das \nfrequências sonoras no espaço-tempo.";
+	otherTexts[116] = "MAELZEL: Foi aí que criou um teclado capaz de manipular objetos \natravés dos sons emitidos pelo instrumento. Este mesmo que agora está \ncom você.";
 	otherTexts[117] = "TOM: Mas espera aí. Em que ano foi isso?";
 	otherTexts[118] = "MAELZEL: 1816.";
 	otherTexts[119] = "TOM: O QUE?";
-	otherTexts[120] = "MAELZEL: Por que acha que não uso essas imitações baratas de metrônomos \ndigitais?.";
+	otherTexts[120] = "MAELZEL: Por que acha que não uso essas imitações baratas de \nmetrônomos digitais?.";
 	otherTexts[121] = "TOM: Mas como pode? Como você ainda está vivo???";
 	otherTexts[122] = "MAELZEL: Vamos, me deixe terminar, garoto…";
-	otherTexts[123] = "MAELZEL: Quando Isaac foi testar o teclado, ele pediu minha ajuda para \nmedir o tempo com o metrônomo.";
-	otherTexts[124] = "MAELZEL: Mas por alguma razão desconhecida, o experimento acidentalmente \nalterou os paradigmas de espaço-tempo, influenciando na variação \ntemporal e fazendo-nos viajar no tempo.";
-	otherTexts[125] = "MAELZEL: Fui parar na sua cidade e no seu tempo. Tudo que eu tinha era \nminha roupa do corpo e meu metrônomo.";
-	otherTexts[126] = "MAELZEL: Foi daí que tive a ideia de abrir o restaurante para sobreviver. \nComo meu metrônomo foi infectado pela magia do teclado, tenho o poder de \nacelerar o tempo. Fiz muito dinheiro com meu Presto Pasta e desbamquei \no velho Macarroni.";
+	otherTexts[123] = "MAELZEL: Quando Isaac foi testar o teclado, ele pediu minha ajuda \npara medir o tempo com o metrônomo.";
+	otherTexts[124] = "MAELZEL: Mas por alguma razão desconhecida, o experimento \nacidentalmente alterou os paradigmas de espaço-tempo, influenciando \nna variação temporal e fazendo-nos viajar no tempo.";
+	otherTexts[125] = "MAELZEL: Fui parar na sua cidade e no seu tempo. Tudo que eu tinha \nera minha roupa do corpo e meu metrônomo.";
+	otherTexts[126] = "MAELZEL: Foi daí que tive a ideia de abrir o restaurante para \nsobreviver. Como meu metrônomo foi infectado pela magia do teclado, \ntenho o poder de acelerar o tempo. \nFiz muito dinheiro com meu Presto Pasta e desbamquei o velho \nMacarroni.";
 	otherTexts[127] = "MAELZEL: Mas e meu avô? Então quer dizer que ele está vivo?";
-	otherTexts[128] = "MAELZEL: Provavelmente seu avô encontra-se preso em alguma fenda temporal \nque foi aberta acidentalmente nessa viagem. \nSe ele está vivo, não posso garantir...";
+	otherTexts[128] = "MAELZEL: Provavelmente seu avô encontra-se preso em alguma fenda \ntemporal que foi aberta acidentalmente nessa viagem. \nSe ele está vivo, não posso garantir...";
 	otherTexts[129] = "MAELZEL: Lamento, garoto.";
 	otherTexts[130] = "TOM: Sim... entendo…";
 	otherTexts[131] = "MAELZEL: Venha, agora precisamos voltar pra casa.";
@@ -164,7 +164,25 @@ function Awake () {
 
 function Start () {
 
-	yield WaitForSeconds(0.2);
+	//yield WaitForSeconds(0.2);
+	
+	switch(Pontuacao.numMusica2) {
+	case 10:
+		i = 59;
+		chamaFuncao = true;
+		break;
+	
+	case 11:
+		i = 78;
+		chamaFuncao = true;
+		break;
+	
+	default:
+		chamaFuncao = false;
+		break;
+	}
+	
+	
 
 	Text = otherTexts[i];
 	
@@ -174,7 +192,6 @@ function Start () {
 	else
 		passaTexto = false;
 	
-	chamaFuncao = false;
 	liberaTexto = false;
 	
 }
@@ -211,8 +228,18 @@ function TrocaTexto() {
 	if(i == 37)
 		Application.LoadLevel("PuzzlePirata");
 	
+	if(i == 58) {
+		Application.LoadLevel("Jogo");
+		Pontuacao.numMusica = 10;
+	}
+		
+	if(i == 77) {
+		Application.LoadLevel("Jogo");
+		Pontuacao.numMusica = 11;
+	}
+	
 	else {
-		guiText.text = "";
+		GetComponent.<GUIText>().text = "";
 		currentPosition = 0;
 		Text = otherTexts[i];
 		delay = 0.01;
@@ -233,7 +260,7 @@ function FirstStep() {
         	//Text += "\n" + S;
 	while (true) {
 		if (currentPosition < Text.Length)
-	    	guiText.text += Text[currentPosition++];
+	    	GetComponent.<GUIText>().text += Text[currentPosition++];
 		yield WaitForSeconds (delay);
 	}
 }

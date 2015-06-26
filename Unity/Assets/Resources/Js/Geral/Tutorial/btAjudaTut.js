@@ -10,14 +10,14 @@ function Start () {
 function Update () {
 
 	if(Pontuacao.animacaoIn == 3)
-		renderer.enabled = true;
+		GetComponent.<Renderer>().enabled = true;
 
 }
 
 function OnMouseDown() {
 
 	GetComponent(SpriteRenderer).sprite = imagem[1];
-	ajuda.renderer.enabled = !ajuda.renderer.enabled;
+	ajuda.GetComponent.<Renderer>().enabled = !ajuda.GetComponent.<Renderer>().enabled;
 	
 
 }

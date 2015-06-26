@@ -8,7 +8,7 @@ function Start () {
 function Update () {
 	
 	var myMesh = GetComponent(TextMesh);
-	renderer.material.color = Color.red; //cor do texto
+	GetComponent.<Renderer>().material.color = Color.red; //cor do texto
 	
 	if(!Pontuacao.treino && Pontuacao.puzzle == 0)
 		myMesh.text = Pontuacao.multiplicador.ToString() + "X";

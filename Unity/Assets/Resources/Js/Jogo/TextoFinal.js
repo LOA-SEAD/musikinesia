@@ -9,7 +9,7 @@ var additionalLines : String[];
 private var Text : String;
  
 function WriteText(aText : String) {
-    guiText.text = "";
+    GetComponent.<GUIText>().text = "";
     currentPosition = 0;
     //Text = aText;
 }
@@ -44,7 +44,7 @@ function Start(){
         	Text += "\n" + S;
     	while (true){
         	if (currentPosition < Text.Length)
-            	guiText.text += Text[currentPosition++];
+            	GetComponent.<GUIText>().text += Text[currentPosition++];
         	yield WaitForSeconds (Delay);
     				}
 

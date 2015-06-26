@@ -13,26 +13,26 @@ function Update () {
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0);
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0);
 
 }
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
 }
 
 function OnMouseDown () {
 
 	Escolha();
-	audio.PlayOneShot(audios[1]);	
+	GetComponent.<AudioSource>().PlayOneShot(audios[1]);	
 
 }
 
 function OnMouseEnter() {
 
-	audio.PlayOneShot(audios[0]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[0]);
 
 }
 

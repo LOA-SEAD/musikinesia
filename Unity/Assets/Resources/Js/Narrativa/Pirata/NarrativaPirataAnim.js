@@ -30,39 +30,43 @@ var materiais : Material[];
 
 static var soltaAnimacao : boolean;
 
+var textoCarta : GameObject;
+
 function Start () {
 
 	soltaAnimacao = false;
 	
+	//textoCarta.SetActive(false);
+	
 	//Teste
-	NarrativaPirataTexto.i = 77;
+	//NarrativaPirataTexto.i = 77;
 	
 	if(NarrativaPirataTexto.i < 37) {
-		animation.clip = animacao[0];
+		GetComponent.<Animation>().clip = animacao[0];
 		cameraAnim.orthographicSize = 5;
-		cameraAnim.camera.nearClipPlane = 0.03;
+		cameraAnim.GetComponent.<Camera>().nearClipPlane = 0.03;
 	}
 	
 	if(NarrativaPirataTexto.i > 37 && NarrativaPirataTexto.i < 58) {
-		animation.clip = animacao[1];
+		GetComponent.<Animation>().clip = animacao[1];
 		cameraAnim.orthographicSize = 5;
-		cameraAnim.camera.nearClipPlane = 0.03;
+		cameraAnim.GetComponent.<Camera>().nearClipPlane = 0.03;
 	}
 	
 	if(NarrativaPirataTexto.i >= 58 && NarrativaPirataTexto.i < 77) {
-		animation.clip = animacao[2];
+		GetComponent.<Animation>().clip = animacao[2];
 		cameraAnim.orthographicSize = 5;
-		cameraAnim.camera.nearClipPlane = 0.03;
+		cameraAnim.GetComponent.<Camera>().nearClipPlane = 0.03;
 	}
 		
 	if(NarrativaPirataTexto.i >= 77) { // && NarrativaPirataTexto.i < 77)
-		animation.clip = animacao[3];
-		cameraAnim.camera.backgroundColor = corBG;
+		GetComponent.<Animation>().clip = animacao[3];
+		cameraAnim.GetComponent.<Camera>().backgroundColor = corBG;
 		cameraAnim.orthographicSize = 4.5;
-		cameraAnim.camera.nearClipPlane = -0.1;
+		cameraAnim.GetComponent.<Camera>().nearClipPlane = -0.1;
 	}
 	
-	animation.Play();
+	GetComponent.<Animation>().Play();
 	
 	barcoBranco.GetComponent(SpriteRenderer).sprite = barcoSprites[0];
 	barcoEscuro.GetComponent(SpriteRenderer).sprite = barcoSprites[3];
@@ -72,17 +76,17 @@ function Start () {
 function FixedUpdate () {
 
 	if(soltaAnimacao) {
-		animation["AnimNarrativaPirata"].speed = 1;
-		animation["AnimNarrativaPirata2"].speed = 1;
-		animation["AnimNarrativaPirata3"].speed = 1;
-		animation["AnimNarrativaPirata4"].speed = 1;
+		GetComponent.<Animation>()["AnimNarrativaPirata"].speed = 1;
+		GetComponent.<Animation>()["AnimNarrativaPirata2"].speed = 1;
+		GetComponent.<Animation>()["AnimNarrativaPirata3"].speed = 1;
+		GetComponent.<Animation>()["AnimNarrativaPirata4"].speed = 1;
 		soltaAnimacao = false;
 	}
 	
 	//debug
 	if(testeDebug[0]) {
-		animation.clip = animacao[0];
-		animation.Play();
+		GetComponent.<Animation>().clip = animacao[0];
+		GetComponent.<Animation>().Play();
 		CenarioBarco();
 		Marcacao1();
 		NarrativaPirataTexto.i = 20;
@@ -90,15 +94,15 @@ function FixedUpdate () {
 	}
 	
 	if(testeDebug[1]) {
-		animation.clip = animacao[1];
-		animation.Play();
+		GetComponent.<Animation>().clip = animacao[1];
+		GetComponent.<Animation>().Play();
 		testeDebug[1] = false;
 	}
 	
 	if(testeDebug[2]) {
-		animation["AnimNarrativaPirata4"].time = 4;
-		animation["AnimNarrativaPirata4"].speed = 1;
-		animation.Play();
+		GetComponent.<Animation>()["AnimNarrativaPirata4"].time = 4;
+		GetComponent.<Animation>()["AnimNarrativaPirata4"].speed = 1;
+		GetComponent.<Animation>().Play();
 		testeDebug[2] = false;
 	}
 
@@ -106,10 +110,10 @@ function FixedUpdate () {
 
 function Geral() {
 
-	animation["AnimNarrativaPirata"].speed = 0;
-	animation["AnimNarrativaPirata2"].speed = 0;
-	animation["AnimNarrativaPirata3"].speed = 0;
-	animation["AnimNarrativaPirata4"].speed = 0;
+	GetComponent.<Animation>()["AnimNarrativaPirata"].speed = 0;
+	GetComponent.<Animation>()["AnimNarrativaPirata2"].speed = 0;
+	GetComponent.<Animation>()["AnimNarrativaPirata3"].speed = 0;
+	GetComponent.<Animation>()["AnimNarrativaPirata4"].speed = 0;
 	
 	yield WaitForSeconds (0.5);
 	
@@ -195,13 +199,17 @@ function CenarioPraia() {
 function CenarioBarco() {
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[1];
 	NarrativaPirataTexto.passaTexto = true;
-	audio.clip = musicas[1];
-	audio.Play();
-	audio.loop = true;
+	GetComponent.<AudioSource>().clip = musicas[1];
+	GetComponent.<AudioSource>().Play();
+	GetComponent.<AudioSource>().loop = true;
 }
 
 function CenarioBarcoSombrio() {
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[2];
+}
+
+function CenarioCasaTom() {
+	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[4];
 }
 
 function BarcoBranco() {
@@ -211,23 +219,43 @@ function BarcoBranco() {
 		barcoBranco.GetComponent(SpriteRenderer).sprite = barcoSprites[0];
 }
 
+function BarcoEscuro() {
+	if(barcoEscuro.GetComponent(SpriteRenderer).sprite == barcoSprites[2])
+		barcoEscuro.GetComponent(SpriteRenderer).sprite = barcoSprites[3];
+	else
+		barcoEscuro.GetComponent(SpriteRenderer).sprite = barcoSprites[2];
+}
+
 function CameraSize485() {
 	cameraAnim.orthographicSize = 4.85;
 }
 
+function CameraSize45() {
+	cameraAnim.orthographicSize = 4.5;
+	cameraAnim.transform.position = Vector3(0, 0, 0);
+}
+
 function Marcacao1() {
-	animation["AnimNarrativaPirata"].time = 12;
+	GetComponent.<Animation>()["AnimNarrativaPirata"].time = 12;
 }
 
 function EfeitoSonoro() {
 	if(NarrativaPirataTexto.i > 58) {
-		audio.PlayOneShot(efeitosSonoros[0]);
+		GetComponent.<AudioSource>().PlayOneShot(efeitosSonoros[0]);
 	}
 	
 	else {
-		audio.PlayOneShot(efeitosSonoros[1]);
+		GetComponent.<AudioSource>().PlayOneShot(efeitosSonoros[1]);
 	}
 	
+}
+
+function TiroCanhao() {
+	GetComponent.<AudioSource>().PlayOneShot(efeitosSonoros[2]);
+}
+
+function SomExplosao() {
+	GetComponent.<AudioSource>().PlayOneShot(efeitosSonoros[3]);
 }
 
 function SereiaNormal() {
@@ -242,4 +270,16 @@ function Flashback1() {
 
 function Flashback2() {
 	personagens[5].GetComponent(SpriteRenderer).sprite = isaacSprites[1];
+}
+
+function TextoCartaEntra() {
+	textoCarta.SendMessage("Carta", SendMessageOptions.DontRequireReceiver);
+}
+
+function TextoCartaSai() {
+	textoCarta.SetActive(false);
+}
+
+function CreditosFinais() {
+	Application.LoadLevel("CreditosFinais");
 }

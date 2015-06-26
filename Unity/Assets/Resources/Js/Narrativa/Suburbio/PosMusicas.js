@@ -68,16 +68,16 @@ function Start () {
 
 	pauseMenu.transform.position.y = 20;
 	
-	logo.renderer.material.color.a = 0;
-	planoPreto.renderer.material.color.a = 0;
-	btVoltar.renderer.enabled = false;
-	personagem[3].renderer.enabled = false;
+	logo.GetComponent.<Renderer>().material.color.a = 0;
+	planoPreto.GetComponent.<Renderer>().material.color.a = 0;
+	btVoltar.GetComponent.<Renderer>().enabled = false;
+	personagem[3].GetComponent.<Renderer>().enabled = false;
 	
 	if(proximo < 37)
 		{
-		audio.clip = musicas[0];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = musicas[0];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		}
 	
 	if(proximo == 0)
@@ -96,8 +96,8 @@ function Start () {
 		{
 		objetos[0].GetComponent(Animator).enabled = false; //para de rodar a animacao do bau flutuando
 		objetos[1].GetComponent(Animator).enabled = false; //para de rodar a animacao do bilhete flutuando
-		objetos[0].renderer.enabled = false;
-		objetos[1].renderer.enabled = false;
+		objetos[0].GetComponent.<Renderer>().enabled = false;
+		objetos[1].GetComponent.<Renderer>().enabled = false;
 		personagem[0].GetComponent(Animator).enabled = false; //para de rodar a animacao do pai flutuando
 		personagem[0].transform.Rotate (0, 180, -180);
 		}
@@ -219,8 +219,8 @@ function Update () {
 		}
 	
 	if(proximo == 59 || proximo == 64)
-		if(planoPreto.renderer.material.color.a != 1)
-			planoPreto.renderer.material.color.a += 0.3;
+		if(planoPreto.GetComponent.<Renderer>().material.color.a != 1)
+			planoPreto.GetComponent.<Renderer>().material.color.a += 0.3;
 }
 
 function Animacao () {		
@@ -245,7 +245,7 @@ function Animacao () {
 		
 			yield WaitForSeconds(0.2);
 		
-			audio.PlayOneShot(efeitoSonoro[0]);
+			GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[0]);
 			}
 	
 		if(proximo == 10)
@@ -253,7 +253,7 @@ function Animacao () {
 			personagem[0].transform.Rotate (0, 180, -180);
 			personagem[0].transform.position.y = -0.4361838;
 			personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[1];
-			personagem[2].renderer.enabled = false;
+			personagem[2].GetComponent.<Renderer>().enabled = false;
 			}
 	
 		if(proximo == 11)
@@ -278,7 +278,7 @@ function Animacao () {
 		
 	if(proximo == 15)
 		{
-		audio.PlayOneShot(efeitoSonoro[1]);
+		GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[1]);
 		
 		posicao = Vector3(0.037, 0.256, 0);
 		Instantiate(texto[58], posicao, Quaternion.identity); //texto14-2
@@ -314,7 +314,7 @@ function Animacao () {
 		
 		if(proximo == 21)
 			{
-			audio.PlayOneShot(efeitoSonoro[2]);
+			GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[2]);
 			personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[2];
 			personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[6];
 			
@@ -330,7 +330,7 @@ function Animacao () {
 			personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
 			personagem[1].transform.position.x = 13;
 			personagem[1].transform.Rotate (0, 180, 0);
-			personagem[3].renderer.enabled = true;
+			personagem[3].GetComponent.<Renderer>().enabled = true;
 			}
 	
 		if(proximo == 28)
@@ -368,11 +368,11 @@ function Animacao () {
 			{
 			cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[1];
 			//cenario[0].transform.localScale = Vector2(5.6, 5.6);
-			audio.PlayOneShot(efeitoSonoro[3]);
+			GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[3]);
 			personagem[0].GetComponent(SpriteRenderer).sprite = spritesP[0];
 			personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
 			personagem[3].GetComponent(SpriteRenderer).sprite = spritesP[11];
-			personagem[3].renderer.enabled = true;
+			personagem[3].GetComponent.<Renderer>().enabled = true;
 			personagem[0].transform.position.x = 6;
 			personagem[0].transform.position.y = -0.43;
 			personagem[1].transform.position.x = 2.45;
@@ -384,7 +384,7 @@ function Animacao () {
 	
 		if(proximo == 36)
 			{
-			audio.PlayOneShot(efeitoSonoro[3]);
+			GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[3]);
 			personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[4];
 			
 			yield WaitForSeconds(2); //tempo de espera para soltar o texto
@@ -421,18 +421,18 @@ function Animacao () {
 			{
 			cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[2];
 			//cenario[0].transform.localScale = Vector2(2.8, 2.8);
-			personagem[0].renderer.enabled = false;
+			personagem[0].GetComponent.<Renderer>().enabled = false;
 			personagem[1].transform.position.x = -3;
-			personagem[3].renderer.enabled = false;
+			personagem[3].GetComponent.<Renderer>().enabled = false;
 			personagem[4].transform.position.x = 4.3;
 		
-			audio.Stop();
+			GetComponent.<AudioSource>().Stop();
 		
 			yield WaitForSeconds (0.1);
 		
-			audio.clip = musicas[1];
-			audio.Play();
-			audio.loop = true;
+			GetComponent.<AudioSource>().clip = musicas[1];
+			GetComponent.<AudioSource>().Play();
+			GetComponent.<AudioSource>().loop = true;
 			}
 		
 		if(proximo == 53)
@@ -459,17 +459,17 @@ function Animacao () {
 		if(proximo == 56)
 			{
 			cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[3];
-			personagem[0].renderer.enabled = false;
+			personagem[0].GetComponent.<Renderer>().enabled = false;
 			personagem[1].GetComponent(SpriteRenderer).sprite = spritesP[10];
 			personagem[4].transform.position.x = 4.3;
 		
-			audio.Stop();
+			GetComponent.<AudioSource>().Stop();
 		
 			yield WaitForSeconds (0.1);
 		
-			audio.clip = musicas[2];
-			audio.Play();
-			audio.loop = true;
+			GetComponent.<AudioSource>().clip = musicas[2];
+			GetComponent.<AudioSource>().Play();
+			GetComponent.<AudioSource>().loop = true;
 			}
 		
 		posicao = Vector3(0.037, 0.256, 0);
@@ -483,16 +483,16 @@ function Animacao () {
 	if(proximo == 59)
 		{
 		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[4];
-		personagem[1].renderer.enabled = false;
+		personagem[1].GetComponent.<Renderer>().enabled = false;
 		personagem[4].transform.position.x = 20; //sai da tela
 		
-		audio.Stop();
+		GetComponent.<AudioSource>().Stop();
 		
 		yield WaitForSeconds (0.1);
 		
-		audio.clip = musicas[3];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = musicas[3];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		
 		yield WaitForSeconds (1);
 		
@@ -501,12 +501,12 @@ function Animacao () {
 		
 		yield WaitForSeconds (1.5);
 		
-		audio.PlayOneShot(efeitoSonoro[4]); //carro chegando
+		GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[4]); //carro chegando
 		
 		yield WaitForSeconds(3);
 		
 		proximo = 60;
-		planoPreto.renderer.material.color.a = 0;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0;
 		}
 	
 	//antes da cena da mafia
@@ -514,7 +514,7 @@ function Animacao () {
 		{
 		
 		if(proximo == 62)
-			audio.PlayOneShot(efeitoSonoro[5]); //carro saindo
+			GetComponent.<AudioSource>().PlayOneShot(efeitoSonoro[5]); //carro saindo
 		
 		posicao = Vector3(0.037, 0.256, 0);
 		Instantiate(texto[proximo - 6], posicao, Quaternion.identity);
@@ -549,54 +549,54 @@ function Animacao () {
 	
 	if(proximo == 371)
 		{
-		planoPreto.renderer.material.color.a = 1;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 1;
 		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[2];
 		//cenario[0].transform.localScale = Vector2(2.8, 2.8);
-		personagem[0].renderer.enabled = false;
+		personagem[0].GetComponent.<Renderer>().enabled = false;
 		personagem[1].transform.position.x = 13;
-		personagem[3].renderer.enabled = false;
+		personagem[3].GetComponent.<Renderer>().enabled = false;
 		
-		audio.Stop();
+		GetComponent.<AudioSource>().Stop();
 		
 		yield WaitForSeconds (0.1);
 		
-		audio.clip = musicas[1];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = musicas[1];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		
 		posicao = Vector3(0.037, 0.256, 0);
 		Instantiate(texto[62], posicao, Quaternion.identity);
 		
 		yield WaitForSeconds(3);
 		
-		planoPreto.renderer.material.color.a = 0;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0;
 		proximo = 37;
 		chamaAnimacao = true;
 		}
 	
 	if(proximo == 520)
 		{
-		planoPreto.renderer.material.color.a = 1;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 1;
 		cenario[0].GetComponent(SpriteRenderer).sprite = spritesC[3];
 		//cenario[0].transform.localScale = Vector2(2.8, 2.8);
 		personagem[1].transform.position.x = 13;
 		personagem[1].transform.rotation.y = 180;
 		personagem[4].transform.position.x = 20;
 		
-		audio.Stop();
+		GetComponent.<AudioSource>().Stop();
 		
 		yield WaitForSeconds (0.1);
 		
-		audio.clip = musicas[2];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = musicas[2];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		
 		posicao = Vector3(0.037, 0.256, 0);
 		Instantiate(texto[60], posicao, Quaternion.identity);
 		
 		yield WaitForSeconds(3);
 		
-		planoPreto.renderer.material.color.a = 0;
+		planoPreto.GetComponent.<Renderer>().material.color.a = 0;
 		proximo = 52;
 		chamaAnimacao = true;
 		}

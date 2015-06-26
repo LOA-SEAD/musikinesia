@@ -15,7 +15,7 @@ function Update () {
 
 function OnMouseEnter() {
 
-	audio.PlayOneShot(efeitos[0]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[0]);
 
 }
 
@@ -35,24 +35,25 @@ function Acao() {
 			Application.LoadLevel("Jogo");
 			}
 		
-		if(MafiaNarrativa.proximo < 32)
+		else if(MafiaNarrativa.proximo >= 13 && MafiaNarrativa.proximo < 32)
 			Application.LoadLevel("PuzzleMafia");
 		
-		if(MafiaNarrativa.proximo < 39)
+		else if(MafiaNarrativa.proximo >= 32 && MafiaNarrativa.proximo < 39)
 			{		
 			Pontuacao.numMusica = 8;
 			Application.LoadLevel("Jogo");
 			}
 		
-		/*if(MafiaNarrativa.proximo < 64)
-			{		
-			Mundo Piratas
-			}*/
+		else if(MafiaNarrativa.proximo < 64)
+			{
+			NarrativaPirataTexto.i = 0;		
+			Application.LoadLevel("NarrativaPirata");
+			}
 		}
 
 	if(gameObject.tag == "bt2") //botao Proximo
 		{
-		audio.PlayOneShot(efeitos[1]);
+		GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 		MafiaNarrativa.proximo++;
 		MafiaNarrativa.btProximo = false;
 		MafiaNarrativa.chamaFuncao = true;

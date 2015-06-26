@@ -2,6 +2,15 @@
 //script generico para todas as teclas
 //define a açao das teclas do teclado
 
+private var csScript : MidiInput;
+csScript = this.GetComponent("MidiInput");
+
+var channel : MidiChannel = MidiChannel.All;
+
+private var noteNumber : int; //soma de noteNumberFirst e noteNumberNext;
+static var noteNumberFirst : int; //primeira nota, definina no menu inicial;
+var noteNumberNext : int; //soma um valor a nota inicial, pra definir só a primeira no inspector
+
 static var teclaDown : boolean; //static para ser acessada em ChecarTrigger.js
 
 var notas : AudioClip; //timbre
@@ -16,24 +25,28 @@ var teclaValida : boolean;
 var trigger : GameObject; //trigger referente a tecla
 var trigger50 : GameObject; //trigger referente a tecla - 50% do valor
 
+function Awake() {
+	noteNumber = noteNumberFirst + noteNumberNext;
+}
+
 function Start () {
 
 	animator = GetComponent(Animator);
 	
 	teclaDown = false;
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
 }
 
 function Update () {
 	
 	if(corBranca)
-		renderer.material.color = Color(1, 1, 1, 1);
+		GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
-	if(Input.GetKeyDown(tecla) && teclaValida && Tutorial.proximo == 22)
+	if((Input.GetKeyDown(tecla) || csScript.GetKeyDown (channel, noteNumber)) && teclaValida && Tutorial.proximo == 22)
 		teclaApertada();
 
-	if(Input.GetKeyUp(tecla) && teclaValida && Tutorial.proximo == 22)
+	if((Input.GetKeyUp(tecla)  || csScript.GetKeyUp (channel, noteNumber)) && teclaValida && Tutorial.proximo == 22)
 		teclaLevantada();
 			
 }
@@ -66,24 +79,29 @@ function teclaApertada () {
 		
 		if(teclaDown)
 			{
-			trigger.transform.collider.enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
-			trigger50.transform.collider.enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
+			trigger.SetActive(true);
+			trigger50.SetActive(true);
+			//trigger.transform.GetComponent.<Collider>().enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
+			//trigger50.transform.GetComponent.<Collider>().enabled = true; //habilita o trigger correspondente quando a tecla eh clicada
 			}
 		
 		yield WaitForSeconds(0.02);
 		
-		audio.PlayOneShot(notas);
+		GetComponent.<AudioSource>().PlayOneShot(notas);
 		
 		//troca de cor das teclas
 		if(ChecarTrigger.maisPontos)
-			renderer.material.color = Color(0, 0.7, 0, 1);
+			GetComponent.<Renderer>().material.color = Color(0, 0.7, 0, 1);
 		else
-			renderer.material.color = Color(0.7, 0, 0, 1);
+			GetComponent.<Renderer>().material.color = Color(0.7, 0, 0, 1);
 			
 		yield WaitForSeconds(0.1);
+		
 				
-		trigger.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
-		trigger50.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
+		trigger.SetActive(false);
+		trigger50.SetActive(false);		
+		//trigger.transform.GetComponent.<Collider>().enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
+		//trigger50.transform.GetComponent.<Collider>().enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
 		
 
 }
@@ -93,8 +111,10 @@ function teclaLevantada () {
 		animator.SetTrigger ("UnPress");
 
 		corBranca = true;
-		trigger.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
-		trigger50.transform.collider.enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
+		trigger.SetActive(false);
+		trigger50.SetActive(false);
+		//trigger.transform.GetComponent.<Collider>().enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
+		//trigger50.transform.GetComponent.<Collider>().enabled = false; //desabilita o trigger correspondente quando a tecla eh solta
 		ChecarTrigger.maisPontos = false;
 		teclaDown = false;
 

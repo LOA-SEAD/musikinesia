@@ -5,7 +5,7 @@ var delay : float = 0.5;  // 10 characters per sec.
 var Text : String = "";
 
 function Start () {
-	guiText.text = "";
+	GetComponent.<GUIText>().text = "";
 	currentPosition = 0;
 	delay = 0.07;
 	Text = "Continua...";
@@ -26,7 +26,7 @@ function FirstStep() {
         	//Text += "\n" + S;
 	while (true) {
 		if (currentPosition < Text.Length)
-	    	guiText.text += Text[currentPosition++];
+	    	GetComponent.<GUIText>().text += Text[currentPosition++];
 		yield WaitForSeconds (delay);
 	}
 }

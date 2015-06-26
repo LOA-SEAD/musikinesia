@@ -24,17 +24,17 @@ function Start () {
 	//balaCanhao.SetActive(false);
 	
 	if (NarrativaPirataTexto.i == 38 || NarrativaPirataTexto.i == 39) {
-		audio.clip = musicas[1];
+		GetComponent.<AudioSource>().clip = musicas[1];
 		cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[1];
 		proximo = NarrativaPirataTexto.i;
 	}
 	
 	else {
-		audio.clip = musicas[0];
+		GetComponent.<AudioSource>().clip = musicas[0];
 		cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[0];
 	}
 	
-	audio.Play();
+	GetComponent.<AudioSource>().Play();
 
 }
 
@@ -233,7 +233,7 @@ function MudaSprite() {
 	}*/
 	
 	if(atiraCanhao)
-		audio.PlayOneShot(tiroCanhao);
+		GetComponent.<AudioSource>().PlayOneShot(tiroCanhao);
 
 }
 
@@ -241,8 +241,8 @@ function MudaCenario() {
 
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[1];
 	
-	audio.clip = musicas[1];
-	audio.Play();
+	GetComponent.<AudioSource>().clip = musicas[1];
+	GetComponent.<AudioSource>().Play();
 	
 	personagens[0].transform.position.x = -1;
 	personagens[0].transform.rotation.y = 0;

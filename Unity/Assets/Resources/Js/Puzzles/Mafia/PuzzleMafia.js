@@ -54,14 +54,14 @@ function Start () {
 	panela[0].GetComponent(Animator).enabled = false;
 	panela[1].GetComponent(Animator).enabled = false;
 	panela[2].GetComponent(Animator).enabled = false;
-	visorTeclado[0].renderer.enabled = false;
-	visorTeclado[1].renderer.enabled = false;
-	visorTeclado[2].renderer.enabled = false;
+	visorTeclado[0].GetComponent.<Renderer>().enabled = false;
+	visorTeclado[1].GetComponent.<Renderer>().enabled = false;
+	visorTeclado[2].GetComponent.<Renderer>().enabled = false;
 	fundoPanela.transform.position.x = -20;
 	fundoPanela.GetComponent(SpriteRenderer).color = Color(0.6, 0.2, 0.2, 1);
 	
-	audio.clip = musica;
-	audio.Play();
+	GetComponent.<AudioSource>().clip = musica;
+	GetComponent.<AudioSource>().Play();
 
 }
 
@@ -93,10 +93,11 @@ function Update () {
 		}	
 		
 		
-
+/*
 	if(Input.GetKeyDown("space"))
 		if(btProximo.transform.position.y > -5)
 			chamaFuncao = true;
+*/
 
 	/*if(Input.GetKeyDown("a"))
 		if(tempoCerto)
@@ -124,7 +125,7 @@ function OnTriggerEnter(other : Collider) {
 
 }
 
-function OnTriggerExit(other : Collider) {
+function OnTriggerExit(other) {
 
 	tempoCerto = false;
 	
@@ -136,7 +137,7 @@ function OnTriggerExit(other : Collider) {
 function Verificacao() {
 
 	proximo++;
-	print(proximo);	
+	//print(proximo);	
 	btProximo.transform.position.y = -20;	
 	
 	yield WaitForSeconds(0.2);
@@ -173,11 +174,11 @@ function Animacao() {
 		{
 		PuzzleMafiaTeclas.etapa = 0;
 		Instantiate(animTriggerPrefab[0], Vector3(20, 0, 0), Quaternion.identity);
-		audio.clip = metronomo[0];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = metronomo[0];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		//panela[0].GetComponent(Animator).enabled = true;
-		visorTeclado[0].renderer.enabled = true;
+		visorTeclado[0].GetComponent.<Renderer>().enabled = true;
 		fundoPanela.transform.position.x = -5.5;
 		}
 		
@@ -185,11 +186,11 @@ function Animacao() {
 		{
 		PuzzleMafiaTeclas.etapa = 0;
 		Instantiate(animTriggerPrefab[1], Vector3(20, 0, 0), Quaternion.identity);
-		audio.clip = metronomo[1];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = metronomo[1];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		//panela[1].GetComponent(Animator).enabled = true;
-		visorTeclado[1].renderer.enabled = true;
+		visorTeclado[1].GetComponent.<Renderer>().enabled = true;
 		fundoPanela.transform.position.x = 0;
 		}
 	
@@ -197,11 +198,11 @@ function Animacao() {
 		{
 		PuzzleMafiaTeclas.etapa = 0;
 		Instantiate(animTriggerPrefab[2], Vector3(20, 0, 0), Quaternion.identity);
-		audio.clip = metronomo[2];
-		audio.Play();
-		audio.loop = true;
+		GetComponent.<AudioSource>().clip = metronomo[2];
+		GetComponent.<AudioSource>().Play();
+		GetComponent.<AudioSource>().loop = true;
 		//panela[2].GetComponent(Animator).enabled = true;
-		visorTeclado[2].renderer.enabled = true;
+		visorTeclado[2].GetComponent.<Renderer>().enabled = true;
 		fundoPanela.transform.position.x = 5.5;
 		}
 	
@@ -213,12 +214,12 @@ function Animacao() {
 		panela[0].GetComponent(SpriteRenderer).sprite = spritePanela[0];
 		panela[1].GetComponent(SpriteRenderer).sprite = spritePanela[1];
 		panela[2].GetComponent(SpriteRenderer).sprite = spritePanela[2];
-		visorTeclado[0].renderer.enabled = false;
-		visorTeclado[1].renderer.enabled = false;
-		visorTeclado[2].renderer.enabled = false;
+		visorTeclado[0].GetComponent.<Renderer>().enabled = false;
+		visorTeclado[1].GetComponent.<Renderer>().enabled = false;
+		visorTeclado[2].GetComponent.<Renderer>().enabled = false;
 		fundoPanela.transform.position.x = -20;
-		audio.clip = musica;
-		audio.Play();
+		GetComponent.<AudioSource>().clip = musica;
+		GetComponent.<AudioSource>().Play();
 		}
 	
 	if(proximo != 3 && proximo != 7 && proximo != 11)
@@ -234,17 +235,17 @@ function MixPanelas() {
 
 	yield WaitForSeconds(0.1);
 	
-	print(contadorMix);
+	//print(contadorMix);
 	PuzzleMafiaTeclas.etapa = 0;
-	audio.loop = true;
+	GetComponent.<AudioSource>().loop = true;
 	panela[0].GetComponent(Animator).enabled = false;
 	panela[1].GetComponent(Animator).enabled = false;
 	panela[2].GetComponent(Animator).enabled = false;
-	visorTeclado[0].renderer.enabled = false;
-	visorTeclado[1].renderer.enabled = false;
-	visorTeclado[2].renderer.enabled = false;
+	visorTeclado[0].GetComponent.<Renderer>().enabled = false;
+	visorTeclado[1].GetComponent.<Renderer>().enabled = false;
+	visorTeclado[2].GetComponent.<Renderer>().enabled = false;
 	fundoPanela.transform.position.x = -20;
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	if(contadorMix == 3)
 		{
@@ -262,10 +263,10 @@ function MixPanelas() {
 		contadorMix++;
 		Instantiate(animTriggerPrefab[2], Vector3(20, 0, 0), Quaternion.identity);
 		Instantiate(texto[11], posicao, Quaternion.identity);
-		audio.clip = metronomo[2];
-		audio.Play();
+		GetComponent.<AudioSource>().clip = metronomo[2];
+		GetComponent.<AudioSource>().Play();
 		//panela[2].GetComponent(Animator).enabled = true;
-		visorTeclado[2].renderer.enabled = true;
+		visorTeclado[2].GetComponent.<Renderer>().enabled = true;
 		fundoPanela.transform.position.x = 5.5;
 		}
 	
@@ -275,10 +276,10 @@ function MixPanelas() {
 		contadorMix++;
 		Instantiate(animTriggerPrefab[0], Vector3(20, 0, 0), Quaternion.identity);
 		Instantiate(texto[3], posicao, Quaternion.identity);
-		audio.clip = metronomo[0];
-		audio.Play();
+		GetComponent.<AudioSource>().clip = metronomo[0];
+		GetComponent.<AudioSource>().Play();
 		//panela[0].GetComponent(Animator).enabled = true;
-		visorTeclado[0].renderer.enabled = true;
+		visorTeclado[0].GetComponent.<Renderer>().enabled = true;
 		fundoPanela.transform.position.x = -5.5;
 		}
 	
@@ -288,10 +289,10 @@ function MixPanelas() {
 		contadorMix++;
 		Instantiate(animTriggerPrefab[1], Vector3(20, 0, 0), Quaternion.identity);
 		Instantiate(texto[7], posicao, Quaternion.identity);
-		audio.clip = metronomo[1];
-		audio.Play();
+		GetComponent.<AudioSource>().clip = metronomo[1];
+		GetComponent.<AudioSource>().Play();
 		//panela[1].GetComponent(Animator).enabled = true;
-		visorTeclado[1].renderer.enabled = true;
+		visorTeclado[1].GetComponent.<Renderer>().enabled = true;
 		fundoPanela.transform.position.x = 0;
 		}
 

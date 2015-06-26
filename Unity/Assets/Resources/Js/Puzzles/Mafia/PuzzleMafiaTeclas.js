@@ -1,5 +1,14 @@
 ﻿#pragma strict
 
+private var csScript : MidiInput;
+csScript = this.GetComponent("MidiInput");
+
+var channel : MidiChannel = MidiChannel.All;
+
+private var noteNumber : int; //soma de noteNumberFirst e noteNumberNext;
+static var noteNumberFirst : int; //primeira nota, definina no menu inicial;
+var noteNumberNext : int; //soma um valor a nota inicial, pra definir só a primeira no inspector
+
 var tecla : String = "a";
 
 var numTecla : int; //distingue as teclas
@@ -23,6 +32,10 @@ static var i : int; //valor de cada sprite
 
 private var animator : Animator;
 
+function Awake() {
+	noteNumber = noteNumberFirst + noteNumberNext;
+}
+
 function Start () {
 
 	animator = GetComponent(Animator);
@@ -34,7 +47,7 @@ function Start () {
 
 function Update () {
 
-	if(Input.GetKeyDown(tecla))
+	if(Input.GetKeyDown(tecla) || csScript.GetKeyDown (channel, noteNumber))
 		{
 		if(PuzzleMafia.proximo == 3 || PuzzleMafia.proximo == 15)
 			{
@@ -57,7 +70,7 @@ function Update () {
 		teclaDown = true;
 		}
 	
-	if(Input.GetKeyUp(tecla))
+	if(Input.GetKeyUp(tecla) || csScript.GetKeyUp (channel, noteNumber))
 		TeclaLevantada();
 		
 	if(PuzzleMafia.perdeu)
@@ -410,9 +423,10 @@ function Verificacao3() {
 }
 
 function TeclaApertada() {
+print (noteNumber);
 
 	animator.SetTrigger ("DoPress");
-	audio.PlayOneShot(notas);
+	GetComponent.<AudioSource>().PlayOneShot(notas);
 
 }
 

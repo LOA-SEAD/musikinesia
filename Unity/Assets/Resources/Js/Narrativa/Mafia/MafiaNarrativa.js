@@ -275,10 +275,10 @@ function Animacao() {
 
 //efeitos sonoros
 	if(proximo == 40)
-		audio.PlayOneShot(sons[0]); // som de aplausos
+		GetComponent.<AudioSource>().PlayOneShot(sons[0]); // som de aplausos
 	
 	if(proximo == 45 || proximo == 51)
-		audio.PlayOneShot(sons[1]); // whoosh
+		GetComponent.<AudioSource>().PlayOneShot(sons[1]); // whoosh
 
 
 //objetos instanciaveis
@@ -407,7 +407,8 @@ function Animacao() {
 	
 	if(proximo == 64)
 		{		
-		Application.LoadLevel("Continua");
+		Application.LoadLevel("NarrativaPirata");
+		NarrativaPirata.proximo = 0;
 		}
 
 }

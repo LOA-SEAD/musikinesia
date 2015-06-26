@@ -30,18 +30,30 @@ function Start () {
 	Pontuacao.animacaoIn = 0;
 	Pontuacao.treino = false;
 	Pontuacao.escolhaOK = false; //tirar daqui quando nao tiver os botoes de escolha das musicas
+	
 	ChecarTrigger.maisPontos = false;
 	ChecarTrigger.pontos = 0;
 	ChecarTrigger.combo = 0;
 	ChecarTrigger.vida = 30;
 	ChecarTrigger.pontosFeitos = 0;
+	ChecarTrigger.valorTeclaTocada = 0;
+	
 	Teclas.teclaDown = false;
+	Teclas.etapaPuzzle = 0;
+	Teclas.pontoNota = 0;
+	//Teclas.notaTag = "";
+	
 	VelPrefab.speed = 0;
+	
 	Introducao.proximo = 0;
 	Introducao.chamaAnimacao = false;
+	
 	PosMusicas.proximo = 0;
+	
 	Instanciar.jogar = false;
-	planoPreto.renderer.enabled = false;
+	
+	planoPreto.GetComponent.<Renderer>().enabled = false;
+	
 	ChecaPuzzle.proximo = 0;
 	ChecaPuzzle.chamaFuncao = false;
 	ChecaPuzzle.quadroOK = false;
@@ -49,6 +61,30 @@ function Start () {
 	ChecaPuzzle.relogInt = 0;
 	ChecaPuzzle.pontos = 0;
 	
+	botoesPause.menuVoltar = false;
+	
+	PorcentagemAcerto.totalNotas = 0;
+	PorcentagemAcerto.acertos = 0;
+	PorcentagemAcerto.porcentagem = 0;
+	
+	MafiaNarrativa.proximo = 0;
+	MafiaNarrativa.btProximo = false;
+	MafiaNarrativa.chamaFuncao = false;
+	MafiaNarrativa.isPause = false;
+	
+	NarrativaPirata.atiraCanhao = false;
+	NarrativaPirata.proximo = 0;
+	NarrativaPirata.chamaPosicao = false;
+	NarrativaPirata.chamaSprite = false;
+	NarrativaPirata.travaMudaPosicao = false;
+	
+	Tutorial.proximo = 0;
+	Tutorial.voltar = 0;
+	Tutorial.btProximo = false;
+	Tutorial.btVoltar = false;
+	Tutorial.chamarAnimacao = false;
+	Tutorial.chamarVoltar = false;
+	Tutorial.isPause = false;
 	
 	//pause
 	Pontuacao.isPause = false; //desativa o pause do jogo (se estiver pausado)

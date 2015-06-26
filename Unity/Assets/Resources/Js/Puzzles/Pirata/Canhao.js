@@ -11,14 +11,16 @@ function Update () {
 	if(transform.position.x < -11.7)
 		DesativaCanhao();
 
-	if(PuzzlePirata.atiraBala)
+	if(PuzzlePirata.atiraBala) {
 		gameObject.GetComponent(Animator).enabled = true;
+		PuzzlePirata.atiraBala = false;
+	}
 
 }
 
 function DesativaCanhao () {
 
-	animation.Rewind();
+	GetComponent.<Animation>().Rewind();
 	gameObject.GetComponent(Animator).enabled = false;
 	
 	yield WaitForSeconds (0.1);

@@ -25,19 +25,19 @@ function Update () {
 
 function OnMouseEnter() {
 
-	audio.PlayOneShot(efeitos[0]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[0]);
 
 }
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0); //fica vermelho
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0); //fica vermelho
 
 }
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1); //volta pra cor natural
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1); //volta pra cor natural
 	
 }
 
@@ -53,7 +53,7 @@ function OnMouseDown () {
 
 function Acao1() {
 
-	audio.PlayOneShot(efeitos[1]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 
 	Tutorial.proximo++;
 	Tutorial.chamarAnimacao = true;
@@ -63,7 +63,7 @@ function Acao1() {
 
 function Acao2() {
 
-	audio.PlayOneShot(efeitos[1]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 
 	if(gameObject.tag == "bt1") //botao Pular
 		{

@@ -12,6 +12,6 @@ function Start () {
 function Update () {
 
 	if(Tutorial.proximo == proximo)
-		guiText.enabled = false;
+		GetComponent.<GUIText>().enabled = false;
 
 }

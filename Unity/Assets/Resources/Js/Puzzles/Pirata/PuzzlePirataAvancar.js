@@ -26,7 +26,7 @@ function Acao () {
 	
 	if(PuzzlePirataTexto.liberaAcao) {
 		PuzzlePirataTexto.passaTexto = true;
-		audio.PlayOneShot(audios[1]);
+		GetComponent.<AudioSource>().PlayOneShot(audios[1]);
 		}
 
 }
@@ -47,7 +47,7 @@ function OnMouseUp () {
 
 function OnMouseEnter () {
 
-	audio.PlayOneShot(audios[0]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[0]);
 
 }
 

@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 345d3a6277a79eb4fb02adc8cd8f1062
+timeCreated: 1426735922
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: APlateiaShow0
@@ -131,6 +133,14 @@ TextureImporter:
     21300252: APirataNarizSp2
     21300254: APirataNarizSp1
     21300256: APirataNarizSp0
+    21300258: APirataTiro2
+    21300260: APirataTiro0
+    21300262: APirataTiro1
+    21300264: APirataTiro3
+    21300266: APirataAgua2
+    21300268: APirataAgua1
+    21300270: APirataAgua0
+    21300272: APirataAgua3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -149,6 +159,9 @@ TextureImporter:
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 1024
@@ -159,6 +172,7 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
+  rGBM: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
@@ -1470,5 +1484,87 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTiro2
+      rect:
+        serializedVersion: 2
+        x: 1238
+        y: 282
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTiro0
+      rect:
+        serializedVersion: 2
+        x: 1207
+        y: 280
+        width: 7
+        height: 7
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTiro1
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 282
+        width: 7
+        height: 7
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataTiro3
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 282
+        width: 7
+        height: 7
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataAgua2
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 257
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataAgua1
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 258
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataAgua0
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 252
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: APirataAgua3
+      rect:
+        serializedVersion: 2
+        x: 1251
+        y: 251
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

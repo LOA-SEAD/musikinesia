@@ -32,8 +32,8 @@ public class guiScale : MonoBehaviour {
 		if (Screen.width!=refWidth) {
 			rel = Screen.width/refWidth;
 			if(rel > maxMultiply) rel=maxMultiply;
-			if(this.guiTexture) guiTextureResize(this.guiTexture);
-			if(this.guiText) guiTextResize(this.guiText);
+			if(this.GetComponent<GUITexture>()) guiTextureResize(this.GetComponent<GUITexture>());
+			if(this.GetComponent<GUIText>()) guiTextResize(this.GetComponent<GUIText>());
 		}
 	}
 	void Start(){

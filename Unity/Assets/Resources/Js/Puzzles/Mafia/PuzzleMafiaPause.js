@@ -13,13 +13,13 @@ function Update () {
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0);
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0);
 
 }
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
 }
 
@@ -54,6 +54,24 @@ function Escolha () {
 		Pontuacao.numMusica = 0;
 		Pontuacao.puzzle = 0;
 		Application.LoadLevel("Jogo");
+		}
+		
+	if(gameObject.tag == "bt5") //botao Tutorial
+		{
+		
+		Pontuacao.numMusica = 0;
+		Pontuacao.puzzle = 0;
+		Tutorial.proximo = 0;
+		Tutorial.voltar = 0;
+		Tutorial.btProximo = false;
+		Tutorial.btVoltar = false;
+		Tutorial.chamarAnimacao = false;
+		Tutorial.chamarVoltar = false;
+		Tutorial.isPause = false;
+		Time.timeScale = 1; //tempo volta ao normal
+		Pontuacao.isPause = false;
+		AudioListener.pause = false;
+		Application.LoadLevel("Tutorial");
 		}
 
 }

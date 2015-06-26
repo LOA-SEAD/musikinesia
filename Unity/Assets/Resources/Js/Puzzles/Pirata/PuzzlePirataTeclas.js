@@ -1,6 +1,15 @@
 ﻿#pragma strict
 @script RequireComponent(AudioSource)
 
+private var csScript : MidiInput;
+csScript = this.GetComponent("MidiInput");
+
+var channel : MidiChannel = MidiChannel.All;
+
+private var noteNumber : int; //soma de noteNumberFirst e noteNumberNext;
+static var noteNumberFirst : int; //primeira nota, definina no menu inicial;
+var noteNumberNext : int; //soma um valor a nota inicial, pra definir só a primeira no inspector
+
 var tecla : String = "a";
 
 var numTecla : int; //distingue as teclas
@@ -15,6 +24,12 @@ static var sustenido : boolean; //faz a bala do canhao ir pra cima
 static var bemol : boolean; //faz a bala do canhao ir pra baixo
 static var liberaTiro : boolean; //permite que o jogador atire
 
+var balaFuncao : GameObject;
+
+function Awake() {
+	noteNumber = noteNumberFirst + noteNumberNext;
+}
+
 function Start () {
 
 	animator = GetComponent(Animator);
@@ -23,10 +38,10 @@ function Start () {
 
 function Update () {
 
-	if(Input.GetKeyDown(tecla))
+	if(Input.GetKeyDown(tecla) || csScript.GetKeyDown (channel, noteNumber))
 		TeclaApertada();
 		
-	if(Input.GetKeyUp(tecla))
+	if(Input.GetKeyUp(tecla) || csScript.GetKeyUp (channel, noteNumber))
 		TeclaLevantada();
 
 }
@@ -44,9 +59,10 @@ function OnMouseUp() {
 }
 
 function TeclaApertada() {
+print (noteNumber);
 
 	animator.SetTrigger ("DoPress");
-	audio.PlayOneShot(notas);
+	GetComponent.<AudioSource>().PlayOneShot(notas);
 	
 	if(PuzzlePirata.etapa == 0)
 		{
@@ -68,6 +84,7 @@ function TeclaApertada() {
 			PuzzlePirata.atiraBala = true;
 			PuzzlePirataBala.velBola = 3;
 			liberaTiro = false;
+			balaFuncao.SendMessage("Bala");
 			}
 		
 		if(numTecla == 4)
@@ -76,31 +93,33 @@ function TeclaApertada() {
 	
 	else if(PuzzlePirataTexto.i == 22)
 		{
-		if(numTecla == 9)
+		if(numTecla == 11)
 			bemol = true;
 		
-		if(numTecla == 10 && liberaTiro) {
+		if(numTecla == 12 && liberaTiro) {
 			PuzzlePirata.atiraBala = true;
 			PuzzlePirataBala.velBola = 4;
 			liberaTiro = false;
+			balaFuncao.SendMessage("Bala");
 			}
 		
-		if(numTecla == 11)
+		if(numTecla == 13)
 			sustenido = true;
 		}
 	
 	else if(PuzzlePirataTexto.i == 27)
 		{
-		if(numTecla == 19)
+		if(numTecla == 17)
 			bemol = true;
 		
-		if(numTecla == 20 && liberaTiro) {
+		if(numTecla == 18 && liberaTiro) {
 			PuzzlePirata.atiraBala = true;
 			PuzzlePirataBala.velBola = 5;
 			liberaTiro = false;
+			balaFuncao.SendMessage("Bala");
 			}
 		
-		if(numTecla == 21)
+		if(numTecla == 19)
 			sustenido = true;
 		}
 

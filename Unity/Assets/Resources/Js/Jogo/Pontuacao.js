@@ -30,7 +30,8 @@ var velMus6 : float; //velocidade do prefab das notas
 var velMus6p2 : float; //velocidade do prefab das notas
 var velMus7 : float; //velocidade do prefab das notas
 var velMus8 : float; //velocidade do prefab das notas
-var velMus9 : float; //velocidade do prefab das notas
+var velMus10 : float; //velocidade do prefab das notas
+var velMus11 : float; //velocidade do prefab das notas
 
 static var relog : float; //relogio para liberar a tela final; acessada em PorcentagemAcerto.js
 
@@ -118,12 +119,19 @@ var aniFase : GameObject[];
 //anifase[10] = guitarrista show
 //anifase[11] = baixista show
 
+var bgCamera : Color;
+
 var templatePontos : GameObject;
 var templatePontosS : Sprite[];
+
+var sustenidosMus11 : GameObject;
 
 //para teste
 var relogTeste : float;
 
+var contadorTeste : float;
+var soltaContador : boolean;
+var treinoTeste : boolean;
 
 function Start () {
 
@@ -136,8 +144,8 @@ function Start () {
 	pontuacao = 0;
 	escolhaOK = false; 
 	multiplicador = 1;
-	planoPreto.renderer.enabled = false;
-	planoPreto.renderer.material.color.a = 0.7;
+	planoPreto.GetComponent.<Renderer>().enabled = false;
+	planoPreto.GetComponent.<Renderer>().material.color.a = 0.7;
 	
 	//pause
 	isPause = false;
@@ -145,28 +153,31 @@ function Start () {
 	AudioListener.pause = false;
 	if(puzzle == 0)
 		{
-		inGameVolume = 0.5;
-		AudioListener.volume = 0.5;
+		inGameVolume = 1;
+		AudioListener.volume = 1;
 		}
 	
 	//derrota
 	derrota = false;
 	
 	//animacao Inicial
-	objAni[1].renderer.material.color.a = 0;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
 	objAni[3].transform.position.y = -34;
 	objAni[4].transform.localScale = Vector2(12, 12);
-	objAni[2].renderer.enabled = false;
-	objAni[5].renderer.enabled = false;
+	objAni[2].GetComponent.<Renderer>().enabled = false;
+	objAni[5].GetComponent.<Renderer>().enabled = false;
 	animacaoIn = 0;
 	
 	//teclas do teclado travadas
 	travaTeclas = true;
 
 	//puzzle
-	puzzleSuburbio[0].renderer.enabled = false; //marcacao do quadro
-	puzzleSuburbio[1].renderer.enabled = false; //quadro
+	puzzleSuburbio[0].SetActive(false); //marcacao do quadro
+	puzzleSuburbio[1].SetActive(false); //quadro
+	puzzleSuburbio[2].SetActive(false); //escrito "tempo"
 	ChecaPuzzle.quadroOK = false;
+	
+	//treino = true;
 	
 	//chama musica
 	if(!treino)
@@ -216,6 +227,20 @@ function Start () {
 	aniFase[18].GetComponent(SpriteRenderer).enabled = false;
 	aniFase[18].GetComponent(Animator).enabled = false;
 	aniFase[19].GetComponent(Animator).enabled = false;
+	aniFase[20].SetActive(false);
+	aniFase[20].GetComponent(Animator).enabled = false;
+	aniFase[21].SetActive(false);
+	aniFase[21].GetComponent(Animator).enabled = false;
+	
+	
+	
+	if(numMusica == 10) {
+		GetComponent.<Camera>().backgroundColor = bgCamera;
+	}
+	else {
+		GetComponent.<Camera>().clearFlags = CameraClearFlags.SolidColor;
+		GetComponent.<Camera>().backgroundColor = Color.white;
+	}
 	
 	//template de pontos
 	if(puzzle == 0)
@@ -223,10 +248,19 @@ function Start () {
 	
 	else
 		templatePontos.GetComponent(SpriteRenderer).sprite = templatePontosS[1];
+		
+	//sustenidos musica 11
+	sustenidosMus11.SetActive(false);
 	
 }
 
 function Update () {
+	
+	//treino = treinoTeste;
+
+	//if(soltaContador) {
+	//	contadorTeste += Time.deltaTime;
+	//}
 
 	//revelar algo escondido - PARA TESTES
 	/*if(Input.GetKeyDown("p"))
@@ -238,14 +272,14 @@ function Update () {
 		//aparecerTeste = !aparecerTeste;*/
 	
 	//Pular pra narrativa = teste
-	if(Input.GetKey("q"))
-		relogTeste += Time.deltaTime;
+	//if(Input.GetKey("q"))
+	//	relogTeste += Time.deltaTime;
 	
-	if(Input.GetKeyUp("q"))
-		relogTeste = 0;
+	//if(Input.GetKeyUp("q"))
+	//	relogTeste = 0;
 	
-	if(relogTeste > 3)
-		Application.LoadLevel("NarrativaMafia");
+	//if(relogTeste > 3)
+	//	Application.LoadLevel("CreditosFinais");
 
 
 	//animacao Inicial
@@ -259,31 +293,31 @@ function Update () {
 			
 	if(animacaoIn == 2)
 		{
-		planoPreto.renderer.enabled = true; //plano preto 70% fica visivel
+		planoPreto.GetComponent.<Renderer>().enabled = true; //plano preto 70% fica visivel
 		
 		if(puzzle == 0) //soh funciona nas musicas
 			{		
 			//entrada em quadro dos elementos do jogo:		
-			if(objAni[1].renderer.material.color.a != 1)
-				objAni[1].renderer.material.color.a += 0.02; //pentagrama aparece
+			if(objAni[1].GetComponent.<Renderer>().material.color.a < 1)
+				objAni[1].GetComponent.<Renderer>().material.color.a += 0.02; //pentagrama aparece
 			
-			if(objAni[4].renderer.material.color.a >= 0.61)
-				objAni[4].renderer.material.color.a -= 0.02; //imagem de fundo (sotao) fica mais transparente
+			if(objAni[4].GetComponent.<Renderer>().material.color.a >= 0.61)
+				objAni[4].GetComponent.<Renderer>().material.color.a -= 0.02; //imagem de fundo (sotao) fica mais transparente
 			
 			objAni[0].GetComponent(SpriteRenderer).enabled = true; //botao notas
 			objAni[0].GetComponent(BoxCollider).enabled = true; //botao notas
 			}
 			else
 				{
-				objAni[4].renderer.enabled = false;
+				objAni[4].GetComponent.<Renderer>().enabled = false;
 				objAni[0].GetComponent(SpriteRenderer).enabled = false; //botao notas
 				objAni[0].GetComponent(BoxCollider).enabled = false; //botao notas
 				
-				if(!objAni[2].renderer.enabled)
-					objAni[2].renderer.enabled = true;
+				if(!objAni[2].GetComponent.<Renderer>().enabled)
+					objAni[2].GetComponent.<Renderer>().enabled = true;
 					
-				if(objAni[2].renderer.material.color.a >= 0.61)
-					objAni[2].renderer.material.color.a -= 0.02; //imagem de fundo (sotao) fica mais transparente
+				if(objAni[2].GetComponent.<Renderer>().material.color.a >= 0.61)
+					objAni[2].GetComponent.<Renderer>().material.color.a -= 0.02; //imagem de fundo (sotao) fica mais transparente
 				}
 			
 		
@@ -333,7 +367,10 @@ function Update () {
 		VelPrefab.speed = velMus8; //define a velocidade do prefab das notas
 	
 	if(numMusica == 10)
-		VelPrefab.speed = velMus9; //define a velocidade do prefab das notas
+		VelPrefab.speed = velMus10; //define a velocidade do prefab das notas
+	
+	if(numMusica == 11)
+		VelPrefab.speed = velMus11; //define a velocidade do prefab das notas
 		
 	
 	//pontuacao
@@ -483,17 +520,17 @@ function Update () {
 	//Segunda Musica Mafia - SETIMA
 	if(numMusica == 8)
 		if(!escolhaOK)
-			SetimaMusica(); //chama a funcao que roda a primeira musica da mafia
+			SetimaMusica(); //chama a funcao que roda a segunda musica da mafia
 			
-	//Primeira Musica Pirata - OITAVA
-	//if(numMusica == 9)
-		//if(!escolhaOK)
-			//OitavaMusica(); //chama a funcao que roda a primeira musica dos piratas
-	
-	//Segunda Musica Pirata - NONA
+	//Primeira Musica Pirata - DECIMA
 	if(numMusica == 10)
 		if(!escolhaOK)
-			NonaMusica(); //chama a funcao que roda a segunda musica dos piratas
+			DecimaMusica(); //chama a funcao que roda a primeira musica dos piratas
+	
+	//Segunda Musica Pirata - DECIMA PRIMEIRA
+	if(numMusica == 11)
+		if(!escolhaOK)
+			DecimaPrimeiraMusica(); //chama a funcao que roda a segunda musica dos piratas
 		
 	//puzzle
 	if(puzzle == 1)
@@ -529,47 +566,47 @@ if(!isPause && !derrota && animacaoIn > 0)
 			numMusica = 4;
 		
 		//SEGUNDA - PUZZLE 1
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.21, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.16, Screen.width*0.05, Screen.height*0.1), ""))
 			puzzle = 1;
 								
 		//TERCEIRA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.31, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 3;
 		
 		//QUARTA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.46, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 6;
 			
 		//QUINTA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.81, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 5;
 		
 		//SEXTA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.76, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 7;
 		
 		//SETIMA - PUZZLE 2
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.21, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), ""))
 			Application.LoadLevel("PuzzleMafia");
 		
 		//OITAVA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.16, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 8;
 		
-		//NONA - PUZZLE 3
-		//if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
-			//numMusica = 8;
+		// PUZZLE 3
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.31, Screen.width*0.05, Screen.height*0.1), ""))
+			Application.LoadLevel("PuzzlePirata");
 		
 		//DECIMA
-		//if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
-			//numMusica = 9;
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.46, Screen.width*0.05, Screen.height*0.1), ""))
+			numMusica = 10;
 		
 		//DECIMA PRIMEIRA
-		//if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.41, Screen.width*0.05, Screen.height*0.1), ""))
-			//numMusica = 10;
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
+			numMusica = 11;
 		
 		//musica do Suki - BONUS
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.76, Screen.width*0.05, Screen.height*0.1), ""))
 			numMusica = 2;	
 		
 		}
@@ -578,8 +615,15 @@ if(!isPause && !derrota && animacaoIn > 0)
 	//fim
 	if(relog > 69 && puzzle == 0) //trava para nao ficar rodando o if de baixo sempre; nao funciona no modo puzzle
 		{
-		if((numMusica == 2 && relog > 88) || (numMusica == 3 && relog > 70) || (numMusica == 4 && relog > 115) || (numMusica == 5 && relog > 95) || (numMusica == 6 && relog > 100) || (numMusica == 7 && relog > 120) || (numMusica == 8 && relog > 97))
-			{
+		if	((numMusica == 2 && relog > 88)
+		 	|| (numMusica == 3 && relog > 70) 
+		 	|| (numMusica == 4 && relog > 115) 
+		 	|| (numMusica == 5 && relog > 95) 
+		 	|| (numMusica == 6 && relog > 100) 
+		 	|| (numMusica == 7 && relog > 120) 
+		 	|| (numMusica == 8 && relog > 97)
+		 	|| (numMusica == 10 && relog > 77)
+		 	|| (numMusica == 11 && relog > 83)) {
 			if(!travaTeclas)
 				Final();
 			
@@ -687,15 +731,18 @@ if(!isPause && !derrota && animacaoIn > 0)
 			
 			
 			GUI.skin = btSeguir;
-			if(GUI.Button(Rect(Screen.width*0.8,Screen.height*0.75,Screen.width*0.1,Screen.height*0.15), ""))
+			if(GUI.Button(Rect(Screen.width*0.8,Screen.height*0.75,Screen.width*0.1,Screen.height*0.15), "") || Input.GetKeyUp(KeyCode.Space))
 				{
 				if(!treino)
 					{
 					if(numMusica <= 6)
 						Application.LoadLevel("NarrativaSuburbio");
 					
-					if(numMusica > 6)
+					else if(numMusica > 6 && numMusica < 10)
 						Application.LoadLevel("NarrativaMafia");
+					
+					else
+						Application.LoadLevel("NarrativaPirata");
 					}
 					
 				else
@@ -741,7 +788,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 		//slider para controlar o volume da musica
 		GUI.skin = hSlider;
 		inGameVolume = GUI.HorizontalSlider (Rect (Screen.width*0.271, Screen.height*0.69, Screen.width*0.08, Screen.height*0.08), inGameVolume, 0.0, 1.0);
-		audio.volume = inGameVolume; //a variavel volume (nativa) se iguala a variavel de volume criada.
+		GetComponent.<AudioSource>().volume = inGameVolume; //a variavel volume (nativa) se iguala a variavel de volume criada.
 		}
 	
 	}
@@ -753,7 +800,7 @@ function PrimeiraMusica() {
 	escolhaOK = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
-	objAni[1].renderer.material.color.a = 0;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
 	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
 	objAni[4].transform.localScale = Vector2(14, 14);
 	objAni[4].transform.position.y = 1.58;
@@ -761,7 +808,7 @@ function PrimeiraMusica() {
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 
 	yield WaitForSeconds(3.1);
 	
@@ -771,7 +818,7 @@ function PrimeiraMusica() {
 	//musica
 	position = Vector3 (55.1, -2.9372, 0); //55.3
 	Instantiate(musica[0], position, Quaternion.identity);
-	audio.PlayOneShot(audios[0]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[0]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
@@ -784,14 +831,14 @@ function SegundaMusica() {
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
-	objAni[1].renderer.material.color.a = 1;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 1;
 	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[1];
-	objAni[5].renderer.enabled = true;
+	objAni[5].GetComponent.<Renderer>().enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	//animacao da fase
 	aniFase[0].GetComponent(SpriteRenderer).enabled = true;
@@ -810,7 +857,7 @@ function SegundaMusica() {
 	//musica
 	position = Vector3 (51.9, -2.9372, 0); //(52.1, 0, 0);
 	Instantiate(musica[1], position, Quaternion.identity);
-	audio.PlayOneShot(audios[1]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[1]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
@@ -822,7 +869,7 @@ function TerceiraMusica() {
 	escolhaOK = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
-	objAni[1].renderer.material.color.a = 0;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
 	objAni[4].GetComponent(SpriteRenderer).sprite = spritesC[0];
 	objAni[4].transform.localScale = Vector2(14, 14);
 	objAni[4].transform.position.y = 1.58;
@@ -830,7 +877,7 @@ function TerceiraMusica() {
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 
 	yield WaitForSeconds(3.1);
 	
@@ -840,7 +887,7 @@ function TerceiraMusica() {
 	//musica
 	position = Vector3 (47, -2.9372, 0);
 	Instantiate(musica[2], position, Quaternion.identity);
-	audio.PlayOneShot(audios[2]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[2]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
@@ -854,14 +901,14 @@ function QuartaMusica() {
 	
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
-	objAni[1].renderer.material.color.a = 1;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 1;
 	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[2];
-	objAni[5].renderer.enabled = true;
+	objAni[5].GetComponent.<Renderer>().enabled = true;
 	
 	position = Vector3 (15.48, -1.17, -3); 
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	//animacao da fase
 	aniFase[3].GetComponent(SpriteRenderer).enabled = true;
@@ -884,7 +931,7 @@ function QuartaMusica() {
 	//musica
 	position = Vector3 (77.8, -2.9372, 0); //versao 1: (50, 0, 0); VelPrefab = 6.141
 	Instantiate(musica[3], position, Quaternion.identity);
-	audio.PlayOneShot(audios[3]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[3]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 	
@@ -897,14 +944,14 @@ function QuintaMusica() {
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
-	objAni[1].renderer.material.color.a = 1;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 1;
 	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[5];
-	objAni[5].renderer.enabled = true;
+	objAni[5].GetComponent.<Renderer>().enabled = true;
 	
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	//animacao da fase
 	aniFase[7].GetComponent(SpriteRenderer).enabled = true;
@@ -928,7 +975,7 @@ function QuintaMusica() {
 	//musica
 	position = Vector3 (18.4, -2.9372, 0);
 	Instantiate(musica[4], position, Quaternion.identity);
-	audio.PlayOneShot(audios[4]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[4]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
@@ -941,14 +988,14 @@ function SextaMusica() {
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;	
-	objAni[1].renderer.material.color.a = 0;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
 	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[6];
-	objAni[5].renderer.enabled = true;
+	objAni[5].GetComponent.<Renderer>().enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	//animacao da fase
 	aniFase[12].GetComponent(SpriteRenderer).enabled = true;
@@ -973,9 +1020,9 @@ function SextaMusica() {
 	aniFase[18].GetComponent(Animator).enabled = true;
 	
 	//musica
-	position = Vector3 (439, -42.95, -3.1); //444.77
+	position = Vector3 (439, -43, -3.1); //444.77
 	Instantiate(musica[6], position, Quaternion.identity);
-	audio.PlayOneShot(audios[7]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[7]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
@@ -988,15 +1035,15 @@ function SetimaMusica() {
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
-	objAni[1].renderer.material.color.a = 0;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
 	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
 	objAni[5].transform.position.y = 10.047;
-	objAni[5].renderer.enabled = true;
+	objAni[5].GetComponent.<Renderer>().enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	yield WaitForSeconds(3.1);
 	
@@ -1009,43 +1056,91 @@ function SetimaMusica() {
 	//musica
 	position = Vector3 (-8, -35.77, -3.1);
 	Instantiate(musica[5], position, Quaternion.identity);
-	audio.PlayOneShot(audios[6]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[6]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
 
 }
 
-//funcao da segunda musica dos piratas (nona musica)
-function NonaMusica() {
+//funcao da primeira musica dos piratas (decima musica)
+function DecimaMusica() {
 
 	escolhaOK = true;
 	animacaoIn = 2;
+	GetComponent.<Camera>().backgroundColor = bgCamera;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;	
-	objAni[1].renderer.material.color.a = 0;
-	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[7];
-	objAni[5].transform.position.y = 10.047;
-	objAni[5].renderer.enabled = true;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[8];
+	objAni[4].SetActive(false);
+	objAni[5].transform.position.y = 18;
+	objAni[5].GetComponent.<Renderer>().enabled = true;
 
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
+
+	//animacao da fase
+	aniFase[20].SetActive(true);
 
 	yield WaitForSeconds(3.1);
 	
 	//animacao da fase
-	//aniFase[19].GetComponent(Animator).enabled = true;
+	aniFase[20].GetComponent(Animator).enabled = true;
 	
 	animacaoIn = 3;
 	travaTeclas = false;
 	
 	//musica
-	position = Vector3 (5.594, -37.76, -3.1); //444.77
-	Instantiate(musica[8], position, Quaternion.identity);
-	audio.PlayOneShot(audios[9]);
+	position = Vector3 (5.52, -37.76, -3.1); //444.77
+	Instantiate(musica[7], position, Quaternion.identity);
+	GetComponent.<AudioSource>().PlayOneShot(audios[10]);
 	planoPreto.transform.position.y = 50;
 	ChecarTrigger.pontos = 0;
+	
+	
+
+}
+
+//funcao da primeira musica dos piratas (decima primeira musica)
+function DecimaPrimeiraMusica() {
+
+	escolhaOK = true;
+	animacaoIn = 2;
+	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
+	objAni[1].transform.position.y = -7.34;	
+	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
+	objAni[5].GetComponent(SpriteRenderer).sprite = spritesC[9];
+	objAni[5].transform.position.y = 12.18;
+	objAni[5].transform.localScale = Vector3(21, 21, 1);
+	objAni[5].GetComponent.<Renderer>().enabled = true;
+
+	position = Vector3 (15.48, -1.17, -3);
+	Instantiate(regressiva, position, Quaternion.identity);
+
+	GetComponent.<AudioSource>().Stop();
+	
+	//animacao da fase
+	aniFase[21].SetActive(true);
+
+	yield WaitForSeconds(3.1);
+	
+	//animacao da fase
+	aniFase[21].GetComponent(Animator).enabled = true;
+	
+	animacaoIn = 3;
+	travaTeclas = false;
+	
+	//musica
+	sustenidosMus11.SetActive(true);
+	position = Vector3 (28.92, -37.76, -3.1); //444.77
+	Instantiate(musica[8], position, Quaternion.identity);
+	GetComponent.<AudioSource>().PlayOneShot(audios[11]);
+	planoPreto.transform.position.y = 50;
+	ChecarTrigger.pontos = 0;
+	
+	soltaContador = true;
 
 }
 
@@ -1058,8 +1153,13 @@ function puzzleSub() {
 	
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
+	puzzleSuburbio[2].SetActive(true); //escrito "tempo"
+	
+	if(!treino) {
+		puzzleSuburbio[2].transform.localPosition.x = -1.081; //escrito "tempo"
+	}
 
-	audio.Stop();
+	GetComponent.<AudioSource>().Stop();
 	
 	yield WaitForSeconds(3.1);
 	
@@ -1067,14 +1167,14 @@ function puzzleSub() {
 	travaTeclas = false;
 	
 	//puzzle
-	audio.volume = 1;
+	GetComponent.<AudioSource>().volume = 1;
 	inGameVolume = 1;
-	audio.clip = audios[5];
-	audio.Play();
-	audio.loop = true;
-	puzzleSuburbio[0].GetComponent(ChecaPuzzle).enabled = true;
-	puzzleSuburbio[0].renderer.enabled = true; //marcacao do quadro
-	puzzleSuburbio[1].renderer.enabled = true; //quadro
+	GetComponent.<AudioSource>().clip = audios[5];
+	GetComponent.<AudioSource>().Play();
+	GetComponent.<AudioSource>().loop = true;
+	//puzzleSuburbio[0].GetComponent(ChecaPuzzle).enabled = true;
+	puzzleSuburbio[0].SetActive(true); //marcacao do quadro
+	puzzleSuburbio[1].SetActive(true); //quadro
 	planoPreto.transform.position.y = 50;
 
 }
@@ -1113,6 +1213,9 @@ static function Mute() {
 
 function NomesMusicas () { //Instanciar nome das musicas na tela de escolha - TREINO
 
+	objAni[4].GetComponent.<SpriteRenderer>().sprite = spritesC[0];
+	objAni[4].GetComponent.<Renderer>().material.color.a = 0.7;
+
 	yield WaitForSeconds(1);
 
 	//primeira
@@ -1120,35 +1223,47 @@ function NomesMusicas () { //Instanciar nome das musicas na tela de escolha - TR
 	Instantiate(textoMusica[0], position, Quaternion.identity);
 	
 	//segunda - Puzzle
-	position = Vector3 (0.23, 0.75, 1);
+	position = Vector3 (0.23, 0.80, 1);
 	Instantiate(textoMusica[5], position, Quaternion.identity);
 	
 	//terceira
-	position = Vector3 (0.23, 0.55, 1);
+	position = Vector3 (0.23, 0.65, 1);
 	Instantiate(textoMusica[1], position, Quaternion.identity);
 	
 	//quarta
-	position = Vector3 (0.23, 0.35, 1);
+	position = Vector3 (0.23, 0.50, 1);
 	Instantiate(textoMusica[2], position, Quaternion.identity);
 	
 	//quinta
-	position = Vector3 (0.23, 0.15, 1);
+	position = Vector3 (0.23, 0.35, 1);
 	Instantiate(textoMusica[3], position, Quaternion.identity);
 	
 	//sexta
-	position = Vector3 (0.58, 0.95, 1);
+	position = Vector3 (0.23, 0.20, 1);
 	Instantiate(textoMusica[6], position, Quaternion.identity);
 	
 	//setima - Puzzle
-	position = Vector3 (0.58, 0.75, 1);
+	position = Vector3 (0.58, 0.95, 1);
 	Instantiate(textoMusica[7], position, Quaternion.identity);
 	
 	//oitava
-	position = Vector3 (0.58, 0.55, 1);
+	position = Vector3 (0.58, 0.80, 1);
 	Instantiate(textoMusica[8], position, Quaternion.identity);
 	
-	//bonus
+	//puzzle pirata
+	position = Vector3 (0.58, 0.65, 1);
+	Instantiate(textoMusica[9], position, Quaternion.identity);
+	
+	//decima
+	position = Vector3 (0.58, 0.50, 1);
+	Instantiate(textoMusica[10], position, Quaternion.identity);
+	
+	//decima primeira
 	position = Vector3 (0.58, 0.35, 1);
+	Instantiate(textoMusica[11], position, Quaternion.identity);
+	
+	//bonus
+	position = Vector3 (0.58, 0.20, 1);
 	Instantiate(textoMusica[4], position, Quaternion.identity);
 
 }
@@ -1180,7 +1295,7 @@ function Final(){
 	else if(tecladoVida.GetComponent(SpriteRenderer).sprite == spriteTeclado[7])
 		ChecarTrigger.vida = 7;
 	
-	planoPreto.renderer.material.color.a = 0.7; //plano preto de fundo 70%
+	planoPreto.GetComponent.<Renderer>().material.color.a = 0.7; //plano preto de fundo 70%
 	planoPreto.transform.position.y = 0; //plano preto no centro da tela
 	
 	//multiplicacao dos pontos pelas vidas
@@ -1204,6 +1319,8 @@ function Final(){
 	aniFase[17].GetComponent(Animator).enabled = false;
 	aniFase[18].GetComponent(Animator).enabled = false;
 	aniFase[19].GetComponent(Animator).enabled = false;
+	aniFase[20].GetComponent(Animator).enabled = false;
+	aniFase[21].GetComponent(Animator).enabled = false;
 
 	//Desempenho
 	position = Vector3(0.12, 0.86, -4);
@@ -1211,35 +1328,46 @@ function Final(){
 			
 	if(!treino)
 		{
-		if(numMusica == 4)
+		switch (numMusica) {
+		case 4:
 			PosMusicas.proximo = 0;
-			
-		else if(numMusica == 3)
-			PosMusicas.proximo = 34;
-	
-		else if(numMusica == 6)
-			PosMusicas.proximo = 48;
-	
-		else if(numMusica == 5)
-			PosMusicas.proximo = 56;
-			
-		else if(numMusica == 7)
-			MafiaNarrativa.proximo = 14;
-		
-		else if(numMusica == 8)
-			MafiaNarrativa.proximo = 40;
-		
-		if(numMusica <= 6)
-			{
 			PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
 			PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
-			}
+			break;
+		
+		case 3:
+			PosMusicas.proximo = 34;
+			PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
+			PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
+			break;
 			
-		if(numMusica > 6)
-			{
+		case 6:
+			PosMusicas.proximo = 48;
+			PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
+			PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
+			break;
+			
+		case 5:
+			PosMusicas.proximo = 56;
+			PlayerPrefs.SetInt("SaveGame", PosMusicas.proximo);
+			PlayerPrefs.SetInt("Continua", 1); //botao Continua do Menu ativo
+			break;
+			
+		case 7:
+			MafiaNarrativa.proximo = 14;
 			PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
 			PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
-			}
+			break;
+			
+		case 8:
+			MafiaNarrativa.proximo = 40;
+			PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
+			PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
+			break;
+		
+		default:
+			break;
+		}
 		
 		yield WaitForSeconds(1);
 		

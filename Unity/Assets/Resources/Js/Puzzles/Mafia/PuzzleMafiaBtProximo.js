@@ -8,7 +8,7 @@ function Start () {
 
 function Update () {
 
-	if(Input.GetKeyDown("space")) {
+	if(Input.GetKeyUp("space")) {
 		if(transform.position.y > -5) {
 			Acao();
 		}
@@ -18,23 +18,23 @@ function Update () {
 
 function OnMouseEnter() {
 
-	audio.PlayOneShot(efeitos[0]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[0]);
 
 }
 
 function OnMouseOver () {
 
-	renderer.material.color -= Color(0, 0.1, 0.1, 0);
+	GetComponent.<Renderer>().material.color -= Color(0, 0.1, 0.1, 0);
 
 }
 
 function OnMouseExit () {
 
-	renderer.material.color = Color(1, 1, 1, 1);
+	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	
 }
 
-function OnMouseDown () {
+function OnMouseUp() {
 
 	if(transform.position.y > -5)
 		Acao();	
@@ -42,7 +42,7 @@ function OnMouseDown () {
 
 function Acao() {
 	
-	audio.PlayOneShot(efeitos[1]);
+	GetComponent.<AudioSource>().PlayOneShot(efeitos[1]);
 	PuzzleMafia.chamaFuncao = true;
 	
 }

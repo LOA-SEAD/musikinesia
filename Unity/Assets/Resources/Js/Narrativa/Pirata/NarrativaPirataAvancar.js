@@ -5,7 +5,10 @@ var audios : AudioClip[];
 function Start () {
 
 	gameObject.GetComponent(SpriteRenderer).color = Color(0.969, 0.647, 0.169, 1);
-	transform.position.y = -20;
+	
+	if(gameObject.name == "btAvancar") {
+		transform.position.y = -20;
+	}
 
 }
 
@@ -31,9 +34,29 @@ function Acao () {
 	NarrativaPirataAnim.soltaAnimacao = true;
 	NarrativaPirataTexto.passaTexto = true;
 	NarrativaPirataTexto.liberaTexto = false;
-	audio.PlayOneShot(audios[1]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[1]);
 	print("Proximo " + NarrativaPirata.proximo);
 	
+}
+
+function Pular() {
+	if(NarrativaPirataTexto.i < 37) {
+		Application.LoadLevel("PuzzlePirata");
+	}
+	
+	if(NarrativaPirataTexto.i > 37 && NarrativaPirataTexto.i < 58) {
+		Application.LoadLevel("Jogo");
+		Pontuacao.numMusica = 10;
+	}
+	
+	if(NarrativaPirataTexto.i >= 58 && NarrativaPirataTexto.i < 77) {
+		Application.LoadLevel("Jogo");
+		Pontuacao.numMusica = 11;
+	}
+		
+	if(NarrativaPirataTexto.i >= 77) { // && NarrativaPirataTexto.i < 77)
+		Application.LoadLevel("CreditosFinais");
+	}
 }
 
 function OnMouseDown () {
@@ -46,13 +69,18 @@ function OnMouseUp () {
 
 	gameObject.GetComponent(SpriteRenderer).color = Color(0.969, 0.647, 0.169, 1);
 	
-	Acao();
+	if(gameObject.name == "btPular") {
+		Pular();
+	}
+	else {
+		Acao();
+	}
 
 }
 
 function OnMouseEnter () {
 
-	audio.PlayOneShot(audios[0]);
+	GetComponent.<AudioSource>().PlayOneShot(audios[0]);
 
 }
 

@@ -11,9 +11,9 @@ var imagem : Sprite[];
 var ajuda : GameObject[];
 
 function Start () {
-
-	ajuda[0].renderer.enabled = false; //notas
-	ajuda[1].renderer.enabled = false; //teclas
+	
+	ajuda[0].GetComponent.<Renderer>().enabled = false; //notas
+	ajuda[1].GetComponent.<Renderer>().enabled = false; //teclas
 	
 }
 
@@ -27,15 +27,15 @@ function OnMouseDown() {
 	
 	if(gameObject.tag == "bt1")
 		{
-		ajuda[0].renderer.enabled = !ajuda[0].renderer.enabled; //liga ou desliga a imagem das notas	
-		ajuda[1].renderer.enabled = false; //desliga a imagem das teclas
+		ajuda[0].GetComponent.<Renderer>().enabled = !ajuda[0].GetComponent.<Renderer>().enabled; //liga ou desliga a imagem das notas	
+		ajuda[1].GetComponent.<Renderer>().enabled = false; //desliga a imagem das teclas
 		GetComponent(SpriteRenderer).sprite = imagem[1];
 		}
 		
 	else if(gameObject.tag == "bt2")
 		{
-		ajuda[1].renderer.enabled = !ajuda[1].renderer.enabled; //liga ou desliga a imagem das teclas
-		ajuda[0].renderer.enabled = false; //desliga a imagem das notas
+		ajuda[1].GetComponent.<Renderer>().enabled = !ajuda[1].GetComponent.<Renderer>().enabled; //liga ou desliga a imagem das teclas
+		ajuda[0].GetComponent.<Renderer>().enabled = false; //desliga a imagem das notas
 		GetComponent(SpriteRenderer).sprite = imagem[3];
 		}
 

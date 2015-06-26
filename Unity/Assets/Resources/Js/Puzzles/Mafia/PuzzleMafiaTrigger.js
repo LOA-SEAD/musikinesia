@@ -11,7 +11,7 @@ function Update () {
 
 	if(PuzzleMafia.proximo == i || PuzzleMafia.proximo == j)
 		{
-		animation.Stop();
+		GetComponent.<Animation>().Stop();
 		Destroy(gameObject);
 		}
 		
