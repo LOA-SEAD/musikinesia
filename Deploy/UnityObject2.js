@@ -1,1693 +1,592 @@
-/**
- * @fileOverview 
- * Defines UnityObject2
- */
+<!DOCTYPE html><html lang="pt" xmlns:fb="http://ogp.me/ns/fb#" xml:lang="pt" xmlns="http://www.w3.org/1999/xhtml" class="media-desktop"><head><script nonce="gdiVXuDtntBIVhJ+eFQ+">
+window._goch_ = {};
+window.addEventListener('click', function(event) {
+    'use strict';
+    var elm = event.target, match;
+    while (elm) {
+        match = /\bcpyxl\d+\b/.exec(elm.className);
+        if (match !== null) {
+            match = match[0];
+            if (window._goch_.hasOwnProperty(match)) {
+                if (false === window._goch_[match].call(elm,event)) {
+                    event.preventDefault();
+                }
 
-
-//TODO: No need to polute the global space, just transfer this control to a 'static' variable insite unityObject! 
-/**
- * @namespace 
- */
-//var unity = unity || {};
-// We store all unityObject instances in a global scope, needed for IE firstFrameCallback and other internal tasks.
-//unity.instances = [];
-//unity.instanceNumber = 0;
-
-/**
- * Object expected by the Java Installer. We can move those to UnityObject2 if we update the java Installer.
- */
-var unityObject = {
-    /**
-     * Callback used bt the Java installer to notify the Install Complete.
-     * @private
-     * @param {String} id
-     * @param {bool} success
-     * @param {String} errormessage
-     */
-    javaInstallDone : function (id, success, errormessage) {
-
-        var instanceId = parseInt(id.substring(id.lastIndexOf('_') + 1), 10);
-
-        if (!isNaN(instanceId)) {
-
-            // javaInstallDoneCallback must not be called directly because it deadlocks google chrome
-            setTimeout(function () {
-
-                UnityObject2.instances[instanceId].javaInstallDoneCallback(id, success, errormessage);
-            }, 10);
+            }
         }
+        elm = elm.parentElement;
     }
-};
-
-
-/** 
- *  @class 
- *  @constructor
- */
-var UnityObject2 = function (config) {
-
-    /** @private */
-    var logHistory = [],
-        win = window,
-        doc = document,
-        nav = navigator,
-        instanceNumber = null,
-        //domLoaded = false,
-        //domLoadEvents = [],
-        embeddedObjects = [], //Could be removed?
-        //listeners = [],
-        //styleSheet = null,
-        //styleSheetMedia = null,
-        //autoHideShow = true,
-        //fullSizeMissing = true,
-        useSSL = (document.location.protocol == 'https:'),  //This will turn off enableUnityAnalytics, since enableUnityAnalytics don't have a https version.
-        baseDomain = useSSL ? "https://ssl-webplayer.unity3d.com/" : "http://webplayer.unity3d.com/",
-        triedJavaCookie = "_unity_triedjava",
-        triedJavaInstall = _getCookie(triedJavaCookie),
-        triedClickOnceCookie = "_unity_triedclickonce",
-        triedClickOnce = _getCookie(triedClickOnceCookie),
-        progressCallback = false,
-        applets = [],
-        //addedClickOnce = false,
-        googleAnalyticsLoaded = false,
-        googleAnalyticsCallback = null,
-        latestStatus = null,
-        lastType = null,
-        //beginCallback = [],
-        //preCallback = [],
-        imagesToWaitFor = [],
-        //referrer = null,
-        pluginStatus = null,
-        pluginStatusHistory = [],
-        installProcessStarted = false, //not used anymore?
-        kInstalled = "installed",
-        kMissing = "missing",
-        kBroken = "broken",
-        kUnsupported = "unsupported",
-        kReady = "ready", //not used anymore?
-        kStart = "start",
-        kError = "error",
-        kFirst = "first",
-        //kStandard = "standard",
-        kJava = "java",
-        kClickOnce = "clickonce", //not used anymore?
-        wasMissing = false,             //identifies if this is a install attempt, or if the plugin was already installed
-		unityObject = null,				//The <embed> or <object> for the webplayer. This can be used for webPlayer communication.
-        //kApplet = "_applet",
-        //kBanner = "_banner",
-
-        cfg = {
-            pluginName              : "Unity Player",
-            pluginMimeType          : "application/vnd.unity",
-            baseDownloadUrl         : baseDomain + "download_webplayer-3.x/",
-            fullInstall             : false,
-            autoInstall             : false,
-            enableJava              : true,
-            enableJVMPreloading     : false,
-            enableClickOnce         : true,
-            enableUnityAnalytics    : false,
-            enableGoogleAnalytics   : true,
-            params                  : {},
-            attributes              : {},
-            referrer                : null,
-            debugLevel              : 0
-        };
-
-    // Merge in the given configuration and override defaults.
-    cfg = jQuery.extend(true, cfg, config);
-
-    if (cfg.referrer === "") {
-        cfg.referrer = null;
-    }
-    //enableUnityAnalytics does not support SSL yet.
-    if (useSSL) {
-        cfg.enableUnityAnalytics = false;
-    }
-
-    /** 
-     * Get cookie value
-     * @private
-     * @param {String} name The param name
-     * @return string or false if non-existing.
-     */
-    function _getCookie(name) {
-
-        var e = new RegExp(escape(name) + "=([^;]+)");
-
-        if (e.test(doc.cookie + ";")) {
-
-            e.exec(doc.cookie + ";");
-            return RegExp.$1;
-        }
-
-        return false;
-    }
-
-    /** 
-     * Sets session cookie
-     * @private
-     */
-    function _setSessionCookie(name, value) {
-        
-        document.cookie = escape(name) + "=" + escape(value) + "; path=/";
-    }
-
-    /**
-     * Converts unity version to number (used for version comparison)
-     * @private
-     */
-    function _getNumericUnityVersion(version) {
-
-        var result = 0,
-            major,
-            minor,
-            fix,
-            type,
-            release;
-
-        if (version) {
-
-            var m = version.toLowerCase().match(/^(\d+)(?:\.(\d+)(?:\.(\d+)([dabfr])?(\d+)?)?)?$/);
-
-            if (m && m[1]) {
-
-                major = m[1];
-                minor = m[2] ? m[2] : 0;
-                fix = m[3] ? m[3] : 0;
-                type = m[4] ? m[4] : 'r';
-                release = m[5] ? m[5] : 0;
-                result |= ((major / 10) % 10) << 28;
-                result |= (major % 10) << 24;
-                result |= (minor % 10) << 20;
-                result |= (fix % 10) << 16;
-                result |= {d: 2 << 12, a: 4 << 12, b: 6 << 12, f: 8 << 12, r: 8 << 12}[type];
-                result |= ((release / 100) % 10) << 8;
-                result |= ((release / 10) % 10) << 4;
-                result |= (release % 10);
-            }
-        }
-        
-        return result;
-    }
-
-    /**
-     * Gets plugin and unity versions (non-ie)
-     * @private
-     */
-    function _getPluginVersion(callback, versions) {
-        
-        var b = doc.getElementsByTagName("body")[0];
-        var ue = doc.createElement("object");
-        var i = 0;
-        
-        if (b && ue) {
-            ue.setAttribute("type", cfg.pluginMimeType);
-            ue.style.visibility = "hidden";
-            b.appendChild(ue);
-            var count = 0;
-            
-            (function () {
-                if (typeof ue.GetPluginVersion === "undefined") {
-                    
-                    if (count++ < 10) {
-                        
-                        setTimeout(arguments.callee, 10);
-                    } else {
-                        
-                        b.removeChild(ue);
-                        callback(null);
-                    }
-                } else {
-                    
-                    var v = {};
-                    
-                    if (versions) {
-                        
-                        for (i = 0; i < versions.length; ++i) {
-                            
-                            v[versions[i]] = ue.GetUnityVersion(versions[i]);
-                        }
-                    }
-                    
-                    v.plugin = ue.GetPluginVersion();
-                    b.removeChild(ue);
-                    callback(v);
-                }
-            })();
-            
-        } else {
-            
-            callback(null);
-        }
-    }
-        
-    /**
-	 * Retrieves windows installer name
-     * @private
-     */        
-	function _getWinInstall() {
-        var url = "";
-
-        if (ua.x64) {
-            url = cfg.fullInstall ? "UnityWebPlayerFull64.exe" : "UnityWebPlayer64.exe";
-        } else {
-            url = cfg.fullInstall ? "UnityWebPlayerFull.exe" : "UnityWebPlayer.exe";
-        }
-        
-		if (cfg.referrer !== null) {
-            
-			url += "?referrer=" + cfg.referrer;
-		}
-		return url;
-	}
-
-    /**
-	 * Retrieves mac plugin package name
-     * @private
-     */
-	function _getOSXInstall() {
-        
-		var url = "UnityPlayer.plugin.zip";
-        
-		if (cfg.referrer != null) {
-            
-			url += "?referrer=" + cfg.referrer;
-		}
-		return url;
-	}
-
-    /**
-	 * retrieves installer name
-     * @private
-     */
-	function _getInstaller() {
-        
-		return cfg.baseDownloadUrl + (ua.win ? _getWinInstall() : _getOSXInstall() );
-	}    
-
-    /**
-     * sets plugin status
-     * @private
-     */    
-    function _setPluginStatus(status, type, data, url) {
-        
-        if (status === kMissing) {
-            wasMissing = true;
-        }
-                
-        //   debug('setPluginStatus() status:', status, 'type:', type, 'data:', data, 'url:', url);
-
-        // only report to analytics the first time a status occurs.
-        if ( jQuery.inArray(status, pluginStatusHistory) === -1 ) {
-            
-            //Only send analytics for plugins installs. Do not send if plugin is already installed.
-            if (wasMissing) {
-                _an.send(status, type, data, url);
-            }
-            pluginStatusHistory.push(status);
-        }
-
-        pluginStatus = status;
-    }
-
-
-    /** 
-     *  Contains browser and platform properties
-     *  @private
-     */
-    var ua = function () {
-        
-            var a = nav.userAgent, p = nav.platform;
-            var chrome = /chrome/i.test(a);
-
-            //starting from IE 11, IE is using a different UserAgent.
-            var ie = false;
-            if (/msie/i.test(a)){
-                ie = parseFloat(a.replace(/^.*msie ([0-9]+(\.[0-9]+)?).*$/i, "$1"));
-            } else if (/Trident/i.test(a)) {
-                ie = parseFloat(a.replace(/^.*rv:([0-9]+(\.[0-9]+)?).*$/i, "$1"));
-            }
-            var ua = {
-                w3 : typeof doc.getElementById != "undefined" && typeof doc.getElementsByTagName != "undefined" && typeof doc.createElement != "undefined",
-                win : p ? /win/i.test(p) : /win/i.test(a),
-                mac : p ? /mac/i.test(p) : /mac/i.test(a),
-                ie : ie,
-                ff : /firefox/i.test(a),
-                op : /opera/i.test(a),
-                ch : chrome,
-                ch_v : /chrome/i.test(a) ? parseFloat(a.replace(/^.*chrome\/(\d+(\.\d+)?).*$/i, "$1")) : false,
-                sf : /safari/i.test(a) && !chrome,
-                wk : /webkit/i.test(a) ? parseFloat(a.replace(/^.*webkit\/(\d+(\.\d+)?).*$/i, "$1")) : false,
-                x64 : /win64/i.test(a) && /x64/i.test(a),
-                moz : /mozilla/i.test(a) ? parseFloat(a.replace(/^.*mozilla\/([0-9]+(\.[0-9]+)?).*$/i, "$1")) : 0,
-				mobile: /ipad/i.test(p) || /iphone/i.test(p) || /ipod/i.test(p) || /android/i.test(a) || /windows phone/i.test(a)
-            };
-            
-            ua.clientBrand = ua.ch ? 'ch' : ua.ff ? 'ff' : ua.sf ? 'sf' : ua.ie ? 'ie' : ua.op ? 'op' : '??';
-            ua.clientPlatform = ua.win ? 'win' : ua.mac ? 'mac' : '???';
-            
-            // get base url
-            var s = doc.getElementsByTagName("script");
-            
-            for (var i = 0; i < s.length; ++i) {
-                
-                var m = s[i].src.match(/^(.*)3\.0\/uo\/UnityObject2\.js$/i);
-                
-                if (m) {
-                    
-                    cfg.baseDownloadUrl = m[1];
-                    break;
-                }
-            }
-            
-            /**
-             * compares two versions
-             * @private
-             */
-            function _compareVersions(v1, v2) {
-                
-                for (var i = 0; i < Math.max(v1.length, v2.length); ++i) {
-
-                    var n1 = (i < v1.length) && v1[i] ? new Number(v1[i]) : 0;
-                    var n2 = (i < v2.length) && v2[i] ? new Number(v2[i]) : 0;
-                    if (n1 < n2) return -1;
-                    if (n1 > n2) return 1;
-                }
-
-                return 0;
-            };
-            
-            /**
-             * detect java
-             */ 
-            ua.java = function () {
-                
-                if (nav.javaEnabled()) {
-                    
-                    var wj = (ua.win && ua.ff);
-                    var mj = false;//(ua.mac && (ua.ff || ua.ch || ua.sf));
-                    
-                    if (wj || mj) {
-                        
-                        if (typeof nav.mimeTypes != "undefined") {
-                            
-                            var rv = wj ? [1, 6, 0, 12] : [1, 4, 2, 0];
-                            
-                            for (var i = 0; i < nav.mimeTypes.length; ++i) {
-                                
-                                if (nav.mimeTypes[i].enabledPlugin) {
-                                    
-                                    var m = nav.mimeTypes[i].type.match(/^application\/x-java-applet;(?:jpi-)?version=(\d+)(?:\.(\d+)(?:\.(\d+)(?:_(\d+))?)?)?$/);
-                                    
-                                    if (m != null) {
-                                        
-                                        if (_compareVersions(rv, m.slice(1)) <= 0) {
-                                            
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if (ua.win && ua.ie) {
-
-                        if (typeof ActiveXObject != "undefined") {
-                            
-                            /**
-                             * ActiveX Test
-                             */
-                            function _axTest(v) {
-                                
-                                try {
-                                    
-                                    return new ActiveXObject("JavaWebStart.isInstalled." + v + ".0") != null;
-                                }
-                                catch (ex) {
-                                    
-                                    return false;
-                                }
-                            }
-
-                            /**
-                             * ActiveX Test 2
-                             */
-                            function _axTest2(v) {
-                                
-                                try {
-                                    
-                                    return new ActiveXObject("JavaPlugin.160_" + v) != null;
-                                } catch (ex) {
-                                    
-                                    return false;
-                                }
-                            }
-                            
-                            if (_axTest("1.7.0")) {
-                                
-                                return true;
-                            }
-                            
-                            if (ua.ie >= 8) {
-                                
-                                if (_axTest("1.6.0")) {
-                                    
-                                    // make sure it's 1.6.0.12 or newer. increment 50 to a larger value if 1.6.0.50 is released
-                                    for (var i = 12; i <= 50; ++i) {
-                                        
-                                        if (_axTest2(i)) {
-                                            
-                                            if (ua.ie == 9 && ua.moz == 5 && i < 24) {
-                                                // when IE9 is not in compatibility mode require at least
-                                                // Java 1.6.0.24: http://support.microsoft.com/kb/2506617
-                                                continue;
-                                            } else {
-                                                
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                    
-                                    return false;
-                                }
-                            } else {
-                                
-                                return _axTest("1.6.0") || _axTest("1.5.0") || _axTest("1.4.2");
-                            }
-                        }
-                    }
-                }
-                
-                return false;
-            }();
-            
-            // detect clickonce
-            ua.co = function () {
-                
-                if (ua.win && ua.ie) {
-                    var av = a.match(/(\.NET CLR [0-9.]+)|(\.NET[0-9.]+)/g);
-                    if (av != null) {
-                        var rv = [3, 5, 0];
-                        for (var i = 0; i < av.length; ++i) {
-                            var versionNumbers = av[i].match(/[0-9.]{2,}/g)[0].split(".");
-                            if (_compareVersions(rv, versionNumbers) <= 0) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-                
-            }();
-            
-            return ua;
-    }();
-
-
-    /** 
-     * analytics
-     * @private
-     */
-    var _an = function () {
-        var uid = function () {
-            
-            var now = new Date();
-            var utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDay(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
-            return utc.toString(16) + _getRandomInt().toString(16);
-        }();
-        var seq = 0;
-        var _ugaq = window["_gaq"] = ( window["_gaq"] || [] );
-        
-        _setUpAnalytics();
-
-        /**
-        * generates random integer number
-        * @private
-        */            
-        function _getRandomInt() {
-
-            return Math.floor(Math.random() * 2147483647);
-        }
-        
-        /**
-         * Checks if there is a need to load analytics, by checking the existance of a _gaq object
-         */
-        function _setUpAnalytics() {
-            
-            var gaUrl = ('https:'   == document.location.protocol ? 'https://ssl'   : 'http://www') + '.google-analytics.com/ga.js';
-            var ss = doc.getElementsByTagName("script");
-            var googleAnalyticsLoaded = false;
-            for (var i = 0; i < ss.length; ++i) {
-
-                if (ss[i].src && ss[i].src.toLowerCase() == gaUrl.toLowerCase()) {
-
-                    googleAnalyticsLoaded = true;
-                    break;
-                }
-            }
-            
-            if (!googleAnalyticsLoaded) {
-                var ga = doc.createElement("script");
-                ga.type = "text/javascript";
-                ga.async = true;
-                ga.src = gaUrl;
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(ga, s);
-            }
-            
-            var gaAccount = (cfg.debugLevel === 0) ? 'UA-16068464-16' : 'UA-16068464-17';
-                
-            _ugaq.push(["unity._setDomainName", "none"]);
-            _ugaq.push(["unity._setAllowLinker", true]);
-            _ugaq.push(["unity._setReferrerOverride", ' '+this.location.toString()]);
-
-            _ugaq.push(["unity._setAccount", gaAccount]);
-            // $(GoogleRevisionPlaceholder)
-        }
-
-        /**
-        * sends analytics data to unity
-        * @private
-        */            
-        function _sendUnityAnalytics(event, type, data, callback) {
-
-            if (!cfg.enableUnityAnalytics) {
-                
-                if (callback) {
-                    
-                    callback();
-                }
-                
-                return;
-            }
-            
-            var url = "http://unityanalyticscapture.appspot.com/event?u=" + encodeURIComponent(uid) + "&s=" + encodeURIComponent(seq) + "&e=" + encodeURIComponent(event);
-            // $(UnityRevisionPlaceholder)
-            
-            if (cfg.referrer !== null) {
-                
-                url += "?r=" + cfg.referrer;
-            }
-            
-            if (type) {
-                
-                url += "&t=" + encodeURIComponent(type);
-            }
-            
-            if (data) {
-                
-                url += "&d=" + encodeURIComponent(data);
-            }
-            
-            var img = new Image();
-            
-            if (callback) {
-                
-                img.onload = img.onerror = callback;
-            }
-            
-            img.src = url;
-        }
-
-        /**
-        * sends analytics data to google
-        * @private
-        */            
-        function _sendGoogleAnalytics(event, type, data, callback) {
-
-            if (!cfg.enableGoogleAnalytics) {
-
-                if (callback) {
-
-                    callback();
-                }
-
-                return;
-            }
-
-            var url = "/webplayer/install/" + event;
-            var join = "?";
-
-            if (type) {
-                
-                url += join + "t=" + encodeURIComponent(type);
-                join = "&";
-            }
-
-            if (data) {
-                
-                url += join + "d=" + encodeURIComponent(data);
-                join = "&";
-            }
-
-            if (callback) {
-                
-                _ugaq.push(function () {
-                    setTimeout(callback,1000);
-                    //this.googleAnalyticsCallback = callback;
-                });
-            }
-            
-            //try to shorten the URL to fit into customVariable
-            //it will try to replace the early directories to ..
-            var gameUrl = cfg.src;
-            if (gameUrl.length > 40) {
-                gameUrl = gameUrl.replace("http://","");
-                var paths = gameUrl.split("/");
-                
-                var gameUrlFirst = paths.shift();
-                var gameUrlLast = paths.pop();
-                gameUrl = gameUrlFirst + "/../"+ gameUrlLast;
-                
-                while(gameUrl.length < 40 && paths.length > 0) {
-                    var nextpath = paths.pop();
-                    if(gameUrl.length + nextpath.length + 5 < 40) {
-                        gameUrlLast =  nextpath + "/" + gameUrlLast;
-                    } else {
-                        gameUrlLast =  "../" + gameUrlLast;
-                    }
-                    gameUrl = gameUrlFirst + "/../"+ gameUrlLast;
-                }
-            }
-            _ugaq.push(['unity._setCustomVar',
-                2,                   // This custom var is set to slot #1.  Required parameter.
-                'GameURL',           // The name acts as a kind of category for the user activity.  Required parameter.
-                gameUrl,             // This value of the custom variable.  Required parameter.
-                3                    // Sets the scope to page-level.  Optional parameter.
-           ]);
-           _ugaq.push(['unity._setCustomVar',
-                1,                      // This custom var is set to slot #1.  Required parameter.
-                'UnityObjectVersion',   // The name acts as a kind of category for the user activity.  Required parameter.
-                "2",                    // This value of the custom variable.  Required parameter.
-                3                       // Sets the scope to page-level.  Optional parameter.
-           ]);
-           if (type) {
-               _ugaq.push(['unity._setCustomVar',
-                    3,                      // This custom var is set to slot #1.  Required parameter.
-                    'installMethod',   // The name acts as a kind of category for the user activity.  Required parameter.
-                    type,                    // This value of the custom variable.  Required parameter.
-                    3                       // Sets the scope to page-level.  Optional parameter.
-               ]);
-           }
-
-            _ugaq.push(["unity._trackPageview", url]);
-        }
-
-        return {
-            /**
-            * sends analytics data. optionally opens url once data has been sent
-            * @public
-            */                
-            send : function (event, type, data, url) {
-
-                if (cfg.enableUnityAnalytics || cfg.enableGoogleAnalytics) {
-
-                    debug('Analytics SEND', event, type, data, url);
-                }
-
-                ++seq;
-                var count = 2;
-
-                var callback = function () {
-
-                    if (0 == --count) {
-
-                        googleAnalyticsCallback = null;
-                        window.location = url;
-                    }
-                }
-                
-                if (data === null || data === undefined) {
-                    data = "";
-                }
-
-                _sendUnityAnalytics(event, type, data, url ? callback : null);
-                _sendGoogleAnalytics(event, type, data, url ? callback : null);
-            }
-        };
-    }();
-    
-    
-    
-    
-    
-    /* Java Install - BEGIN */
-
-    /**
-     * @private
-     */
-	function _createObjectElement(attributes, params, elementToReplace) {
-        
-        var i,
-            at,
-            pt,
-            ue,
-            pe;
-        
-		if (ua.win && ua.ie) {
-            
-			at = "";
-            
-			for (i in attributes) {
-                
-				at += ' ' + i + '="' + attributes[i] + '"';
-			}
-            
-			pt = "";
-            
-			for (i in params) {
-                
-				pt += '<param name="' + i + '" value="' + params[i] + '" />';
-			}
-            
-			elementToReplace.outerHTML = '<object' + at + '>' + pt + '</object>';
-            
-		} else {
-            
-			ue = doc.createElement("object");
-            
-			for (i in attributes) {
-                
-				ue.setAttribute(i, attributes[i]);
-			}
-            
-			for (i in params) {
-                
-				pe = doc.createElement("param");
-				pe.name = i;
-				pe.value = params[i];
-				ue.appendChild(pe);
-			}
-            
-			elementToReplace.parentNode.replaceChild(ue, elementToReplace);
-		}
-	}
-	
-    /**
-     * @private
-     */    
-	function _checkImage(img) {
-        
-		// img element not in the DOM yet
-		if (typeof img == "undefined") {
-            
-			return false;
-		}
-        
-		if (!img.complete) {
-            
-			return false;
-		}
-        
-		// some browsers always return true in img.complete, for those
-		// we can check naturalWidth
-		if (typeof img.naturalWidth != "undefined" && img.naturalWidth == 0) {
-            
-			return false;
-		}
-        
-		// no other way of checking, assuming it is ok
-		return true;
-	}
-
-    /**
-     * @private
-     */
-	function _preloadJVMWhenReady(id) {
-        
-		var needToWait = false;
-        
-		for (var i = 0; i < imagesToWaitFor.length; i++) {
-			if (!imagesToWaitFor[i]) {
-				continue;
-			}
-			var img = doc.images[imagesToWaitFor[i]];
-			if (!_checkImage(img)) {
-				needToWait = true;
-			}
-			else {
-				imagesToWaitFor[i] = null;
-			}
-		}
-		if (needToWait) {
-			// check again in 100ms
-			setTimeout(arguments.callee, 100);
-		}
-		else {
-			// preload after a small delay, to make sure
-			// the images have actually rendered
-			setTimeout(function () {
-				_preloadJVM(id);
-			}, 100);
-		}
-	}
-
-
-	/**
-     *  preloads the JVM and the Java Plug-in
-     *  @private
-     */       
-	function _preloadJVM(id) {
-        
-		var re = doc.getElementById(id);
-        
-		if (!re) {
-            
-			re = doc.createElement("div");
-			var lastBodyElem = doc.body.lastChild;
-			doc.body.insertBefore(re, lastBodyElem.nextSibling);
-		}
-        
-		var codebase = cfg.baseDownloadUrl + "3.0/jws/";
-        
-		var a = {
-			id : id,
-			type : "application/x-java-applet",
-			code : "JVMPreloader",
-			width : 1,
-			height : 1,
-			name : "JVM Preloader"
-		};
-        
-		var p = {
-			context : id,
-			codebase : codebase,
-			classloader_cache : false,
-			scriptable : true,
-			mayscript : true
-		};
-        
-		_createObjectElement(a, p, re);
-        jQuery('#' + id).show();
-		//setVisibility(id, true);
-	}
-	
-    /**
-	 * launches java installer
-     * @private
-     */    
-	function _doJavaInstall(id) {
-        
-		triedJavaInstall = true;
-		_setSessionCookie(triedJavaCookie, triedJavaInstall);
-		var re = doc.getElementById(id);
-		var appletID = id + "_applet_" + instanceNumber;
-        
-        applets[appletID] = {
-            attributes : cfg.attributes,
-            params : cfg.params,
-            callback : cfg.callback,
-            broken : cfg.broken
-        };        
-        
-		var applet = applets[appletID];
-        
-		var a = {
-			id : appletID,
-			type : "application/x-java-applet",
-			archive : cfg.baseDownloadUrl + "3.0/jws/UnityWebPlayer.jar",
-			code : "UnityWebPlayer",
-			width : 1,
-			height : 1,
-			name : "Unity Web Player"
-		};
-        
-		if (ua.win && ua.ff) {
-            
-			a["style"] = "visibility: hidden;";
-		}
-        
-		var p = {
-			context : appletID,
-			jnlp_href : cfg.baseDownloadUrl + "3.0/jws/UnityWebPlayer.jnlp",
-			classloader_cache : false,
-			installer : _getInstaller(),
-			image : baseDomain + "installation/unitylogo.png",
-			centerimage : true,
-			boxborder : false,
-			scriptable : true,
-			mayscript : true
-		};
-        
-		for (var i in applet.params) {
-            
-			if (i == "src") {
-                
-				continue;
-			}
-            
-			if (applet.params[i] != Object.prototype[i]) {
-                
-				p[i] = applet.params[i];
-                
-				if (i.toLowerCase() == "logoimage") {
-                    
-					p["image"] = applet.params[i];
-				}
-				else if (i.toLowerCase() == "backgroundcolor") {
-                    
-					p["boxbgcolor"] = "#" + applet.params[i];
-				}
-				else if (i.toLowerCase() == "bordercolor") {
-                    
-					// there's no way to specify border color
-					p["boxborder"] = true;
-				}
-				else if (i.toLowerCase() == "textcolor") {
-                    
-					p["boxfgcolor"] = "#" + applet.params[i];
-				}
-			}
-		}
-
-		// Create a dummy div element in the unityPlayer div
-		// so that it can be replaced with the 1x1 px applet.
-		// The applet will be resized when it has fully loaded,
-		// see appletStarted().
-		var divToBeReplacedWithApplet = doc.createElement("div");
-		re.appendChild(divToBeReplacedWithApplet);
-		_createObjectElement(a, p, divToBeReplacedWithApplet);
-        jQuery('#' + id).show();
-		//setVisibility(appletID, true);
-	}
-	
-    /**
-     * @private
-     */    
-	function _jvmPreloaded(id) {
-        
-		// timeout prevents crash on ie
-		setTimeout(function () {
-            
-			var re = doc.getElementById(id);
-            
-			if (re) {
-				re.parentNode.removeChild(re);
-			}
-		}, 0);
-	}
-	
-    /**
-     * @private
-     */    
-	function _appletStarted(id) {
-		// set the size of the applet to the one from cloned attributes
-		var applet = applets[id],
-            appletElement = doc.getElementById(id),
-            childNode;
-
-		// the applet might have already finished by now
-		if (!appletElement) {
-		
-            return;
-        }
-		
-		appletElement.width = applet.attributes["width"] || 600;
-		appletElement.height = applet.attributes["height"] || 450;
-
-		// remove all the siblings of the applet
-		var parentNode = appletElement.parentNode;
-		var childNodeList = parentNode.childNodes;
-        
-		for (var i = 0; i < childNodeList.length; i++) {
-            
-			childNode = childNodeList[i];
-			// Compare the child node with our applet element only if
-			// it has the same type. Doing the comparison in other cases just
-			// jumps out of the loop.
-			if (childNode.nodeType == 1 && childNode != appletElement) {
-			
-                parentNode.removeChild(childNode);
-            }
-		}
-	}	 
-    
-    
-	// java installation callback
-	function _javaInstallDoneCallback(id, success, errormessage) {
-        
-        debug('_javaInstallDoneCallback', id, success, errormessage);                   
-        //console.log('javaInstallDoneCallback', id, success, errormessage);                   
-        
-		if (!success) {
-            
-			//var applet = applets[id];
-			_setPluginStatus(kError, kJava, errormessage);
-			//createMissingUnity(id, applet.attributes, applet.params, applet.callback, applet.broken, kJava, errormessage);
-		}
-	}    
-    
-    /* Java Install - END */
-    
-
-    /**
-     * @private
-     */
-    function log() {
-        
-        logHistory.push(arguments);
-        
-        if ( cfg.debugLevel > 0 && window.console && window.console.log ) {
-            
-            console.log(Array.prototype.slice.call(arguments));
-            //console.log.apply(console, Array.prototype.slice.call(arguments));
-        }
-    }
-    
-    /**
-     * @private
-     */
-    function debug() {
-        
-        logHistory.push(arguments);
-        
-        if ( cfg.debugLevel > 1 && window.console && window.console.log ) {
-            
-            console.log(Array.prototype.slice.call(arguments));
-            //console.log.apply(console, Array.prototype.slice.call(arguments));
-        }
-    }
-    
-    /**
-     * appends px to the value if it's a plain number
-     * @private
-     */
-	function _appendPX(value) {
-        
-		if (/^[-+]?[0-9]+$/.test(value)) {
-			value += "px";
-		}
-		return value;
-	}
-
-
-    
-
-    var publicAPI = /** @lends UnityObject2.prototype */ {
-
-        /**
-         * Get Debug Level (0=Disabled)
-         * @public
-         * @return {Number} Debug Level
-         */
-        getLogHistory: function () {
-            
-            return logHistory; // JSON.stringify()
-        },
-
-
-        /**
-         * Get configuration object
-         * @public
-         * @return {Object} cfg
-         */
-        getConfig: function () {
-            
-            return cfg; // JSON.stringify()
-        },
-
-
-        /**
-         * @public
-         * @return {Object} detailed info about OS and Browser.
-         */
-        getPlatformInfo: function () {
-            
-            return ua;
-        },
-
-
-        /**
-         * Initialize plugin config and proceed with attempting to start the webplayer.
-         * @public
-         */
-        initPlugin: function (targetEl, src) {
-
-            cfg.targetEl = targetEl;
-            cfg.src = src;
-
-            debug('ua:', ua);
-            //console.debug('initPlugin this:', this);
-            this.detectUnity(this.handlePluginStatus);  
-        },        
-     
-
-        /**
-         * detects unity web player.
-         * @public
-         * callback - accepts two parameters.
-         *            first one contains "installed", "missing", "broken" or "unsupported" value.
-         *            second one returns requested unity versions. plugin version is included as well.
-         * versions - optional array of unity versions to detect.
-         */
-        detectUnity: function (callback, versions) {
-
-           // console.debug('detectUnity this:', this);
-            var self = this;
-
-            var status = kMissing;
-            var data;
-            nav.plugins.refresh();
-			
-			if (ua.clientBrand === "??" || ua.clientPlatform === "???" || ua.mobile ) {
-				status = kUnsupported;
-			} else if (ua.op && ua.mac) { // Opera on MAC is unsupported
-
-                status = kUnsupported;
-                data = "OPERA-MAC";
-            } else if (
-                typeof nav.plugins != "undefined" 
-                && nav.plugins[cfg.pluginName] 
-                && typeof nav.mimeTypes != "undefined" 
-                && nav.mimeTypes[cfg.pluginMimeType] 
-                && nav.mimeTypes[cfg.pluginMimeType].enabledPlugin
-            ) {
-
-                status = kInstalled;
-
-                // make sure web player is compatible with 64-bit safari
-                if (ua.sf && /Mac OS X 10_6/.test(nav.appVersion)) {
-
-                    _getPluginVersion(function (version) {
-
-                        if (!version || !version.plugin) {
-
-                            status = kBroken;
-                            data = "OSX10.6-SFx64";
-                        }
-
-                        _setPluginStatus(status, lastType, data);
-                        callback.call(self, status, version);
-                    }, versions);
-
-                    return;
-                } else if (ua.mac && ua.ch) { // older versions have issues on chrome
-
-                        _getPluginVersion(function (version) {
-
-                            if (version && (_getNumericUnityVersion(version.plugin) <= _getNumericUnityVersion("2.6.1f3"))) {
-                                status = kBroken;
-                                data = "OSX-CH-U<=2.6.1f3";
-                            }
-
-                            _setPluginStatus(status, lastType, data);
-                            callback.call(self, status, version);
-                        }, versions);
-
-                        return;
-                } else if (versions) {
-
-                        _getPluginVersion(function (version) {
-
-                            _setPluginStatus(status, lastType, data);
-                            callback.call(self, status, version);
-                        }, versions);
-                        return;
-                }
-            } else if (ua.ie) {
-                var activeXSupported = false;
-                try {
-                    if (ActiveXObject.prototype != null) {
-                        activeXSupported = true;
-                    }
-                } catch(e) {}
-
-                if (!activeXSupported) {
-                    status = kUnsupported;
-                    data = "ActiveXFailed";
-                } else {
-                    status = kMissing;
-                    try {
-                        var uo = new ActiveXObject("UnityWebPlayer.UnityWebPlayer.1");
-                        var pv = uo.GetPluginVersion();
-
-                        if (versions) {
-                            var v = {};
-                            for (var i = 0; i < versions.length; ++i) {
-                                v[versions[i]] = uo.GetUnityVersion(versions[i]);
-                            }
-                            v.plugin = pv;
-                        }
-
-                        status = kInstalled;
-                        // 2.5.0 auto update has issues on vista and later
-                        if (pv == "2.5.0f5") {
-                            var m = /Windows NT \d+\.\d+/.exec(nav.userAgent);
-                            if (m && m.length > 0) {
-                                var wv = parseFloat(m[0].split(' ')[2]);
-                                if (wv >= 6) {
-                                    status = kBroken;
-                                    data = "WIN-U2.5.0f5";
-                                }
-                            }
-                        }
-                    } catch(e) {}
-                }
-            }
-
-            _setPluginStatus(status, lastType, data);
-            callback.call(self, status, v);
-        },
-
-
-
-        /**
-         * @public
-         * @return {Object} with info about Unity WebPlayer plugin status (not installed, loading, running etc..)
-         */
-        handlePluginStatus: function (status, versions) {
-            
-            // Store targetEl in the closure, to be able to get it back if setTimeout calls again.
-            var targetEl = cfg.targetEl;
-
-            var $targetEl = jQuery(targetEl);
-
-            switch(status) {
-
-                case kInstalled:
-
-                    // @todo add support for alternate custom handlers.
-                    this.notifyProgress($targetEl);
-                    this.embedPlugin($targetEl, cfg.callback);
-                    break;
-
-                case kMissing:
-
-                    this.notifyProgress($targetEl);
-                    //this.installPlugin($targetEl);
-
-                    var self = this;
-                    var delayTime = (cfg.debugLevel === 0) ? 1000 : 8000;
-                    
-                    // Do a delay and re-check for plugin
-                    setTimeout(function () {
-                        
-                        cfg.targetEl = targetEl;
-                        self.detectUnity(self.handlePluginStatus);
-                    }, delayTime);                     
-                    
-                    break;
-
-                case kBroken:
-                    // Browser needs to restart after install
-                    this.notifyProgress($targetEl);
-                    break;
-
-                case kUnsupported:
-
-                    this.notifyProgress($targetEl);
-                    break;
-            }
-
-        },
-
-        /**
-         * @public
-         * @return {Object} with detailed plugin info, version number and other info that can be retrieved from the plugin.
-         */
-        /*getPluginInfo: function () {
-            
-        },*/
-
-        /**
-        * @public
-        */
-        getPluginURL: function () {
-
-            var url = "http://unity3d.com/webplayer/";
-
-            if (ua.win) {
-
-                url = cfg.baseDownloadUrl + _getWinInstall();
-
-            } else if (nav.platform == "MacIntel") {
-
-                url = cfg.baseDownloadUrl + (cfg.fullInstall ? "webplayer-i386.dmg" : "webplayer-mini.dmg");
-
-                if (cfg.referrer !== null) {
-
-                    url += "?referrer=" + cfg.referrer;
-                }
-
-            } else if (nav.platform == "MacPPC") {
-
-                url = cfg.baseDownloadUrl + (cfg.fullInstall ? "webplayer-ppc.dmg" : "webplayer-mini.dmg");
-
-                if (cfg.referrer !== null) {
-
-                    url += "?referrer=" + cfg.referrer;
-                }
-            }
-
-            return url;
-        },
-        
-        /**
-        * @public
-        */
-        getClickOnceURL: function () {
-            
-            return cfg.baseDownloadUrl + "3.0/co/UnityWebPlayer.application?installer=" + encodeURIComponent(cfg.baseDownloadUrl + _getWinInstall());
-        },
-
-        /**
-         * Embed the plugin into the DOM.
-         * @public
-         */
-        embedPlugin: function (targetEl, callback) {
-            
-            targetEl = jQuery(targetEl).empty();    
-                
-            var src = cfg.src; //targetEl.data('src'),
-            var width = cfg.width || "100%"; //TODO: extract those hardcoded values
-            var height = cfg.height || "100%";
-            var self = this;
-
-            if (ua.win && ua.ie) {
-                // ie, dom and object element do not mix & match
-                
-                var at = "";
-                
-                for (var i in cfg.attributes) {
-                    if (cfg.attributes[i] != Object.prototype[i]) {
-                        if (i.toLowerCase() == "styleclass") {
-                            at += ' class="' + cfg.attributes[i] + '"';
-                        }
-                        else if (i.toLowerCase() != "classid") {
-                            at += ' ' + i + '="' + cfg.attributes[i] + '"';
-                        }
-                    }
-                }
-                
-                var pt = "";
-
-                // we manually add SRC here, because its now defined on the target element.
-                pt += '<param name="src" value="' + src + '" />';
-                pt += '<param name="firstFrameCallback" value="UnityObject2.instances[' + instanceNumber + '].firstFrameCallback();" />';
-
-                for (var i in cfg.params) {
-                    
-                    if (cfg.params[i] != Object.prototype[i]) {
-                        
-                        if (i.toLowerCase() != "classid") {
-                            
-                            pt += '<param name="' + i + '" value="' + cfg.params[i] + '" />';
-                        }
-                    }
-                }
-
-                //var tmpHtml = '<div id="' + targetEl.attr('id') + '" style="width: ' + _appendPX(width) + '; height: ' + _appendPX(height) + ';"><object classid="clsid:444785F1-DE89-4295-863A-D46C3A781394" style="display: block; width: 100%; height: 100%;"' + at + '>' + pt + '</object></div>';
-                var tmpHtml = '<object classid="clsid:444785F1-DE89-4295-863A-D46C3A781394" style="display: block; width: ' + _appendPX(width) + '; height: ' + _appendPX(height) + ';"' + at + '>' + pt + '</object>';
-                var $object = jQuery(tmpHtml);
-                targetEl.append( $object );
-                embeddedObjects.push( targetEl.attr('id') );
-				unityObject = $object[0];
-
-            } else {
-
-                // Create and append embed element into DOM.
-                var $embed = jQuery('<embed/>')
-                    .attr({
-                        src: src,
-                        type: cfg.pluginMimeType,
-                        width: width,
-                        height: height,
-						firstFrameCallback: 'UnityObject2.instances[' + instanceNumber + '].firstFrameCallback();'
-                    })
-                    .attr(cfg.attributes)
-                    .attr(cfg.params)
-                    .css({
-                        display: 'block',
-                        width: _appendPX(width),
-                        height: _appendPX(height)
-                    })
-                    .appendTo( targetEl );
-					unityObject = $embed[0];
-            }
-			
-			//Auto focus the new object/embed, so players dont have to click it before using it.
-            //setTimeout is here to workaround a chrome bug.
-            //we should not invoke focus on safari on mac. it causes some Input bugs.
-            if (!ua.sf || !ua.mac) {
-                setTimeout(function() { 
-                    unityObject.focus(); 
-                }, 100);
-            }
-
-            if (callback) {
-                            
-                callback();
-            }
-        },        
-        
-        /**
-         * Determine which installation method to use on the current platform, and return an array with their identifiers (i.e. 'ClickOnceIE', 'JavaInstall', 'Manual')
-         * Take into account which previous methods might have been attempted (and failed) and skip to next best method.
-         * @public
-         * @return {String}
-         */
-        getBestInstallMethod: function () {
-            
-            // Always fall back to good old manual (download) install.
-            var method = 'Manual';
-            
-            //We only have manual install for 64bit plugin so far.
-            if (ua.x64)
-                return method;
-
-            // Is Java available and not yet attempted?
-            if (cfg.enableJava && ua.java && triedJavaInstall === false) {
-                
-                method = 'JavaInstall';
-            }
-            // Is ClickOnce available and not yet attempted?
-            else if (cfg.enableClickOnce && ua.co && triedClickOnce === false) {
-                
-                method = 'ClickOnceIE';
-            } 
-
-            return method;
-        },
-        
-        /**
-         * Tries to install the plugin using the specified method. 
-         * If no method is passed, it will try to use this.getBestInstallMethod()
-         * @public
-         * @param {String} method The desired install method
-         */
-        installPlugin: function(method) {
-            if (method == null || method == undefined) {
-                method = this.getBestInstallMethod();
-            }
-            
-            var urlToOpen = null;
-            switch(method) {
-
-                case "JavaInstall":
-                    this.doJavaInstall(cfg.targetEl.id);
-                break;
-                case "ClickOnceIE":
-                   triedClickOnce = true;
-                   _setSessionCookie(triedClickOnceCookie, triedClickOnce);
-                   var $iframe = jQuery("<iframe src='" + this.getClickOnceURL() + "' style='display:none;' />");
-                   jQuery(cfg.targetEl).append($iframe);
-                break;
-                default:
-                case "Manual":
-                   //doc.location = this.getPluginURL();
-                   //urlToOpen = this.getPluginURL();
-                   var $iframe = jQuery("<iframe src='" + this.getPluginURL() + "' style='display:none;' />");
-                   jQuery(cfg.targetEl).append($iframe);
-                break;
-            }
-            
-            lastType = method;
-            _an.send(kStart, method, null, null);
-            
-        },
-
-        /**
-         * Trigger event using jQuery(document).trigger()
-         * @public
-         */
-         //TODO: verify its use.
-        trigger: function (event, params) {
-
-            if (params) {
-                
-                debug('trigger("' + event + '")', params);
-                
-            } else {
-                
-                debug('trigger("' + event + '")');
-            }
-            
-            jQuery(document).trigger(event, params);
-        },        
-
-        /**
-         * Notify observers about onProgress event
-         * @public
-         */
-        notifyProgress: function (targetEl) {
-            
-            //debug('*** notifyProgress ***')
-            
-            if (typeof progressCallback !== "undefined" && typeof progressCallback === "function") {
-                
-                var payload = {
-                
-                    ua: ua,
-                    pluginStatus: pluginStatus,
-                    bestMethod: null,
-                    lastType: lastType,
-                    targetEl: cfg.targetEl,
-                    unityObj: this
+}, true);
+</script><meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" /><meta content="origin-when-crossorigin" name="referrer" /><meta content="noindex, nofollow, noimageindex" name="robots" /><script type="text/javascript" nonce="gdiVXuDtntBIVhJ+eFQ+">
+                window._document_observe_listeners = [];
+                document.observe = function(event, func) {
+                    window._document_observe_listeners.push({event: event, func: func});
                 };
-                
-                if (pluginStatus === kMissing) {
-                    
-                    payload.bestMethod = this.getBestInstallMethod();
+
+                window._jquery_ready_handlers = [];
+                jQuery = function(handler) {
+                    window._jquery_ready_handlers.push(handler);
+                };
+
+                function on_script_loaded(func) {
+                    (window.LoadedJsSuccessfully && document.loaded) ? func() : document.observe('script:loaded', func);
                 }
-                
-                if (latestStatus !== pluginStatus) { //Execute only on state change
-                    latestStatus = pluginStatus;
-                
-                    progressCallback(payload);
+                </script> <link href="https://cf.dropboxstatic.com/static/images/favicon-vflk5FiAC.ico" rel="shortcut icon" /><link href="https://cf.dropboxstatic.com/static/css/main-vfltsnHJP.css" type="text/css" rel="stylesheet" /><!--[if IE]><link href="https://cf.dropboxstatic.com/static/css/main_old_ie-vfltYB_kr.css" type="text/css" rel="stylesheet" /><![endif]--><link href="https://cf.dropboxstatic.com/static/css/web_sprites-vfln3zMSw.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/images/dropbox_webclip_60-vflN_uQqB.png" rel="apple-touch-icon" /><link href="https://cf.dropboxstatic.com/static/images/dropbox_webclip_76-vflVDzAci.png" rel="apple-touch-icon" sizes="76x76" /><link href="https://cf.dropboxstatic.com/static/images/dropbox_webclip_120-vflppIksR.png" rel="apple-touch-icon" sizes="120x120" /><link href="https://cf.dropboxstatic.com/static/images/dropbox_webclip_152-vflnR85Xl.png" rel="apple-touch-icon" sizes="152x152" /><link href="/w3c/p3p.xml" rel="P3Pv1" /><script type="text/javascript" nonce="gdiVXuDtntBIVhJ+eFQ+">window.ST=+new Date();</script><meta content="text/html; charset=UTF-8" http-equiv="content-type" /><meta content="Dropbox is a free service that lets you bring your photos, docs, and videos anywhere and share them easily. Never email yourself a file again!" name="description" /><meta content="online storage, free storage, file sharing, share files,
+    awesome, cloud storage, online backup, cross platform, sync, sharing, mac,
+    windows, os x, linux, backup, collaboration, file versioning, file revisions,
+    remote access, undelete" name="keywords" /><meta content="https://www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js?dl=0" property="og:url" /><meta content="Dropbox" property="og:site_name" /><meta content="UnityObject2.js" property="og:title" /><meta content="210019893730" property="fb:app_id" /><meta content="website" property="og:type" /><meta content="Compartilhado com o Dropbox" property="og:description" /><meta content="https://cf.dropboxstatic.com/static/images/icons128/page_white_code.png" property="og:image" /><meta content="128" property="og:image:width" /><meta content="128" property="og:image:height" /><meta content="summary" name="twitter:card" /><meta content="@Dropbox" name="twitter:site" /><meta content="https://www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js?dl=0" name="twitter:url" /><meta content="UnityObject2.js" name="twitter:title" /><meta content="Compartilhado com o Dropbox" name="twitter:description" /><meta content="https://cf.dropboxstatic.com/static/images/icons128/page_white_code.png" name="twitter:image" /><meta content="TnuSyOnBMNmtugbpL1ZvW2PbSF9LKvoTzrvOGS9h-b0" name="google-site-verification" /><meta content="EZKIczQcM1-DVUMz8heu1dIhNtxNbLqbaA9-HbOnCQ4" name="google-site-verification" /><meta content="tz8iotmk-pkhui406y41y5bfmfxdwmaa4a-yc0hm6r0fga7s6j0j27qmgqkmc7oovihzghbzhbdjk-uiyrz438nxsjdbj3fggwgl8oq2nf4ko8gi7j4z7t78kegbidl4" name="norton-safeweb-site-verification" /><meta content="https://cf.dropboxstatic.com/static/images/win8_web_tile-vfl8eyKFU.png" name="msapplication-TileImage" /><meta content="#ffffff" name="msapplication-TileColor" /><title>Dropbox - UnityObject2.js</title><script src="/static/javascript/langpack/pt_BR.js" charset="utf-8" type="text/javascript"></script><script type="text/javascript" nonce="gdiVXuDtntBIVhJ+eFQ+">
+            var EnvConstants = {"LIVE_TRANSCODE_SERVER": "showbox-tr.dropbox.com", "DL_DOC_USER_CONTENT_DOMAIN": "dl-doc.dropboxusercontent.com", "BATCH_THUMB_ENDPOINTS": ["//photos-1.dropbox.com/btjb", "//photos-2.dropbox.com/btjb", "//photos-3.dropbox.com/btjb", "//photos-4.dropbox.com/btjb", "//photos-5.dropbox.com/btjb", "//photos-6.dropbox.com/btjb"], "PHOTO_CLUSTER": ["photos-1.dropbox.com", "photos-2.dropbox.com", "photos-3.dropbox.com", "photos-4.dropbox.com", "photos-5.dropbox.com", "photos-6.dropbox.com"], "BLOCK_CLUSTER": "dl-web.dropbox.com", "IS_PROD": 1, "PUBSERVER": "dl.dropboxusercontent.com", "SVN_REV": "734889143", "CAROUSEL_DBXSERVER": "photos.dropbox.com", "CAROUSEL_WEBSERVER": "carousel.dropbox.com", "GSLB_ENABLED": 0, "WEB_STATIC_CDN_HOST": "cf.dropboxstatic.com", "WEB_STATIC_DROPBOX": "https://www.dropboxstatic.com", "WEBSERVER": "www.dropbox.com"};
+            var RequestConstants = {"REQUEST_START_TIME": 1435324951253, "IS_SPDY": 1, "REQUEST_ID": "c96b7293104001074fca87af47b810d2", "REQUEST_TRACING_ENABLED": false, "JS_CSRF_COOKIE": "js_csrf"};
+            var DebugConstants = {"CPROFILE_PARAMETER": "", "CPROFILE_ENABLED": 0, "GANDALF_PANEL": 0};
+            var StaticConstants = {"static_url_moxie_swf": "https://cf.dropboxstatic.com/static/swf/Moxie-vflz978zN.swf", "static_url_video_overlay": "https://cf.dropboxstatic.com/static/images/icons/video_overlay_2x-vflbzjg-q.png", "static_url_pdfjs_hack_viewer": "https://www.dropboxstatic.com/static/javascript/external/pdf-js-hack/web/viewer-vflUD2h_K.html", "static_url_pdfjs_viewer": "https://www.dropboxstatic.com/static/javascript/external/pdf-js-e9072ac/web/viewer-vflVAhuA0.html", "static_url_copy_clipboard_swf": "https://cf.dropboxstatic.com/static/swf/copy_clipboard-vflvMcZTC.swf", "static_url_video_js_swf": "https://flash.dropboxstatic.com/video-js-vflQBwsej.swf", "static_url_syntax_js": "https://cf.dropboxstatic.com/static/javascript/external/syntax-vflpNqebu.js", "static_url_web_socket_swf": "https://dbxlocal.dropboxstatic.com/WebSocket-vfleddzBF.swf"};
+            var ViewerConstants = {"datetime_format": "dd/MM/yyyy HH:mm", "date_format": "dd/MM/yyyy", "ROLE_PHOTOS": "photos", "hls_debug_level": "off", "TIMEZONE_OFFSET": 0, "_viewer_properties": {"_user_data": []}, "time_format": "HH:mm", "USER_LOCALE": "pt_BR", "transcoder_hls4web": 1, "ROLE_PARAM": "role", "UID_PARAM_NAME": "_subject_uid", "ROLE_BOTH": "both", "ROLE_WORK": "work", "ROLE_PERSONAL": "personal"};
+            var DropboxConstants = {"DELETE_ON_UNLINK_UNSUPPORTED": 3, "protocol": "https", "DOC_PREVIEW_UNAVAILABLE_FAILED": 1, "DOC_PREVIEW_UNAVAILABLE_PROTECTED_DOC": 4, "DOC_PREVIEW_AVAILABLE": 0, "NOTIFICATION_TYPE_META": -1, "DISABLE_VIDEOS_IN_LIGHTBOX": false, "DOC_PREVIEW_IN_PROGRESS": 2, "MAX_PDF_FILE_SIZE_B": 41943040, "FILE_ACTIVITY_LOG_CLIENT_ORIGIN_TYPE": {"MAX_EVENT_TYPE": 8, "SUBSCRIBE_BUTTON": 2, "AT_SIGN_KEYPRESS": 6, "MODAL_TOGGLE_BUTTON": 3, "LITTLE_MAN_BUTTON": 5, "LIKE_BUTTON": 1, "FACEPILE_ADD_BUTTON": 4, "POST_BUTTON": 0, "NO_AT_SIGN_KEYPRESS": 7}, "root_ns": 0, "DELETE_ON_UNLINK_OLD_CLIENT": 2, "PDF_PREVIEW_MODE": "pdf-js", "MAX_WEBHOOKS_PER_APP": 25, "DELETE_ON_UNLINK_SUPPORTED_PERSONAL_ONLY": 4, "DOC_PREVIEW_UNAVAILABLE_OTHER": 5, "FILE_ACTIVITY_LOG_EVENT_TYPE": {"DELETE_COMMENT": 4, "COMMENTS_OFF": 17, "SUBMITTED_FEEDBACK": 19, "NEW_COMMENT": 2, "CLIENT_SIGN_UP_SUCCESS": 16, "COMMENTS_ON": 18, "CLIENT_CONTACT_LIST_SELECTED": 21, "UNLIKE_FILE": 1, "MAX_EVENT_TYPE": 24, "MENTION": 9, "UNRESOLVE_COMMENT": 8, "CLIENT_COMMENTS_HIDDEN": 23, "CLIENT_SIGN_IN_MODAL": 13, "FILE_VIEW": 10, "CLIENT_CONTACT_LIST_SHOWN": 20, "CLIENT_SIGN_IN_SUCCESS": 15, "RESOLVE_COMMENT": 7, "CLIENT_COMMENTS_SHOWN": 22, "EDIT_COMMENT": 3, "UNLIKE_COMMENT": 6, "CLIENT_SIGN_UP_MODAL": 14, "FILE_UNSUBSCRIBE": 12, "LIKE_COMMENT": 5, "FILE_SUBSCRIBE": 11, "LIKE_FILE": 0}, "MAX_TEXT_FILE_SIZE_B": 4194304, "sess_id": "100158306946762622660100757766038800234", "DELETE_ON_UNLINK_SUPPORTED": 1, "PUBLIC_MODE_OVERRIDE": null, "DELETE_ON_UNLINK_SUPPORTED_TEAM_ONLY": 5, "DISABLE_VIDEO_ICONS": false, "referrer": "https://www.facebook.com/", "DOC_PREVIEW_UNAVAILABLE_BAD_FILE": 3, "FILE_ACTIVITY_ACTION_TYPE": {"UNRESOLVE_COMMENT": 8, "DELETE_COMMENT": 4, "COMMENTS_OFF": 11, "NEW_COMMENT": 2, "COMMENTS_ON": 12, "RESOLVE_COMMENT": 7, "UNLIKE_FILE": 1, "EDIT_COMMENT": 3, "UNLIKE_COMMENT": 6, "FILE_UNSUBSCRIBE": 10, "LIKE_COMMENT": 5, "FILE_SUBSCRIBE": 9, "LIKE_FILE": 0}, "WIT_VERSION": 6, "COUNTRY_OVERRIDE": null};
+            var GandalfConstants = {"gandalf": {"carousel-image-editing": false, "dropbox-photos-rebrand": false, "dw-comments-notify-facepile": null, "dw-comments-no-at-mentions": true, "dw-comments-annotation-marker": false, "dw-comments-responsive-width": false, "dw-comments-expanded-input": false, "unity-web-debug": false, "dw-comments-add-mention-dropdown": false, "docpreview-linkfile-drop": false, "dw-comments-no-notify-hint": null, "pptx-commenting": false, "comments-web-feedback": false}};
+            var PythonConstants = {"THUMBNAIL_SIZES": ["640x384", "150x150", "750x500", "16x16", "318x416", "1024x1024", "122x122", "2048x2048", "154x154", "2048x1536", "178x178", "568x320", "320x640", "154x274", "80x80", "512x512", "1024x768", "456x256", "1250x500", "960x640", "128x128", "512x256", "640x1280", "1600x1200", "72x72", "154x308", "75x75", "32x32", "320x568", "320x480", "274x154", "308x154", "480x480", "1000x500", "256x256", "320x320", "256x456", "48x48", "640x1136", "100x100", "640x480", "480x320", "640x640", "1500x500", "1136x640", "470x300", "256x512", "200x200", "800x600", "1280x960", "70x70", "1750x500", "800x800", "2000x500", "320x240", "1280x1280", "478x267", "64x64", "1280x640", "640x320"], "ACTIVITY_LOADING_MODE": {"ALL": 1, "FEEDBACK_METADATA_ONLY": 3, "NO_FEEDBACK": 2}, "THUMBNAIL_SIZE_MODE": {"STRICT": 2, "FIT_ONE_RESTRICT": 9, "LEGACY": 6, "FIT_ONE_ABSTRACT": 7, "EXACT_NO_BACKGROUND": 10, "ABSTRACT": 3, "FIT_ONE": 4, "EXACT": 1, "ORIGINAL": 5, "CUSTOM": 8}};
+            var Constants = {"datetime_format": "dd/MM/yyyy HH:mm", "BATCH_THUMB_ENDPOINTS": ["//photos-1.dropbox.com/btjb", "//photos-2.dropbox.com/btjb", "//photos-3.dropbox.com/btjb", "//photos-4.dropbox.com/btjb", "//photos-5.dropbox.com/btjb", "//photos-6.dropbox.com/btjb"], "protocol": "https", "DELETE_ON_UNLINK_OLD_CLIENT": 2, "JS_CSRF_COOKIE": "js_csrf", "TIMEZONE_OFFSET": 0, "PDF_PREVIEW_MODE": "pdf-js", "_viewer_properties": {"_user_data": []}, "SVN_REV": "734889143", "DISABLE_VIDEOS_IN_LIGHTBOX": false, "DOC_PREVIEW_IN_PROGRESS": 2, "USER_LOCALE": "pt_BR", "MAX_PDF_FILE_SIZE_B": 41943040, "ROLE_PHOTOS": "photos", "DOC_PREVIEW_UNAVAILABLE_PROTECTED_DOC": 4, "GSLB_ENABLED": 0, "REQUEST_ID": "c96b7293104001074fca87af47b810d2", "static_url_video_js_swf": "https://flash.dropboxstatic.com/video-js-vflQBwsej.swf", "ROLE_PARAM": "role", "NOTIFICATION_TYPE_META": -1, "DOC_PREVIEW_AVAILABLE": 0, "FILE_ACTIVITY_LOG_EVENT_TYPE": {"DELETE_COMMENT": 4, "COMMENTS_OFF": 17, "SUBMITTED_FEEDBACK": 19, "NEW_COMMENT": 2, "CLIENT_SIGN_UP_SUCCESS": 16, "COMMENTS_ON": 18, "CLIENT_CONTACT_LIST_SELECTED": 21, "UNLIKE_FILE": 1, "MAX_EVENT_TYPE": 24, "MENTION": 9, "UNRESOLVE_COMMENT": 8, "CLIENT_COMMENTS_HIDDEN": 23, "CLIENT_SIGN_IN_MODAL": 13, "FILE_VIEW": 10, "CLIENT_CONTACT_LIST_SHOWN": 20, "CLIENT_SIGN_IN_SUCCESS": 15, "RESOLVE_COMMENT": 7, "CLIENT_COMMENTS_SHOWN": 22, "EDIT_COMMENT": 3, "UNLIKE_COMMENT": 6, "CLIENT_SIGN_UP_MODAL": 14, "FILE_UNSUBSCRIBE": 12, "LIKE_COMMENT": 5, "FILE_SUBSCRIBE": 11, "LIKE_FILE": 0}, "PHOTO_CLUSTER": ["photos-1.dropbox.com", "photos-2.dropbox.com", "photos-3.dropbox.com", "photos-4.dropbox.com", "photos-5.dropbox.com", "photos-6.dropbox.com"], "CSP_SCRIPT_NONCE": "gdiVXuDtntBIVhJ+eFQ+", "BLOCK_CLUSTER": "dl-web.dropbox.com", "DELETE_ON_UNLINK_SUPPORTED": 1, "hls_debug_level": "off", "PUBLIC_MODE_OVERRIDE": null, "WEB_STATIC_DROPBOX": "https://www.dropboxstatic.com", "DISABLE_VIDEO_ICONS": false, "CAROUSEL_DBXSERVER": "photos.dropbox.com", "static_url_pdfjs_viewer": "https://www.dropboxstatic.com/static/javascript/external/pdf-js-e9072ac/web/viewer-vflVAhuA0.html", "DELETE_ON_UNLINK_SUPPORTED_TEAM_ONLY": 5, "static_url_copy_clipboard_swf": "https://cf.dropboxstatic.com/static/swf/copy_clipboard-vflvMcZTC.swf", "static_url_video_overlay": "https://cf.dropboxstatic.com/static/images/icons/video_overlay_2x-vflbzjg-q.png", "ROLE_PERSONAL": "personal", "FILE_ACTIVITY_ACTION_TYPE": {"UNRESOLVE_COMMENT": 8, "DELETE_COMMENT": 4, "COMMENTS_OFF": 11, "NEW_COMMENT": 2, "COMMENTS_ON": 12, "RESOLVE_COMMENT": 7, "UNLIKE_FILE": 1, "EDIT_COMMENT": 3, "UNLIKE_COMMENT": 6, "FILE_UNSUBSCRIBE": 10, "LIKE_COMMENT": 5, "FILE_SUBSCRIBE": 9, "LIKE_FILE": 0}, "DOC_PREVIEW_UNAVAILABLE_BAD_FILE": 3, "ROLE_BOTH": "both", "GANDALF_PANEL": 0, "LIVE_TRANSCODE_SERVER": "showbox-tr.dropbox.com", "DELETE_ON_UNLINK_UNSUPPORTED": 3, "time_format": "HH:mm", "CPROFILE_PARAMETER": "", "IS_PROD": 1, "PUBSERVER": "dl.dropboxusercontent.com", "REQUEST_START_TIME": 1435324951253, "CAROUSEL_WEBSERVER": "carousel.dropbox.com", "static_url_pdfjs_hack_viewer": "https://www.dropboxstatic.com/static/javascript/external/pdf-js-hack/web/viewer-vflUD2h_K.html", "IS_SPDY": 1, "gandalf": {"carousel-image-editing": false, "dropbox-photos-rebrand": false, "dw-comments-notify-facepile": null, "dw-comments-no-at-mentions": true, "dw-comments-annotation-marker": false, "dw-comments-responsive-width": false, "dw-comments-expanded-input": false, "unity-web-debug": false, "dw-comments-add-mention-dropdown": false, "docpreview-linkfile-drop": false, "dw-comments-no-notify-hint": null, "pptx-commenting": false, "comments-web-feedback": false}, "MAX_WEBHOOKS_PER_APP": 25, "DELETE_ON_UNLINK_SUPPORTED_PERSONAL_ONLY": 4, "COUNTRY_OVERRIDE": null, "date_format": "dd/MM/yyyy", "DL_DOC_USER_CONTENT_DOMAIN": "dl-doc.dropboxusercontent.com", "MAX_TEXT_FILE_SIZE_B": 4194304, "REQUEST_TRACING_ENABLED": false, "static_url_moxie_swf": "https://cf.dropboxstatic.com/static/swf/Moxie-vflz978zN.swf", "ROLE_WORK": "work", "sess_id": "100158306946762622660100757766038800234", "DOC_PREVIEW_UNAVAILABLE_OTHER": 5, "referrer": "https://www.facebook.com/", "UID_PARAM_NAME": "_subject_uid", "WEBSERVER": "www.dropbox.com", "transcoder_hls4web": 1, "static_url_syntax_js": "https://cf.dropboxstatic.com/static/javascript/external/syntax-vflpNqebu.js", "WEB_STATIC_CDN_HOST": "cf.dropboxstatic.com", "FILE_ACTIVITY_LOG_CLIENT_ORIGIN_TYPE": {"MAX_EVENT_TYPE": 8, "SUBSCRIBE_BUTTON": 2, "AT_SIGN_KEYPRESS": 6, "MODAL_TOGGLE_BUTTON": 3, "LITTLE_MAN_BUTTON": 5, "LIKE_BUTTON": 1, "FACEPILE_ADD_BUTTON": 4, "POST_BUTTON": 0, "NO_AT_SIGN_KEYPRESS": 7}, "DOC_PREVIEW_UNAVAILABLE_FAILED": 1, "CPROFILE_ENABLED": 0, "static_url_web_socket_swf": "https://dbxlocal.dropboxstatic.com/WebSocket-vfleddzBF.swf", "WIT_VERSION": 6, "root_ns": 0};
+            </script><script type="text/javascript" nonce="gdiVXuDtntBIVhJ+eFQ+">
+    window.LoadedJsSuccessfully = false;
+
+    if (window.addEventListener) {
+        window.addEventListener('load', function() {
+            window.setTimeout(function() {
+                if (!window.LoadedJsSuccessfully) {
+                    var url = encodeURIComponent(window.location.href);
+                    new Image().src = '/jse?e=failed+to+load+script&loc=' + url + '&f=' + url;
                 }
-            }
-        },
-
-        /**
-         * Subscribe to onProgress notification
-         * @public
-         */
-        observeProgress: function (callback) {
-            
-            progressCallback = callback;
-        },
-        
-        
-        /**
-         * Callback made by the WebPlayer plugin when the first frame is rendered.
-         * @public
-         */        
-        firstFrameCallback : function () {
-            
-            debug('*** firstFrameCallback (' + instanceNumber + ') ***');
-			pluginStatus = kFirst;
-            this.notifyProgress();
-            
-            /*
-            // What?
-            if (status == kFirst) {
-                if (pluginStatus == null) {
-                    return;
-                }
-            }
-            */
-
-            //Webplayer was already installed.
-            //Should only log firstframes if it happened after a install.
-            if (wasMissing === true) {
-                _an.send(pluginStatus, lastType);    
-            }
-            
-            //setRunStatus(kFirst, lastType);
-        },        
-
-        /**
-         * Get a string from a session cookie or SessionStorage
-         * @public
-         * @return {String}
-         */
-        /*getSessionString: function (key) {
-            
-        },*/
-
-        /**
-         * Set a string via a session cookie or SessionStorage
-         * @public
-         */
-       /* setSessionString: function (key, value) {
-            
-        },*/
-        
-        /**
-         * Get a string from a persistent cookie
-         * @public
-         * @return {String}
-         */
-        /*getCookie: function (key) {
-            
-        },*/
-        
-        /**
-         * Set a string to a persistent cookie
-         * @public
-         */
-        /*setCookie: function (key, value, expiryDate) {
-            
-        },*/
-        
-        /**
-         * Exposed private function
-         * @public
-         */        
-        setPluginStatus: function (status, type, data, url) {
-        
-            _setPluginStatus(status, type, data, url);
-        },        
-        
-        /**
-         * Exposed private function
-         * @public
-         */
-		doJavaInstall : function (id) {
-            
-			_doJavaInstall(id);
-		},
-		
-        /**
-         * Exposed private function
-         * @public
-         */
-		jvmPreloaded : function (id) {
-            
-			_jvmPreloaded(id);
-		},
-		
-        /**
-         * Exposed private function
-         * @public
-         */
-		appletStarted : function (id) {
-            
-			_appletStarted(id);
-		},
-		
-        /**
-         * Exposed private function
-         * @public
-         */
-		javaInstallDoneCallback : function (id, success, errormessage) {
-
-			_javaInstallDoneCallback(id, success, errormessage);
-		},
-		
-		getUnity: function() {
-			return unityObject;
-		}
+            }, 5000);
+        }, false);
     }
-    
-    // Internal store of each instance.
-    instanceNumber = UnityObject2.instances.length;
-    UnityObject2.instances.push(publicAPI);
-    
-    return publicAPI;
+</script><style type="text/css">.hny-botc { display: none; }</style> 
+            <style type="text/css" media="screen">
+                html {
+                  overflow: auto;
+                }
+            </style>
+        <link href="https://cf.dropboxstatic.com/static/css/comments-vflcdFbV0.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/components/avatar-vflkEipu-.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/packaged/components-vflERXB7g.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/file_feedback_likes_section-vflrCR4mO.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/file_feedback_sharing_section-vflyLoQSQ.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/file_feedback_ui-vflHmTSq9.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/growth/bright_modal-vflsGrbi6.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/growth/compact_form-vfla8f_Ja.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/growth/shared_link_signup_modals-vflkU42Y_.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/preview_toolbar-vfl5oFzJ4.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/recaptcha_challenge-vflMWk0GE.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/shmodel_print-vfl4KjVBn.css" type="text/css" rel="stylesheet" /><link href="https://cf.dropboxstatic.com/static/css/video-js-vflBkXNKb.css" type="text/css" rel="stylesheet" /><!--[if lt IE 9]><script src="/static/javascript/external/html5shiv.js"></script><![endif]--><script type="text/javascript" nonce="gdiVXuDtntBIVhJ+eFQ+">
+                        window.REQUIREJS_PACKAGE_SHIM = {"jquery": {"exports": "jQuery"}, "connect_v3_mobile": {"deps": ["modules/core/controller_registry", "modules/clean/em_string", "modules/core/html", "modules/clean/viewer", "modules/core/exception", "modules/core/i18n", "jquery", "modules/core/ordered_dictionary", "modules/core/dom", "modules/core/browser", "modules/core/notify", "modules/core/uri", "modules/core/cookies"]}, "libs_mobile": {"deps": ["jquery", "external/security/cyfd", "external/underscore"]}, "mobile": {"deps": ["modules/core/controller_registry", "modules/clean/datetime", "modules/core/i18n", "modules/clean/base64", "modules/core/dom", "modules/core/uri", "modules/core/cookies", "modules/clean/event_load", "libs_mobile", "modules/clean/image_size", "modules/clean/components/ajax_form", "modules/clean/viewer", "modules/core/ordered_dictionary", "modules/clean/uirequest", "jquery", "modules/core/exception", "modules/clean/analytics", "modules/clean/photos/legacy_thumb_loader", "modules/core/browser", "modules/clean/ajax", "modules/clean/sprite", "modules/clean/filepath", "modules/core/notify", "modules/core/html"]}, "libs": {"deps": ["jquery", "external/modernizr", "external/security/cyfd", "external/underscore"]}, "dropbox": {"deps": ["modules/clean/undo", "modules/clean/react/modal", "modules/core/controller_registry", "modules/clean/contacts/list", "modules/clean/job_progress", "modules/clean/pagination_manager", "modules/clean/browse_interface", "modules/clean/search/search_helpers", "modules/clean/gandalf_util", "modules/clean/contacts/cache", "modules/clean/multiaccount_login", "modules/clean/top_notif", "modules/clean/datetime", "modules/constants/viewer", "modules/core/i18n", "modules/clean/uirequest", "modules/clean/em_string", "modules/clean/base64", "modules/core/dom", "modules/clean/web_timing_logger", "modules/clean/video_util", "modules/clean/account/email", "modules/clean/dbmodal", "modules/clean/teams/team_folder_modal", "modules/clean/sharing/share_inband", "modules/clean/db_bubble", "modules/clean/payments/credit_card_util", "modules/clean/contacts/types", "external/react", "modules/clean/profile_services/profile_services_constants", "modules/clean/react/previews/preview_image", "modules/core/uri", "modules/clean/page_role_observer", "modules/core/cookies", "modules/clean/react/previews/preview_image_zoom", "modules/clean/dbmodal_loading", "modules/clean/display_format", "modules/clean/payments/cash", "modules/clean/event_load", "modules/clean/contacts/facebook_modal", "modules/clean/contacts/facebook_oauth", "modules/clean/react/previews/preview_video", "external/purify", "modules/clean/account/email_verify_reasons", "modules/clean/image_size", "modules/clean/react/hierarchical_nav_bar", "modules/clean/payments/dfb_util", "modules/clean/components/ajax_form", "modules/clean/viewer", "modules/core/ordered_dictionary", "modules/clean/events/rollback", "modules/clean/profile_services/profile_services_link", "libs", "modules/clean/frame_messenger", "modules/constants/env", "jquery", "modules/core/exception", "modules/clean/components/bubble_picker", "modules/clean/history", "modules/clean/analytics", "modules/clean/photos/legacy_thumb_loader", "modules/core/browser", "modules/clean/react/previews/preview_blank", "modules/clean/ajax", "modules/clean/react/previews/preview_linkfile", "modules/clean/sso_login_checks", "modules/clean/sprite", "modules/clean/filepath", "modules/core/notify", "modules/clean/clipboard", "modules/clean/sharing/file_preview_open_with_unity", "modules/core/html", "modules/clean/react/invite/invite_form_react"]}};
+                        window.REQUIREJS_CONFIG= {"waitSeconds": 30, "map": {"*": {"jquery": "jquery-security-patch"}, "jquery-security-patch": {"jquery": "jquery"}}, "baseUrl": "https://cf.dropboxstatic.com/static/coffee/compiled", "paths": {"modules/dirty/react/file_comments/switch_revision_ui": "modules/dirty/react/file_comments/switch_revision_ui-vfl6L_4XH", "modules/clean/unity/flash_config": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/activity/users_to_notify_facepile": "modules/clean/react/activity/users_to_notify_facepile-vflDXCTja", "modules/clean/photos/carousel_app/thumb_loading_manager": "packaged/pkg-c-vfl5e5YYh", "modules/clean/components/modal_helper": "packaged/pkg-h-vflSRrlLV", "modules/clean/react/tooltip": "packaged/pkg-a-vflmE5vUb", "modules/clean/captcha": "packaged/pkg-a-vflmE5vUb", "modules/clean/business/landing": "packaged/pkg-f-vfloU1MBB", "modules/clean/photos/carousel_app/settings_page": "packaged/pkg-c-vfl5e5YYh", "modules/dirty/dropins/desktop_chooser_v2": "packaged/pkg-g-vfl1hPi7q", "modules/dirty/search/search_bar": "packaged/pkg-k-vflFc0AVt", "modules/clean/react/select": "packaged/pkg-a-vflmE5vUb", "modules/clean/unity/check_file_cache": "packaged/pkg-a-vflmE5vUb", "modules/clean/contacts/tokenizer": "packaged/pkg-a-vflmE5vUb", "modules/clean/index_2015": "packaged/pkg-f-vfloU1MBB", "modules/clean/activity/activity_local_storage": "packaged/pkg-a-vflmE5vUb", "modules/dirty/groups/ui": "packaged/pkg-e-vflykiXoy", "modules/clean/uirequest": "packaged/pkg-a-vflmE5vUb", "modules/dirty/react/file_comments/file_feedback_sharing_section": "modules/dirty/react/file_comments/file_feedback_sharing_section-vflwLLyKg", "dropboxapi": ["https://cf.dropboxstatic.com/static/api/1/dropbox-vflHwNZwZ", "https://www.dropboxstatic.com/static/api/1/dropbox-vflHwNZwZ"], "modules/dirty/react/file_comments/annotation_bubble": "modules/dirty/react/file_comments/annotation_bubble-vflo2ENRO", "external/underscore": "../../javascript/external/underscore-vfl7K8tzR", "external/modernizr": "../../javascript/external/modernizr-vflWX4uUD", "modules/clean/photos/survey_response_logger": "packaged/pkg-c-vfl5e5YYh", "external/typeahead.bundle": "../../javascript/external/typeahead.bundle-vflcIbo3p", "modules/dirty/react/previews/preview_toolbar": "packaged/pkg-a-vflmE5vUb", "modules/clean/job_progress": "packaged/pkg-a-vflmE5vUb", "modules/dirty/react/openwith/open_with_tooltip": "packaged/pkg-a-vflmE5vUb", "modules/clean/growth/experiments/logger": "packaged/pkg-i-vflCup6FS", "modules/clean/components/register_form_validator": "packaged/pkg-d-vflSt55Jq", "modules/clean/photos/carousel_app/flashback_page": "packaged/pkg-c-vfl5e5YYh", "modules/clean/unity/connection": "packaged/pkg-a-vflmE5vUb", "modules/clean/contacts/facebook_oauth": "packaged/pkg-a-vflmE5vUb", "modules/clean/dbmodal": "packaged/pkg-a-vflmE5vUb", "modules/dirty/search/search": "packaged/pkg-k-vflFc0AVt", "modules/dirty/account/password_change": "packaged/pkg-e-vflykiXoy", "modules/clean/display_format": "packaged/pkg-a-vflmE5vUb", "modules/clean/event_load": "packaged/pkg-a-vflmE5vUb", "external/web_socket": "../../javascript/external/web_socket-vflVOgMbC", "modules/clean/activity/activity_user": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/carousel_album": "packaged/pkg-c-vfl5e5YYh", "modules/clean/react/button": "packaged/pkg-a-vflmE5vUb", "external/keymaster": "../../javascript/external/keymaster-vflUgLHG5", "modules/dirty/groups/group_list": "packaged/pkg-e-vflykiXoy", "modules/clean/photos/carousel_app/add_to_album_modal": "packaged/pkg-c-vfl5e5YYh", "modules/dirty/upsell/ha": "packaged/pkg-a-vflmE5vUb", "modules/clean/dropins/desktop_saver": "packaged/pkg-g-vfl1hPi7q", "modules/clean/photos/carousel_app/react_lightbox_actions_overlay": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/carousel_room": "packaged/pkg-c-vfl5e5YYh", "external/jquery.fs.zoomer": "../../javascript/external/jquery.fs.zoomer-vfl2SRVeV", "modules/clean/payments/payment_form_events": "packaged/pkg-d-vflSt55Jq", "modules/clean/image_cache": "packaged/pkg-c-vfl5e5YYh", "modules/clean/react/recaptcha_challenge": "packaged/pkg-a-vflmE5vUb", "modules/clean/unity/web_socket": "packaged/pkg-a-vflmE5vUb", "modules/dirty/streams/lib/user_queue": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/conversations_page": "packaged/pkg-c-vfl5e5YYh", "modules/clean/unity/features": "packaged/pkg-a-vflmE5vUb", "modules/dirty/get_mobile_app": "packaged/pkg-d-vflSt55Jq", "modules/clean/user": "packaged/pkg-a-vflmE5vUb", "modules/clean/contacts/types": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/exclude_modal": "packaged/pkg-c-vfl5e5YYh", "modules/clean/keycode": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/conversation_settings": "packaged/pkg-c-vfl5e5YYh", "modules/clean/shared_link_error": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/store_event": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/share_cart": "packaged/pkg-c-vfl5e5YYh", "modules/clean/tokenizer": "packaged/pkg-a-vflmE5vUb", "modules/dirty/unity_browse_interface": "packaged/pkg-a-vflmE5vUb", "modules/clean/business/modal_helper": "packaged/pkg-f-vfloU1MBB", "modules/clean/sharing/shared_folder_settings_modal": "modules/clean/sharing/shared_folder_settings_modal-vflfqu_9O", "modules/clean/dropins/hostsite_generic": "packaged/pkg-g-vfl1hPi7q", "modules/clean/teams/team_folder_modal": "packaged/pkg-a-vflmE5vUb", "modules/clean/sharing/file_preview_open_with_unity": "modules/clean/sharing/file_preview_open_with_unity-vflqrxy5i", "modules/clean/dropins/login": "packaged/pkg-g-vfl1hPi7q", "modules/clean/sharing/shared_link_for_sf": "packaged/pkg-a-vflmE5vUb", "modules/clean/teams/trial_buy_now": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/activity/contacts_selector_popup": "modules/clean/react/activity/contacts_selector_popup-vfldTbGF2", "modules/clean/referrer_cleansing_redirect": "packaged/pkg-a-vflmE5vUb", "modules/core/kwargs": "packaged/pkg-a-vflmE5vUb", "modules/clean/hi_res": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/bubble_dropdown": "packaged/pkg-a-vflmE5vUb", "modules/clean/growth/download_arrows": "packaged/pkg-h-vflSRrlLV", "modules/dirty/print": "packaged/pkg-a-vflmE5vUb", "jquery-security-patch": "https://cf.dropboxstatic.com/static/javascript/jquery-security-patch-vfl79CTKP", "modules/clean/react/previews/preview_image": "modules/clean/react/previews/preview_image-vfl5mWons", "modules/core/cookies": "packaged/pkg-a-vflmE5vUb", "modules/clean/account/account_photo_settings": "packaged/pkg-e-vflykiXoy", "modules/clean/payments/cash": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/shared_space_view": "packaged/pkg-c-vfl5e5YYh", "modules/clean/payments/dfb_buy_form": "packaged/pkg-d-vflSt55Jq", "modules/clean/business/collaboration_page": "packaged/pkg-h-vflSRrlLV", "modules/clean/escape": "packaged/pkg-c-vfl5e5YYh", "external/videojs/videojs_hls": "../../javascript/external/videojs/videojs_hls-vflf1wdRu", "modules/clean/avatar/components": "modules/clean/avatar/components-vflr90oD-", "modules/clean/photos/stop_watch": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/reply_composer": "packaged/pkg-c-vfl5e5YYh", "modules/dirty/react/activity/comment_activity_ui": "packaged/pkg-a-vflmE5vUb", "modules/clean/analytics": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/previews/preview_blank": "modules/clean/react/previews/preview_blank-vflNXui30", "modules/clean/photos/carousel_app/react_item": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/carousel_event": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/gallery_context_menu": "packaged/pkg-c-vfl5e5YYh", "modules/clean/marketing_tracker": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/bubble_picker": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/expanding_section": "packaged/pkg-f-vfloU1MBB", "modules/clean/browse_interface": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/previews/preview_linkfile": "modules/clean/react/previews/preview_linkfile-vflbVJC3i", "modules/clean/activity/like": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/activity/contacts_selector": "packaged/pkg-a-vflmE5vUb", "modules/dirty/streams/lib/event_emitter": "packaged/pkg-a-vflmE5vUb", "modules/dirty/react/file_comments/file_feedback_likes_section": "modules/dirty/react/file_comments/file_feedback_likes_section-vflBrtrJx", "modules/clean/photos/carousel_app/selection_limit_modal": "packaged/pkg-c-vfl5e5YYh", "modules/core/instantiate": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/bubble_dropdown": "packaged/pkg-a-vflmE5vUb", "modules/clean/activity/activity": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/activity/resolve_button": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/react_timeline_navigation": "packaged/pkg-c-vfl5e5YYh", "modules/clean/em_string": "packaged/pkg-a-vflmE5vUb", "modules/clean/sharing/namespace_conversion_alert_modal": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/album_list": "packaged/pkg-c-vfl5e5YYh", "modules/dirty/upsell/header_bubble": "packaged/pkg-i-vflCup6FS", "modules/clean/dropins/tappable": "packaged/pkg-g-vfl1hPi7q", "modules/clean/history": "packaged/pkg-a-vflmE5vUb", "modules/clean/sharing/shared_link_modal": "packaged/pkg-a-vflmE5vUb", "modules/clean/pagination_manager": "modules/clean/pagination_manager-vfl3cWwNq", "modules/clean/business/components/snap_engage_link": "packaged/pkg-f-vfloU1MBB", "external/swfobject": "../../javascript/external/swfobject-vfljC7EvC", "modules/clean/photos/carousel_app/item_actions": "packaged/pkg-c-vfl5e5YYh", "modules/clean/search/search_helpers": "modules/clean/search/search_helpers-vflkD8lW1", "modules/clean/annotations/annotation": "modules/clean/annotations/annotation-vflGW7RIg", "modules/clean/react/input": "packaged/pkg-a-vflmE5vUb", "modules/clean/activity/comment": "packaged/pkg-a-vflmE5vUb", "modules/clean/account/verify_email_modals": "packaged/pkg-a-vflmE5vUb", "modules/clean/help/feedback_form": "packaged/pkg-j-vflW_SCaW", "modules/clean/photos/carousel_app/onboarding": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/excluded_folders_modal": "packaged/pkg-c-vfl5e5YYh", "modules/dirty/sharing/sharing_growth_email_experiments": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/file_comments/comment_list_header": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/previews/preview_image_zoom": "modules/clean/react/previews/preview_image_zoom-vflPq_Dxu", "modules/dirty/react/activity/time_counter": "packaged/pkg-a-vflmE5vUb", "modules/clean/sso_login_checks": "packaged/pkg-a-vflmE5vUb", "modules/clean/openwith/logger": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/previews/preview_video": "modules/clean/react/previews/preview_video-vflMJGTQH", "modules/clean/viewer": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/event_dispatcher": "packaged/pkg-c-vfl5e5YYh", "modules/clean/components/tooltip": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/tabs": "packaged/pkg-e-vflykiXoy", "modules/clean/react/form_error_mixin": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/duplicates_page": "packaged/pkg-c-vfl5e5YYh", "modules/clean/react/file_comments/logger": "packaged/pkg-a-vflmE5vUb", "modules/clean/sprite": "packaged/pkg-a-vflmE5vUb", "modules/clean/dbmodal_loading": "packaged/pkg-a-vflmE5vUb", "modules/dirty/react/file_comments/comment_list_ui": "packaged/pkg-a-vflmE5vUb", "modules/clean/undo": "packaged/pkg-a-vflmE5vUb", "external/security/cyfd": "../../javascript/external/security/cyfd-vflGt5CW5", "modules/dirty/growth/shared_link_signup_modals": "packaged/pkg-a-vflmE5vUb", "modules/clean/static_resource_loader": "packaged/pkg-a-vflmE5vUb", "modules/clean/datetime": "packaged/pkg-a-vflmE5vUb", "modules/clean/activity/file_viewer_state": "packaged/pkg-a-vflmE5vUb", "modules/dirty/streams/lib/check": "packaged/pkg-a-vflmE5vUb", "modules/clean/video_util": "packaged/pkg-a-vflmE5vUb", "modules/clean/db_bubble": "packaged/pkg-a-vflmE5vUb", "packaged/pkg-f": "packaged/pkg-f-vfloU1MBB", "packaged/pkg-g": "packaged/pkg-g-vfl1hPi7q", "packaged/pkg-d": "packaged/pkg-d-vflSt55Jq", "packaged/pkg-e": "packaged/pkg-e-vflykiXoy", "packaged/pkg-c": "packaged/pkg-c-vfl5e5YYh", "packaged/pkg-a": "packaged/pkg-a-vflmE5vUb", "packaged/pkg-j": "packaged/pkg-j-vflW_SCaW", "packaged/pkg-k": "packaged/pkg-k-vflFc0AVt", "packaged/pkg-h": "packaged/pkg-h-vflSRrlLV", "packaged/pkg-i": "packaged/pkg-i-vflCup6FS", "jquery": ["https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min", "https://cf.dropboxstatic.com/static/javascript/external/jquery.min-vfl4OBVkB", "https://www.dropboxstatic.com/static/javascript/external/jquery.min-vfl4OBVkB"], "modules/clean/business/analytics": "packaged/pkg-h-vflSRrlLV", "modules/clean/file_viewer_interface_controller": "modules/clean/file_viewer_interface_controller-vfllpjC3K", "modules/clean/upsell/ha_loader": "packaged/pkg-a-vflmE5vUb", "modules/clean/sharing/members_list/members_list_row": "modules/clean/sharing/members_list/members_list_row-vflQ-TyFw", "modules/clean/contacts/typeahead": "packaged/pkg-a-vflmE5vUb", "modules/clean/account_photo_modal/controller": "packaged/pkg-a-vflmE5vUb", "modules/clean/account_photo_modal/account_header": "packaged/pkg-a-vflmE5vUb", "modules/core/i18n": "packaged/pkg-a-vflmE5vUb", "external/flash_detect": "../../javascript/external/flash_detect-vflLuenon", "modules/dirty/account": "packaged/pkg-e-vflykiXoy", "modules/core/dom": "packaged/pkg-a-vflmE5vUb", "modules/clean/validators/validators": "packaged/pkg-a-vflmE5vUb", "modules/clean/payments/credit_card_util": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/phone_number": "packaged/pkg-d-vflSt55Jq", "modules/dirty/table_filter": "packaged/pkg-e-vflykiXoy", "modules/clean/components/tabbable": "packaged/pkg-a-vflmE5vUb", "modules/dirty/business_create": "packaged/pkg-d-vflSt55Jq", "modules/clean/contacts/cache": "packaged/pkg-a-vflmE5vUb", "external/raven": "../../javascript/external/raven-vflP01DZY", "modules/clean/photos/carousel_app/avatar": "packaged/pkg-c-vfl5e5YYh", "mobile": ["https://cf.dropboxstatic.com/static/javascript/compiled/dropbox-mobile-mini-vfluMTTJX", "https://www.dropboxstatic.com/static/javascript/compiled/dropbox-mobile-mini-vfluMTTJX"], "modules/dirty/react/file_comments/file_feedback_ui": "packaged/pkg-a-vflmE5vUb", "modules/clean/help/logger": "packaged/pkg-j-vflW_SCaW", "modules/clean/static_urls": "packaged/pkg-a-vflmE5vUb", "modules/dirty/groups/api": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/react_gallery_page": "packaged/pkg-c-vfl5e5YYh", "modules/core/controller_registry": "packaged/pkg-a-vflmE5vUb", "modules/clean/binary_search": "packaged/pkg-k-vflFc0AVt", "modules/clean/avatar/style": "packaged/pkg-a-vflmE5vUb", "modules/dirty/react/file_comments/shared_link_signup_modals": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/carousel_item": "packaged/pkg-c-vfl5e5YYh", "modules/clean/payments/payment_form/iframe_rpc": "packaged/pkg-d-vflSt55Jq", "modules/clean/payments/validation": "packaged/pkg-a-vflmE5vUb", "modules/clean/payments/payment_form/credit_card_label": "packaged/pkg-d-vflSt55Jq", "modules/clean/components/select_input": "packaged/pkg-d-vflSt55Jq", "modules/core/uri": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/activity/mentions_controller": "packaged/pkg-a-vflmE5vUb", "modules/dirty/sharing/sf_access_type": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/util": "packaged/pkg-a-vflmE5vUb", "modules/clean/account_photo_modal/mode_enum": "packaged/pkg-a-vflmE5vUb", "modules/clean/payments/payment_form/payment_form_spec": "packaged/pkg-d-vflSt55Jq", "modules/core/notify": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/email_verification": "packaged/pkg-c-vfl5e5YYh", "modules/clean/components/login_form": "packaged/pkg-a-vflmE5vUb", "modules/constants/viewer": "modules/constants/viewer-vflFU3Fby", "modules/clean/account/change_email_modals": "packaged/pkg-a-vflmE5vUb", "modules/clean/db_select": "packaged/pkg-e-vflykiXoy", "modules/clean/account/email": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/batch_thumb_loader": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/conversations_page_old": "packaged/pkg-c-vfl5e5YYh", "modules/clean/payments/payment_form/payment_method_base": "packaged/pkg-d-vflSt55Jq", "modules/clean/contacts/facebook_modal": "packaged/pkg-a-vflmE5vUb", "javascript": "../../javascript", "modules/clean/sharing/non_namespace_manage_access_modal": "modules/clean/sharing/non_namespace_manage_access_modal-vflfEJCKg", "modules/clean/account/account_photo_square": "packaged/pkg-a-vflmE5vUb", "modules/clean/dropins/universal_chooser": "packaged/pkg-g-vfl1hPi7q", "modules/clean/react/sprite_div": "packaged/pkg-a-vflmE5vUb", "modules/clean/open_with": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/carousel_event_store": "packaged/pkg-c-vfl5e5YYh", "modules/clean/payments/pci_input_base": "packaged/pkg-d-vflSt55Jq", "modules/clean/multiaccount_login": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/legacy_thumb_loader": "packaged/pkg-a-vflmE5vUb", "modules/dirty/home": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/lightbox": "packaged/pkg-c-vfl5e5YYh", "modules/clean/components/modal_video_player": "packaged/pkg-h-vflSRrlLV", "modules/clean/contacts/data": "packaged/pkg-a-vflmE5vUb", "external/react": ["https://cf.dropboxstatic.com/static/javascript/external/react-0.12.0.min-vfl7pWXh9", "https://www.dropboxstatic.com/static/javascript/external/react-0.12.0.min-vfl7pWXh9"], "modules/clean/photos/carousel_app/conversation_header": "packaged/pkg-c-vfl5e5YYh", "modules/clean/dropbox_nav": "packaged/pkg-a-vflmE5vUb", "modules/clean/payments/payment_form/iframe_credit_card": "packaged/pkg-d-vflSt55Jq", "modules/dirty/streams/lib/reconnecting_queue": "modules/dirty/streams/lib/reconnecting_queue-vflpnBZ5Y", "external/purify": "../../javascript/external/purify-vfl2833aB", "modules/clean/sharing/share_inband": "packaged/pkg-a-vflmE5vUb", "external": "../../javascript/external", "modules/constants/env": "modules/constants/env-vflufks8T", "modules/clean/react/image": "packaged/pkg-a-vflmE5vUb", "modules/core/ordered_dictionary": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/react_marquee": "packaged/pkg-c-vfl5e5YYh", "modules/clean/react/help/bubble_picker": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/input": "packaged/pkg-a-vflmE5vUb", "modules/dirty/react/growth/experiments/onboarding_progress_bar": "packaged/pkg-i-vflCup6FS", "modules/clean/react/modal": "packaged/pkg-a-vflmE5vUb", "modules/clean/profile_services/profile_services_link": "modules/clean/profile_services/profile_services_link-vfl-NsblK", "modules/clean/photos/carousel_app/albums_page": "packaged/pkg-c-vfl5e5YYh", "modules/clean/unity/logger": "modules/clean/unity/logger-vfl1k9XRG", "modules/clean/unity/connection_error": "modules/clean/unity/connection_error-vflUuUDlK", "modules/clean/payments/pro_trial_onboarding_tour": "packaged/pkg-a-vflmE5vUb", "modules/clean/payments/dfb_util": "packaged/pkg-a-vflmE5vUb", "moment": ["https://cf.dropboxstatic.com/static/javascript/external/moment-vflM4ufeu", "https://www.dropboxstatic.com/static/javascript/external/moment-vflM4ufeu"], "modules/clean/components/login_or_register": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/react_event_to_merge_rows": "packaged/pkg-c-vfl5e5YYh", "modules/clean/payments/payment_form/payment_form": "packaged/pkg-d-vflSt55Jq", "modules/core/user_i18n": "modules/core/user_i18n-vfl2LeTNj", "modules/clean/react/form_handlers_mixin": "packaged/pkg-j-vflW_SCaW", "modules/clean/payments/billing_info_validator": "packaged/pkg-d-vflSt55Jq", "modules/dirty/account/security_tab": "packaged/pkg-e-vflykiXoy", "external/jquery.mousewheel": "../../javascript/external/jquery.mousewheel-vflQm_0T9", "modules/dirty/header_bubble": "packaged/pkg-i-vflCup6FS", "modules/clean/typeahead": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/app_manager": "packaged/pkg-c-vfl5e5YYh", "modules/core/exception": "packaged/pkg-a-vflmE5vUb", "external/sjcl": "../../javascript/external/sjcl-vflRtcU5Z", "modules/clean/avatar/size": "packaged/pkg-a-vflmE5vUb", "modules/clean/base64": "packaged/pkg-a-vflmE5vUb", "modules/dirty/photos/carousel_app/carousel_app": "packaged/pkg-c-vfl5e5YYh", "modules/clean/photos/carousel_app/react_timeline_navigation_marker": "packaged/pkg-c-vfl5e5YYh", "modules/clean/sharing/shared_link": "packaged/pkg-a-vflmE5vUb", "libs": ["https://cf.dropboxstatic.com/static/javascript/compiled/libs-mini-vfljPmbF3", "https://www.dropboxstatic.com/static/javascript/compiled/libs-mini-vfljPmbF3"], "modules/clean/ajax": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/context_menu": "packaged/pkg-c-vfl5e5YYh", "modules/clean/account_photo_modal/ui": "packaged/pkg-a-vflmE5vUb", "modules/core/exception_tag_registry": "modules/core/exception_tag_registry-vfl0xQ-Wc", "modules/clean/activity/activity_store": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/photos_engagement_logger": "packaged/pkg-a-vflmE5vUb", "modules/clean/storage": "packaged/pkg-a-vflmE5vUb", "modules/dirty/register_form": "packaged/pkg-a-vflmE5vUb", "modules/clean/dropins/universal_saver": "packaged/pkg-g-vfl1hPi7q", "external/videojs/video": "../../javascript/external/videojs/video-vflrbm_AX", "modules/clean/events/rollback": "modules/clean/events/rollback-vfljNMbh4", "modules/clean/page_role_observer": "modules/clean/page_role_observer-vflP5ca9B", "modules/clean/profile": "packaged/pkg-e-vflykiXoy", "modules/clean/react/activity/like_bar": "packaged/pkg-a-vflmE5vUb", "modules/clean/image_size": "packaged/pkg-a-vflmE5vUb", "external/zxcvbn": ["https://cf.dropboxstatic.com/static/javascript/external/zxcvbn-vflkO7PKd", "https://www.dropboxstatic.com/static/javascript/external/zxcvbn-vflkO7PKd"], "modules/clean/react/hierarchical_nav_bar": "modules/clean/react/hierarchical_nav_bar-vflm2CPug", "external/sha1": "../../javascript/external/sha1-vflgHBuGL", "modules/dirty/dropins/desktop_chooser": "packaged/pkg-g-vfl1hPi7q", "modules/dirty/react/file_comments/annotation_comments_list_ui_bubble": "modules/dirty/react/file_comments/annotation_comments_list_ui_bubble-vflT8_kr9", "modules/clean/clipboard": "packaged/pkg-a-vflmE5vUb", "modules/clean/fuzzy": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/photos_tab_deprecation_modals": "packaged/pkg-c-vfl5e5YYh", "modules/dirty/groups/util": "packaged/pkg-e-vflykiXoy", "modules/dirty/streams/lib/constants": "packaged/pkg-a-vflmE5vUb", "modules/clean/gandalf_util": "modules/clean/gandalf_util-vflVn7T2F", "modules/clean/snapengage": "packaged/pkg-f-vfloU1MBB", "modules/clean/react/react_i18n": "packaged/pkg-a-vflmE5vUb", "modules/clean/upsell/upsell_controller": "packaged/pkg-a-vflmE5vUb", "modules/clean/sharing/members_list/members_list_modal": "modules/clean/sharing/members_list/members_list_modal-vflnEv5AB", "modules/dirty/groups/groups_list": "packaged/pkg-e-vflykiXoy", "modules/clean/mailcheck": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/react_timeline": "packaged/pkg-c-vfl5e5YYh", "modules/clean/profile_services/profile_services_constants": "packaged/pkg-a-vflmE5vUb", "modules/clean/business/business_page": "packaged/pkg-f-vfloU1MBB", "modules/clean/top_notif": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/face_rec_utils": "packaged/pkg-c-vfl5e5YYh", "modules/clean/react/activity/users_to_notify": "packaged/pkg-a-vflmE5vUb", "modules/clean/help/article_mode_block": "packaged/pkg-j-vflW_SCaW", "modules/clean/photos/carousel_app/album_store": "packaged/pkg-c-vfl5e5YYh", "connect_v3_mobile": ["https://cf.dropboxstatic.com/static/javascript/compiled/connect-v3-mobile-mini-vflK1FvCg", "https://www.dropboxstatic.com/static/javascript/compiled/connect-v3-mobile-mini-vflK1FvCg"], "modules/clean/components/ajax_form": "packaged/pkg-a-vflmE5vUb", "modules/clean/react/invite/invite_form_react": "modules/clean/react/invite/invite_form_react-vflIBux71", "modules/clean/dropins/multi_login_iframe": "packaged/pkg-g-vfl1hPi7q", "modules/clean/react/sprite": "packaged/pkg-a-vflmE5vUb", "modules/clean/contacts/list": "packaged/pkg-a-vflmE5vUb", "modules/clean/components/locale_selector": "packaged/pkg-f-vfloU1MBB", "modules/clean/photos/carousel_app/item_store": "packaged/pkg-c-vfl5e5YYh", "modules/clean/contacts/bloodhound_contacts": "packaged/pkg-a-vflmE5vUb", "modules/clean/growth/dropbox_client_download": "packaged/pkg-h-vflSRrlLV", "modules/clean/unity/versions": "modules/clean/unity/versions-vflLCDyqc", "modules/clean/filepath": "packaged/pkg-a-vflmE5vUb", "modules/clean/payments/payment_form/credit_card": "packaged/pkg-d-vflSt55Jq", "modules/clean/contacts/importer": "packaged/pkg-a-vflmE5vUb", "modules/clean/form": "packaged/pkg-a-vflmE5vUb", "libs_mobile": ["https://cf.dropboxstatic.com/static/javascript/compiled/libs-mobile-mini-vflj7IApq", "https://www.dropboxstatic.com/static/javascript/compiled/libs-mobile-mini-vflj7IApq"], "modules/clean/sortable": "packaged/pkg-e-vflykiXoy", "modules/dirty/photos/carousel_app/share_composer": "packaged/pkg-c-vfl5e5YYh", "modules/clean/account/email_verify_reasons": "packaged/pkg-a-vflmE5vUb", "external/jquery_ui": "../../javascript/external/jquery_ui-vfl8EzDoe", "modules/dirty/react/activity/comment_input": "packaged/pkg-a-vflmE5vUb", "dropbox": ["https://cf.dropboxstatic.com/static/javascript/compiled/dropbox-mini-vflrIWhdN", "https://www.dropboxstatic.com/static/javascript/compiled/dropbox-mini-vflrIWhdN"], "modules/clean/frame_messenger": "packaged/pkg-a-vflmE5vUb", "modules/clean/business/business_login_modal": "packaged/pkg-f-vfloU1MBB", "modules/clean/react/invite/licenses_info": "modules/clean/react/invite/licenses_info-vflheuP6s", "modules/core/browser": "packaged/pkg-a-vflmE5vUb", "modules/clean/photos/carousel_app/emoji": "packaged/pkg-c-vfl5e5YYh", "modules/clean/web_timing_logger": "packaged/pkg-a-vflmE5vUb", "modules/clean/account/email_verify": "packaged/pkg-a-vflmE5vUb", "modules/core/html": "packaged/pkg-a-vflmE5vUb"}};
+                        window.REQUIREJS_FALLBACK_URL = "https://www.dropboxstatic.com/static/coffee/compiled";
+                        </script><script src="https://cf.dropboxstatic.com/static/javascript/compiled/require-vflhpVZek.js" type="text/javascript"></script><script type="text/javascript" nonce="gdiVXuDtntBIVhJ+eFQ+">require(["dropbox"]);</script><script nonce="gdiVXuDtntBIVhJ+eFQ+">
+                if (self != top) {
+                    top.location.replace(self.location.href);
+                    setTimeout(function() {
+                        document.body.innerHTML = (
+                            "<img src='https://www.dropbox.com/static/images/logo.png' onClick='top.location.href=window.location.href' />");
+                    }, 1);
+                }
+            
 
-};
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
 
-/**
- * @static
- **/
-UnityObject2.instances = [];
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+            function htmlified_loaded(event) {
+                if (event.origin != 'https://dl.dropboxusercontent.com') {
+                  return;
+                }
+
+                window.htmlified_height = event.data;
+                if (window.INLINE_JS && window.INLINE_JS.FilePreview) {
+                    INLINE_JS.FilePreview.htmlified_loaded();
+                }
+            }
+            if (window.addEventListener) {
+                window.addEventListener('message', htmlified_loaded, false);
+            } else if (window.attachEvent) {
+                window.attachEvent('onmessage', htmlified_loaded);
+            }
+        
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    
+
+        var _javascript_key = "k3mpvuSruqsYhUi5Wo8lpGYaJFSQRTXsaRYUZY2yWy8";
+        var _js_post = false;
+
+        var _cf = _cf || [];
+        _cf.push(['_setJsPost', _js_post]);
+        _cf.push(['_setJavaScriptKey', _javascript_key]);
+        var itv=0; if (Date.now) itv = Date.now(); else itv = +new Date();
+        _cf.push(['_setInitTime', itv]);
+        _cf.push(['_setSDFieldNames', 'login_sd']);
+        _cf.push(['_setSDFieldNames', 'login_sd_small']);
+        _cf.push(['_setSDFieldNames', 'signup_sd']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_1']);
+        _cf.push(['_setSDFieldNames', 'signup_sd_2']);
+        _cf.push(['_setEnReadDocUrl', false]);
+    </script></head><body dir="ltr" class="pt_BR file-preview-body shmodel-body preview-htmlified deferred-resources  "><div style="display: none;" id="modal-behind"></div><div style="display: none;" id="modal"><div id="modal-box"><a href="#" id="modal-x" class=" cpyxl7041036438210404398"><script nonce="gdiVXuDtntBIVhJ+eFQ+">window._goch_["cpyxl7041036438210404398"] = function(event){INLINE_JS.Modal.hide(null, false, true); Event.stop(event); return false;;}</script></a><h2 id="modal-title"></h2><div id="modal-content"></div></div></div><div style="display: none;" id="modal-overlay"></div><div style="display:none" id="grave-yard"></div><div style="display:none" id="trash-can"></div><script type="text/template" id="tutorial_nav_bubble_tmpl" nonce="gdiVXuDtntBIVhJ+eFQ+"><div class="tutorial-bubble-content"><a class="tutorial-bubble-x-link"><img src="/static/images/x-small-active.png" class="tutorial-bubble-x-img" /></a><h1 class="tutorial-bubble-title"><%= TEMPLATE_DATA.title %></h1><p class="tutorial-bubble-body"><%= TEMPLATE_DATA.body %></p><a class="tutorial-bubble-button <%= TEMPLATE_DATA.button_class %>"><%= TEMPLATE_DATA.button_text %></a></div></script><div id="floaters"></div><div style="display: none;" class="external-drop-indicator top"></div><div style="display: none;" class="external-drop-indicator right"></div><div style="display: none;" class="external-drop-indicator bottom"></div><div style="display: none;" class="external-drop-indicator left"></div><div id="outer-frame"> <div style="display: none;" id="db-modal-locale-selector-modal" class="db-modal-wrapper"><div class="db-modal-overlay"></div><div class="db-modal"><div class="db-modal-box"><a href="#" class="db-modal-x"></a><h2 class="db-modal-title"><div class="db-modal-title-text">Selecione um idioma</div></h2><div class="db-modal-content"><table><tr><td><ul><li><a data-locale="id" class="locale-option">Bahasa Indonesia</a></li><li><a data-locale="ms" class="locale-option">Bahasa Malaysia</a></li><li><a data-locale="da_DK" class="locale-option">Dansk</a></li><li><a data-locale="de" class="locale-option">Deutsch</a></li><li><a data-locale="en" class="locale-option">English</a></li><li><a data-locale="es_ES" class="locale-option">Español (España)</a></li><li><a data-locale="es" class="locale-option">Español (Latinoamérica)</a></li><li><a data-locale="fr" class="locale-option">Français</a></li><li><a data-locale="it" class="locale-option">Italiano</a></li><li><a data-locale="nl_NL" class="locale-option">Nederlands</a></li><li><a data-locale="nb_NO" class="locale-option">Norsk (bokmål)</a></li></ul></td><td><ul><li><a data-locale="pl" class="locale-option">Polski</a></li><li><a data-locale="pt_BR" class="locale-option">Português (Brasil)</a></li><li><a data-locale="ru" class="locale-option">Pусский</a></li><li><a data-locale="sv_SE" class="locale-option">Svenska</a></li><li><a data-locale="uk_UA" class="locale-option">Українська [Beta]</a></li><li><a data-locale="th_TH" class="locale-option">ไทย</a></li><li><a data-locale="zh_CN" class="locale-option">中文（简体）</a></li><li><a data-locale="zh_TW" class="locale-option">中文（繁體）</a></li><li><a data-locale="ja" class="locale-option">日本語</a></li><li><a data-locale="ko" class="locale-option">한국어</a></li></ul></td></tr></table></div></div></div></div><div id="page-content"><div class="nav-header"><a href="//www.dropbox.com?src=shmodel" target="_top" class="logo"><img data-js-component-id="component8952590043127844573" src="https://cf.dropboxstatic.com/static/images/header/header_logo_shmodel-vflsZ7QsE.png" alt="Dropbox" data-hi-res="https://cf.dropboxstatic.com/static/images/header/header_logo_shmodel@2x-vflvJX68X.png" /></a> <div class="filename shmodel-filename"><span id="pyxl6944557344121801428"></span></div> <div class="buttons"> <a href="#" id="download-menu-button" class="freshbutton-blue freshdropdown-button cpyxl3491479966803468292"><script nonce="gdiVXuDtntBIVhJ+eFQ+">window._goch_["cpyxl3491479966803468292"] = function(event){INLINE_JS.SharingModel.toggle_dropdown(event, INLINE_JS.$("download-menu"), INLINE_JS.$("download-menu-button"));}</script>Baixar<img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_download-dropdown-arrow-white" /></a><div style="display: none;" id="download-menu" class="chat-bubble freshdropdown-menu"><ul><li><a id="download_button_link" class=" cpyxl3159398895958168688"><script nonce="gdiVXuDtntBIVhJ+eFQ+">window._goch_["cpyxl3159398895958168688"] = function(event){INLINE_JS.FreshDropdown.hide_all();}</script><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_download_arrow" /></div><div class="sprite-text"><div class="sprite-text-inner">Download direto</div></div></div></a></li><li><a id="add_to_my_dropbox_link" class="a2md-button cpyxl4976787358251706924"><script nonce="gdiVXuDtntBIVhJ+eFQ+">window._goch_["cpyxl4976787358251706924"] = function(event){;}</script><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_dropbox" /></div><div class="sprite-text"><div class="sprite-text-inner">Salvar no meu Dropbox</div></div></div></a></li></ul><div class="chat-bubble-arrow-border"></div><div class="chat-bubble-arrow"></div></div> <a href="#" id="non-owner-menu-button" class="freshbutton-lightblue freshdropdown-button cpyxl1672607047021668823"><script nonce="gdiVXuDtntBIVhJ+eFQ+">window._goch_["cpyxl1672607047021668823"] = function(event){INLINE_JS.SharingModel.toggle_dropdown(event, INLINE_JS.$("non-owner-menu"), INLINE_JS.$("non-owner-menu-button"));}</script><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_more" /></a><div style="display: none;" id="non-owner-menu" class="chat-bubble wide freshdropdown-menu"><ul><li><a id="print-button"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_printer" /></div><div class="sprite-text"><div class="sprite-text-inner">Imprimir</div></div></div></a></li></ul><div class="chat-bubble-arrow-border"></div><div class="chat-bubble-arrow"></div></div> <div id="account-header"><ul class="nav"><li id="top-login"><div id="top-login-wrapper"><a href="/login" id="login-hover-link">Acessar conta<img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" style="padding: 0; margin-left: 5px; margin-top: -1px;" id="login-hover-dropdown-icon" class="s_web_arrow-down-blue link-img sprite sprite_web" /></a><div id="login-hover-cont" class="offscreen chat-bubble"><div data-js-component-id="component8178340898000730620" id="pyxl6678277108703075371" class="login-form-container  small"><form action="/ajax_login" novalidate="" method="POST" class="clearfix login-form"><input type="hidden" name="cont" value="https://www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js?dl=0" /><input type="hidden" name="require_role" /><input type="hidden" name="login_sd" id="login_sd_small" /><div data-js-component-id="component1494750574579294837" tabindex="-1" id="pyxl5001426558876499795" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="login_email" /><div data-error-field-name="login_email"></div></div><div class="text-input-wrapper"><input type="email" name="login_email" id="pyxl3274999154506701030" class="text-input-input" /><label for="pyxl3274999154506701030">E-mail</label></div></div><div data-js-component-id="component2330226573910825713" tabindex="-1" id="pyxl4224067071455924639" class="small text-input login-password login-text-input"><div class="text-input-error-wrapper"><form:error name="login_password" /><div data-error-field-name="login_password"></div></div><div class="text-input-wrapper"><input type="password" id="pyxl7931215829976249686" name="login_password" class="password-input text-input-input" /><label for="pyxl7931215829976249686">Senha</label></div></div><div id="react-login-recaptcha-challenge-div"></div><div class="clearfix"><div class="sso-description"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lock" /></div><div class="sprite-text"><div class="sprite-text-inner">SSO (logon único) habilitado</div></div></div></div><div class="small checkbox checkbox-inline remember-me"><div class="text-input-error-wrapper"><form:error name="remember_me" /><div data-error-field-name="remember_me"></div></div><input checked="checked" type="checkbox" name="remember_me" id="pyxl5257191764827549139" /><label for="pyxl5257191764827549139">Lembrar meus dados</label></div><button disabled="True" data-js-component-id="component4096850544529758126" type="submit" class="login-button button-primary"><div class="sign-in-text">Acessar conta</div><div class="sso-text">Continuar</div></button><span class="login-loading-indicator"><img data-js-component-id="component3268885454665153783" src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" data-hi-res="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small@2x-vflAxdZTP.gif" /></span></div><div class="sso-optout"><div>ou <a href="#">Acesse sua conta com as credenciais do Dropbox</a></div></div></form> <form action="/ajax_verify_code" style="display:none;" method="POST" class="two-factor-form clearfix"><input type="hidden" name="cont" value="https://www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js?dl=0" /><input type="hidden" name="require_role" /><input type="hidden" name="remember_me" /><div class="login-info two-factor-uses-sms">Enviamos um código para seu número de telefone terminando em <span class="last-four-digits"></span>.</div><div class="login-info two-factor-uses-authenticator">Digite o código gerado pelo seu aplicativo autenticador.</div><div data-js-component-id="component4236853808947633767" tabindex="-1" id="pyxl6281850432755260148" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="code" /><div data-error-field-name="code"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="text" name="code" id="pyxl1525760754486611478" class="text-input-input" /><label for="pyxl1525760754486611478">Código de 6 dígitos</label></div></div><div class="checkbox checkbox-inline standard remember-me"><div class="text-input-error-wrapper"><form:error name="trusted" /><div data-error-field-name="trusted"></div></div><input type="checkbox" name="trusted" id="pyxl4320011371581770759" /><label for="pyxl4320011371581770759"><div data-js-component-id="component5002184584969256370" class="tooltip-wrapper info-icon"><div class="tooltip-bubble tooltip-tooltip"><div class="tooltip-inner"><div class="two-factor-trusted-info">Computadores reconhecidos não vão solicitar um código de segurança novamente. Você só deve reconhecer este computador se confia em todos os que o utilizam.</div></div></div> <div class="tooltip-prompt sprite-div"><div class="sprite-text"><div class="sprite-text-inner">Confiar neste computador</div></div><div class="sprite-frame small icon-right"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_info" /></div></div></div></label></div><button data-js-component-id="component7688432469362377178" type="submit" class="login-button button-primary">Enviar</button></form></div><p class="create-account"><a href="/register" id="login-create-an-account">Assinar o Dropbox</a></p><div class="chat-bubble-arrow-border"></div><div class="chat-bubble-arrow"></div></div></div></li></ul></div></div></div><div id="shmodel-content-area"><div id="default-content"><img src="https://cf.dropboxstatic.com/static/images/icons128/page_white_code-vflEPhKac.png" class="bigicon" /><div class="filename shmodel-filename"><span id="pyxl3551478747079795884"></span></div><div class="meta"> há 3 meses&nbsp;&middot;&nbsp; 53,18 kB</div><a id="default_content_download_button" class="freshbutton-blue disabled">Baixar</a> <a id="default_content_a2md" class="freshbutton-lightblue disabled">Salvar no meu Dropbox</a><div id="video-preview-flash-message">Instale o <a href="http://get.adobe.com/flashplayer/">Adobe Flash Player</a> para visualizar este vídeo na web.</div></div><div class="filename-below shmodel-filename"><span id="pyxl599487057227345287"></span></div><div class="preview-box"><div data-docpreview-ui-rams-enabled="True" id="htmlified-wrapper" class=""><div id="htmlified-loading" class="center"><img src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" alt="" class="text-img" />Carregando...</div><div id="component1272840112710572585" class=""></div><iframe src="https://dl.dropboxusercontent.com/content_link_htmlify/YRVRZMJHjNXxJHE7L4YkrULeDJwPzMXGZ6I3JZ86daLtWB4Z0gvBALR7F03XM6EW" id="htmlified" frameborder="0"></iframe></div></div><div id="component5913210019218774298" class=""></div><a title="Alertar quanto a copyright" data-title-hide-tail="yes" data-title-position="right" href="/copyright_complaint?ssu=https%3A//www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js%3Fdl%3D0" rel="nofollow" class="content-flag title_bubble">Alertar quanto a copyright</a></div><div style="display: none;" id="disable-token-modal"><p class="disable-token-desc"></p><div class="modal-buttons"><span class="ajax-loading-indicator"><img src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" /></span><input value="Remover link" type="button" class="freshbutton-blue unshare-button cpyxl6097026800511628685" /><script nonce="gdiVXuDtntBIVhJ+eFQ+">(function(){window._goch_["cpyxl6097026800511628685"] = function(event){INLINE_JS.SharingModel.do_remove(INLINE_JS.Modal.vars);;}}());</script><input value="Cancelar" type="button" class="freshbutton cpyxl4495960995341897537" /><script nonce="gdiVXuDtntBIVhJ+eFQ+">(function(){window._goch_["cpyxl4495960995341897537"] = function(event){INLINE_JS.Modal.hide();;}}());</script></div></div><div style="display: none;" id="album-disable-token-modal"><p class="disable-token-desc">Tem certeza de que deseja cancelar o compartilhamento de <span class="album_unshare_name"></span>? Se você fizer isso, ninguém mais poderá visualizar este álbum.</p><div class="modal-buttons"><span class="ajax-loading-indicator"><img src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" /></span><input value="Cancelar compartilhamento" type="button" class="freshbutton-blue unshare-button cpyxl3405900522558007232" /><script nonce="gdiVXuDtntBIVhJ+eFQ+">(function(){window._goch_["cpyxl3405900522558007232"] = function(event){INLINE_JS.SharingModel.do_remove(INLINE_JS.Modal.vars);;}}());</script><input value="Cancelar" type="button" class="freshbutton cpyxl5775313365898421896" /><script nonce="gdiVXuDtntBIVhJ+eFQ+">(function(){window._goch_["cpyxl5775313365898421896"] = function(event){INLINE_JS.Modal.hide();;}}());</script></div></div><div style="display: none;" id="c2d-modal"><div id="pyxl5632609729410452948" class="login-register-container default-register standard"><div class="login-register-login-part"><div class="clearfix"><div class="login-register-header">Acessar conta</div><div class="login-register-switch">ou <a class="login-register-switch-link">criar uma conta</a></div></div><div data-js-component-id="component3008577445346163051" id="pyxl4062476287214525953" class="login-form-container  standard"><form action="/ajax_login" novalidate="" method="POST" class="clearfix login-form"><div class="login-subheader"><div class="c2d-login-register-desc c2d-login-register-album-desc">Quando você acessar a sua conta do Dropbox, os vídeos e fotos deste álbum serão instantaneamente salvos no seu Dropbox e baixados em todos os computadores vinculados à sua conta.</div><div class="c2d-login-register-desc c2d-login-register-folder-desc">Quando acessar sua conta no Dropbox, esta pasta será instantaneamente salva em seu Dropbox e baixada em todos os computadores vinculados à sua conta.</div><div class="c2d-login-register-desc c2d-login-register-file-desc">Quando você acessar sua conta, este arquivo será instantaneamente salvo no seu Dropbox e baixado em todos os computadores vinculados à sua conta.</div></div><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="login_sd" id="login_sd" /><input type="hidden" name="signup_tag" value="copy_to_dropbox" /><div data-js-component-id="component4754379282739145442" tabindex="-1" id="pyxl6622780430019680491" class="text-input login-text-input standard"><div class="text-input-error-wrapper"><form:error name="login_email" /><div data-error-field-name="login_email"></div></div><div class="text-input-wrapper"><input type="email" name="login_email" id="pyxl3102756590490572679" class="text-input-input autofocus" /><label for="pyxl3102756590490572679">E-mail</label></div></div><div data-js-component-id="component5334915482206376350" tabindex="-1" id="pyxl5674282230162569956" class="text-input login-password login-text-input standard"><div class="text-input-error-wrapper"><form:error name="login_password" /><div data-error-field-name="login_password"></div></div><div class="text-input-wrapper"><input type="password" id="pyxl4274446793319047549" name="login_password" class="password-input text-input-input" /><label for="pyxl4274446793319047549">Senha</label></div></div><div id="react-login-recaptcha-challenge-div"></div><div class="clearfix"><div class="sso-description"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lock" /></div><div class="sprite-text"><div class="sprite-text-inner">SSO (logon único) habilitado</div></div></div></div><div class="checkbox checkbox-inline standard remember-me"><div class="text-input-error-wrapper"><form:error name="remember_me" /><div data-error-field-name="remember_me"></div></div><input checked="checked" type="checkbox" name="remember_me" id="pyxl2926955641235027775" /><label for="pyxl2926955641235027775">Lembrar meus dados</label></div><button disabled="True" data-js-component-id="component3088052562850688386" type="submit" class="login-button button-primary"><div class="sign-in-text">Acessar conta</div><div class="sso-text">Continuar</div></button><span class="login-loading-indicator"><img data-js-component-id="component4339775696818053358" src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" data-hi-res="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small@2x-vflAxdZTP.gif" /></span></div><div class="sso-optout"><div>ou <a href="#">Acesse sua conta com as credenciais do Dropbox</a></div></div><div class="login-need-help"><a href="/forgot">Esqueceu a senha?</a></div></form> <form action="/ajax_verify_code" style="display:none;" method="POST" class="two-factor-form clearfix"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="remember_me" /><input type="hidden" name="signup_tag" value="copy_to_dropbox" /><div class="login-info two-factor-uses-sms">Enviamos um código para seu número de telefone terminando em <span class="last-four-digits"></span>.</div><div class="login-info two-factor-uses-authenticator">Digite o código gerado pelo seu aplicativo autenticador.</div><div data-js-component-id="component374482268747325172" tabindex="-1" id="pyxl896544707450414399" class="text-input login-text-input standard"><div class="text-input-error-wrapper"><form:error name="code" /><div data-error-field-name="code"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="text" name="code" id="pyxl5792071637198295015" class="text-input-input" /><label for="pyxl5792071637198295015">Código de 6 dígitos</label></div></div><div class="checkbox checkbox-inline standard remember-me"><div class="text-input-error-wrapper"><form:error name="trusted" /><div data-error-field-name="trusted"></div></div><input type="checkbox" name="trusted" id="pyxl319324089542262775" /><label for="pyxl319324089542262775"><div data-js-component-id="component3321846214582593919" class="tooltip-wrapper info-icon"><div class="tooltip-bubble tooltip-tooltip"><div class="tooltip-inner"><div class="two-factor-trusted-info">Computadores reconhecidos não vão solicitar um código de segurança novamente. Você só deve reconhecer este computador se confia em todos os que o utilizam.</div></div></div> <div class="tooltip-prompt sprite-div"><div class="sprite-text"><div class="sprite-text-inner">Confiar neste computador</div></div><div class="sprite-frame small icon-right"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_info" /></div></div></div></label></div><button data-js-component-id="component287092217480996569" type="submit" class="login-button button-primary">Enviar</button><div class="two-factor-need-help"><a href="" class="resend-two-factor-code two-factor-uses-sms">Não recebeu?</a><a href="/lost_phone"><span class="two-factor-uses-sms">Perdi meu celular</span><span class="two-factor-uses-authenticator">Não estou conseguindo usar meu aplicativo de autenticação.</span></a></div></form></div></div><div class="login-register-register-part"><div class="clearfix"><div class="login-register-header">Criar uma conta</div><div class="login-register-switch">ou <a class="login-register-switch-link">fazer login</a></div></div><div data-js-component-id="component5984245811866033453" class="login-form-container form_shown register standard"><form action="/ajax_register" class="clearfix register-form"><div class="login-subheader"><div class="c2d-login-register-desc c2d-login-register-album-desc">Quando você se registrar no Dropbox, os vídeos e fotos deste álbum serão instantaneamente salvos no seu Dropbox e baixados em todos os computadores vinculados à sua conta.</div><div class="c2d-login-register-desc c2d-login-register-folder-desc">Quando você se registrar no Dropbox, esta pasta será instantaneamente salva no seu Dropbox e baixada em todos os computadores vinculados à sua conta.</div><div class="c2d-login-register-desc c2d-login-register-file-desc">Quando você se registrar no Dropbox, este arquivo será instantaneamente salvo no seu Dropbox e baixado em todos os computadores vinculados à sua conta.</div></div><input type="hidden" name="cont" /><input type="hidden" name="signup_sd" id="signup_sd" /><input type="hidden" name="signup_tag" value="copy_to_dropbox" /><div data-js-component-id="component2035941784460290845" tabindex="-1" id="pyxl8717152521044850161" class="first text-input standard input-fname"><div class="text-input-error-wrapper"><form:error name="fname" /><div data-error-field-name="fname"></div></div><div class="text-input-wrapper"><input name="fname" id="pyxl2244167397087090013" type="text" class="text-input-input autofocus" /><label for="pyxl2244167397087090013">Nome</label></div></div><div data-js-component-id="component8212897390538773189" tabindex="-1" id="pyxl61184246078609709" class="input-lname second text-input standard"><div class="text-input-error-wrapper"><form:error name="lname" /><div data-error-field-name="lname"></div></div><div class="text-input-wrapper"><input name="lname" id="pyxl5889097923641015934" type="text" class="text-input-input autofocus" /><label for="pyxl5889097923641015934">Sobrenome</label></div></div><div data-js-component-id="component3735424928146744116" tabindex="-1" id="pyxl8243304774600519718" class="input-email text-input standard"><div class="text-input-error-wrapper"><form:error name="email" /><div data-error-field-name="email"></div></div><div class="text-input-wrapper"><input type="email" name="email" id="pyxl8706465118069893487" class="text-input-input" /><label for="pyxl8706465118069893487">E-mail</label></div></div><div class="email-suggestion"></div><div data-js-component-id="component7842069743689911285" tabindex="-1" id="pyxl8077816443239103345" class="input-password text-input standard"><div class="text-input-error-wrapper"><form:error name="password" /><div data-error-field-name="password"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="password" name="password" id="pyxl3839695332895286173" class="password-input text-input-input" /><label for="pyxl3839695332895286173">Senha</label><span data-js-component-id="component8716124844082950605" class="bubble-dropdown-container"><div class="password-input-meter bubble-dropdown-target bubble-dropdown-target"><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div></div><div class="bubble-dropdown left "><div class="password-bubble-title"></div><div class="password-bubble-desc">Boas senhas são difíceis de adivinhar. Use palavras incomuns ou piadas internas, maiÚsculas e minúSCulas fora do padrão, ortogrrrrafia criativa e números e símbolos não óbvios.</div><div class="bubble-arrow-border"></div><div class="bubble-arrow"></div></div></span></div></div><div id="react-signup-recaptcha-challenge-div"></div><div class="checkbox checkbox-inline agree standard"><div class="text-input-error-wrapper"><form:error name="tos_agree" /><div data-error-field-name="tos_agree"></div></div><input type="checkbox" name="tos_agree" id="pyxl265296972609822991" /><label for="pyxl265296972609822991"><span>Concordo com os <a href="/terms" target="_blank">Termos do Dropbox</a>.</span></label></div><button disabled="True" data-js-component-id="component6150626622839296687" type="submit" class="login-button button-primary">Criar uma conta</button></form></div></div></div></div>
+<script type="text/template" id="lightbox_more_actions_item_tmpl" nonce="gdiVXuDtntBIVhJ+eFQ+">
+<%
+  var _id = (typeof TEMPLATE_DATA._id !== 'undefined') ? TEMPLATE_DATA._id : '',
+      _href = (typeof TEMPLATE_DATA._href !== 'undefined') ? TEMPLATE_DATA._href : '',
+      _target = (typeof TEMPLATE_DATA._target !== 'undefined') ? TEMPLATE_DATA._target : '',
+      _ns_id = (typeof TEMPLATE_DATA._ns_id !== 'undefined') ? TEMPLATE_DATA._ns_id : '',
+      _ns_path = (typeof TEMPLATE_DATA._ns_path !== 'undefined') ? TEMPLATE_DATA._ns_path : '',
+      sprite_name = TEMPLATE_DATA.sprite_name,
+      item_text = TEMPLATE_DATA.item_text,
+      more_classes = (typeof TEMPLATE_DATA.more_classes !== 'undefined') ? TEMPLATE_DATA.more_classes : '',
+      divider = ((typeof TEMPLATE_DATA.divider !== 'undefined') && (TEMPLATE_DATA.divider)),
+      Sprite = TEMPLATE_DATA.Sprite;
+%>
+
+<% if (divider) { %>
+  <li class="divider <%= more_classes %>" />
+<% } else { %>
+  <li id="<%= _id %>" class="<%= more_classes %>" data-ns-id="<%= _ns_id %>" data-ns-path="<%= _ns_path %>">
+    <a href="<%= _href %>" target="<%= _target %>">
+      <%= Sprite.html('web', sprite_name) %>
+      <div>
+          <%= item_text %>
+      </div>
+    </a>
+  </li>
+<% } %>
+</script>
+<div style="display: none;" id="file-preview-modal"><div id="component7752317109281242179" class=""></div><div class="modal-preview-content"><div class="preview"><table class="preview-container-parent"><tr><td class="preview-container"><div class="preview-content"></div></td></tr></table></div> <div id="file-preview-menu" class="menu "><div class="file-title lightbox-not-important"><span class="album-name">&nbsp;</span><span class="filename">&nbsp;</span><span class="added-by">&nbsp;</span></div><div class="actions">&nbsp;</div><div id="lightbox-actions-base"><div id="lightbox-share-action-base" class="lightbox-action"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_link_white" /></div><div class="sprite-text"><div class="sprite-text-inner">Compartilhar</div></div></div></div><div id="lightbox-delete-action-base" class="lightbox-action"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lightbox_delete_16" /></div><div class="sprite-text"><div class="sprite-text-inner">&nbsp;</div></div></div></div><div id="lightbox-more-actions-base" class="lightbox-action"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lightbox_more" /></div><div class="sprite-text"><div class="sprite-text-inner"></div></div></div></div></div><div class="paging lightbox-not-important"><div class="paging-block"><a href="#" class="prev"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lightbox_prev" /></a><div class="lightbox-index-text-container"></div><a href="#" class="next"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lightbox_next" /></a></div></div></div><div style="display:none;" id="lightbox-more-actions-menu" class="freshdropdown-menu big black chat-bubble-bottom"><ul id="lightbox-more-actions-list"></ul><div class="chat-bubble-arrow-border black"></div><div class="chat-bubble-arrow black"></div></div> <div style="display:none;" class="delete-file-prompt chat-bubble-bottom"><input type="button" id="lightbox-delete-photo" value="Excluir" class="freshbutton-blue" /><br /><input type="button" id="lightbox-delete-cancel" value="Cancelar" class="freshbutton" /><div class="chat-bubble-arrow-border black"></div><div class="chat-bubble-arrow black"></div></div></div><div class="header"><a href="#" class="close lightbox-not-important"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lightbox_close" /></a></div></div><div id="context-menu-container"></div>
+<script type="text/template" id="context_menu_tmpl" nonce="gdiVXuDtntBIVhJ+eFQ+">
+  <%
+    var context = TEMPLATE_DATA.context,
+        actions = TEMPLATE_DATA.actions,
+        disabled_actions = TEMPLATE_DATA.disabled_actions,
+        big = TEMPLATE_DATA.big,
+        Sprite = TEMPLATE_DATA.Sprite;
+  %>
+  <% var extra_class_name = big ? 'big' : ''; %>
+    <ul id="context-menu" class="chat-bubble menu <%= extra_class_name %>">
+  <% for (var i = 0; i < actions.length; i++) { %>
+      <% if (actions[i].type === 'divider') { %>
+        <li class="divider"></li>
+      <% } else if (actions[i].type === 'subheader') { %>
+        <li class="subheader">
+            <span><%= actions[i].text %></span>
+        </li>
+      <% } else { %>
+        <li class="action primary">
+          <% if (actions[i].href) { %>
+            <a href="<%= actions[i].href %>"
+              <% if (actions[i].target) { %>
+                target="<%= actions[i].target %>"
+              <% } %>
+            >
+                <%= Sprite.html('web', actions[i].icon) %>
+                <span><%= actions[i].text %></span>
+            </a>
+          <% } else { %>
+            <label for="<%= actions[i].name %>_button">
+                <button id="<%= actions[i].name %>_button"
+                     type="submit"
+                     name="action"
+                     data-value="<%= actions[i].name %>"
+                     <% if (disabled_actions !== null &&
+                            disabled_actions.indexOf(actions[i].name) !== -1) { %>
+                        class="disabled"
+                     <% } %>
+                     >
+                    <% if (actions[i].is_dropdown && actions[i].subactions) { %>
+                      <%= Sprite.html('web', 'menu-right-arrow') %>
+                    <% } %>
+                    <div class="icon-frame">
+                      <% if (actions[i].icon) { %>
+                        <%= Sprite.html('web', actions[i].icon) %>
+                      <% } else if (actions[i].icon_href) { %>
+                        <img src="<%= actions[i].icon_href %>" />
+                      <% } else { %>
+                        <img src="<%= Sprite.SPACER %>" class="context-menu-spacer" />
+                      <% } %>
+                    </div>
+                    <span><%= actions[i].text %></span>
+                </button>
+            </label>
+
+              <% if (actions[i].is_dropdown && actions[i].subactions) { %>
+            <ul class="secondary chat-bubble menu">
+              <% for (var j = 0; j < actions[i].subactions.length; j++) { %>
+                <% if (actions[i].subactions[j].type === 'divider') { %>
+                  <li class="divider"></li>
+                <% } else if (actions[i].subactions[j].type === 'subheader') { %>
+                  <li class="subheader">
+                  <span><%= actions[i].subactions[j].text %></span>
+                  </li>
+                <% } else { %>
+                  <li class="action">
+                    <% if (!actions[i].subactions[j].href) { %>
+                      <label>
+                          <button type="submit"
+                                  name="action"
+                                  data-value="<%= actions[i].subactions[j].name %>"
+                                  submenu-index="<%= j %>">
+                              <div class="icon-frame">
+                                <% if (actions[i].subactions[j].icon) { %>
+                                  <%= Sprite.html('web', actions[i].subactions[j].icon) %>
+                                <% } %>
+                              </div>
+                              <span><%= actions[i].subactions[j].text %></span>
+                              <% if (actions[i].subactions[j].detail_text) { %>
+                              <span class="detail-text"><%= actions[i].subactions[j].detail_text %></span>
+                              <% } %>
+                          </button>
+                      </label>
+                    <% } else { %>
+                      <a href="<%= actions[i].subactions[j].href %>">
+                          <%= Sprite.html('web', actions[i].subactions[j].icon) %>
+                          <span><%= actions[i].subactions[j].text %></span>
+                      </a>
+                    <% } %>
+                  </li>
+                <% } %>
+              <% } %>
+            </ul>
+              <% } %>
+
+          <% } %>
+        </li>
+      <% } %>
+  <% } %>
+    </ul>
+</script>
+<div style="display: none;" id="db-modal-shared-link-default-comments-signup-modal" class="db-modal-wrapper db-bright-modal-wrapper"><div class="db-modal-overlay"></div><div class="db-modal"><div class="db-modal-box"><a href="#" class="db-modal-x"></a><h2 class="db-modal-title"><div class="db-modal-title-text"></div></h2><div class="db-modal-content"><div class="bright-modal-logo"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_dropbox_39x36" /></div><div class="bright-modal-header"><div class="register-form-component form-component"><div class="text-variant post-comment-variant">Para postar seu comentário, crie uma conta gratuita no Dropbox.<div class="secondary">Manteremos seu comentário a salvo enquanto você se registra.</div></div><div class="text-variant like-comment-variant">Para curtir esse comentário, crie uma conta gratuita do Dropbox.</div><div class="text-variant subscribe-variant">Para assinar este arquivo, crie uma conta gratuita do Dropbox.</div><div class="text-variant default-variant">Para continuar, crie uma conta gratuita do Dropbox.</div></div><div class="login-form-component form-component"><div class="text-variant post-comment-variant">Para postar seu comentário, acesse sua conta do Dropbox.<div class="secondary">Manteremos seu comentário a salvo enquanto você acessa sua conta.</div></div><div class="text-variant like-comment-variant">Para curtir este comentário, acesse sua conta do Dropbox.</div><div class="text-variant subscribe-variant">Para assinar este arquivo, acesse sua conta do Dropbox.</div><div class="text-variant default-variant">Para continuar, acesse sua conta do Dropbox.</div></div></div><div class="bright-modal-content"><div class="register-form-component form-component"><div class="compact-form compact-register-form"><div data-js-component-id="component7643158471834378882" class="login-form-container small form_shown register"><form action="/ajax_register" class="clearfix register-form"><input type="hidden" name="cont" /><input type="hidden" name="signup_sd" id="signup_sd" /><input type="hidden" name="signup_tag" value="comments_shmodel_modal_register" /><div data-js-component-id="component42775598548409608" tabindex="-1" id="pyxl1496706294622438773" class="small first text-input input-fname"><div class="text-input-error-wrapper"><form:error name="fname" /><div data-error-field-name="fname"></div></div><div class="text-input-wrapper"><input name="fname" id="pyxl668660508331418663" type="text" class="text-input-input autofocus" /><label for="pyxl668660508331418663">Nome</label></div></div><div data-js-component-id="component686638583613483687" tabindex="-1" id="pyxl8331437345495528560" class="input-lname second text-input small"><div class="text-input-error-wrapper"><form:error name="lname" /><div data-error-field-name="lname"></div></div><div class="text-input-wrapper"><input name="lname" id="pyxl1081237965712312698" type="text" class="text-input-input autofocus" /><label for="pyxl1081237965712312698">Sobrenome</label></div></div><div data-js-component-id="component7527733435522986167" tabindex="-1" id="pyxl7608404095641367816" class="input-email small text-input"><div class="text-input-error-wrapper"><form:error name="email" /><div data-error-field-name="email"></div></div><div class="text-input-wrapper"><input type="email" name="email" id="pyxl8088225250713714290" class="text-input-input" /><label for="pyxl8088225250713714290">E-mail</label></div></div><div class="email-suggestion"></div><div data-js-component-id="component7009497305382133436" tabindex="-1" id="pyxl787358153895935017" class="input-password small text-input"><div class="text-input-error-wrapper"><form:error name="password" /><div data-error-field-name="password"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="password" name="password" id="pyxl5862297398615183763" class="password-input text-input-input" /><label for="pyxl5862297398615183763">Senha</label><span data-js-component-id="component813489313149505970" class="bubble-dropdown-container"><div class="password-input-meter bubble-dropdown-target bubble-dropdown-target"><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div></div><div class="bubble-dropdown left "><div class="password-bubble-title"></div><div class="password-bubble-desc">Boas senhas são difíceis de adivinhar. Use palavras incomuns ou piadas internas, maiÚsculas e minúSCulas fora do padrão, ortogrrrrafia criativa e números e símbolos não óbvios.</div><div class="bubble-arrow-border"></div><div class="bubble-arrow"></div></div></span></div></div><div id="react-signup-recaptcha-challenge-div"></div><div class="small checkbox checkbox-inline agree"><div class="text-input-error-wrapper"><form:error name="tos_agree" /><div data-error-field-name="tos_agree"></div></div><input type="checkbox" name="tos_agree" id="pyxl4289407560536591255" /><label for="pyxl4289407560536591255"><span>Concordo com os <a href="/terms" target="_blank">Termos do Dropbox</a>.</span></label></div><button disabled="True" data-js-component-id="component644460658101593381" type="submit" class="login-button button-primary">Criar uma conta</button></form></div></div></div><div class="login-form-component form-component"><div class="compact-form compact-login-form"><div data-js-component-id="component1116022250350641570" id="pyxl8924714761422184475" class="login-form-container  small"><form action="/ajax_login" novalidate="" method="POST" class="clearfix login-form"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="login_sd" id="login_sd_small" /><div data-js-component-id="component4157918747982543360" tabindex="-1" id="pyxl6616964225867697753" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="login_email" /><div data-error-field-name="login_email"></div></div><div class="text-input-wrapper"><input type="email" name="login_email" id="pyxl2876996549010341907" class="text-input-input autofocus" /><label for="pyxl2876996549010341907">E-mail</label></div></div><div data-js-component-id="component244435025952033303" tabindex="-1" id="pyxl3872007294328198623" class="small text-input login-password login-text-input"><div class="text-input-error-wrapper"><form:error name="login_password" /><div data-error-field-name="login_password"></div></div><div class="text-input-wrapper"><input type="password" id="pyxl7524929807005124370" name="login_password" class="password-input text-input-input" /><label for="pyxl7524929807005124370">Senha</label></div></div><div id="react-login-recaptcha-challenge-div"></div><div class="clearfix"><div class="sso-description"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lock" /></div><div class="sprite-text"><div class="sprite-text-inner">SSO (logon único) habilitado</div></div></div></div><div class="small checkbox checkbox-inline remember-me"><div class="text-input-error-wrapper"><form:error name="remember_me" /><div data-error-field-name="remember_me"></div></div><input checked="checked" type="checkbox" name="remember_me" id="pyxl4573097251318918774" /><label for="pyxl4573097251318918774">Lembrar meus dados</label></div><button disabled="True" data-js-component-id="component8014259322029214166" type="submit" class="login-button button-primary"><div class="sign-in-text">Acessar conta</div><div class="sso-text">Continuar</div></button><span class="login-loading-indicator"><img data-js-component-id="component8119119659713339019" src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" data-hi-res="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small@2x-vflAxdZTP.gif" /></span></div><div class="sso-optout"><div>ou <a href="#">Acesse sua conta com as credenciais do Dropbox</a></div></div><div class="login-need-help"><a href="/forgot">Esqueceu a senha?</a></div></form> <form action="/ajax_verify_code" style="display:none;" method="POST" class="two-factor-form clearfix"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="remember_me" /><div class="login-info two-factor-uses-sms">Enviamos um código para seu número de telefone terminando em <span class="last-four-digits"></span>.</div><div class="login-info two-factor-uses-authenticator">Digite o código gerado pelo seu aplicativo autenticador.</div><div data-js-component-id="component2793377264040732140" tabindex="-1" id="pyxl766616204787318029" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="code" /><div data-error-field-name="code"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="text" name="code" id="pyxl4033092175780021258" class="text-input-input" /><label for="pyxl4033092175780021258">Código de 6 dígitos</label></div></div><div class="checkbox checkbox-inline standard remember-me"><div class="text-input-error-wrapper"><form:error name="trusted" /><div data-error-field-name="trusted"></div></div><input type="checkbox" name="trusted" id="pyxl5889604057417700361" /><label for="pyxl5889604057417700361"><div data-js-component-id="component3604781582001522311" class="tooltip-wrapper info-icon"><div class="tooltip-bubble tooltip-tooltip"><div class="tooltip-inner"><div class="two-factor-trusted-info">Computadores reconhecidos não vão solicitar um código de segurança novamente. Você só deve reconhecer este computador se confia em todos os que o utilizam.</div></div></div> <div class="tooltip-prompt sprite-div"><div class="sprite-text"><div class="sprite-text-inner">Confiar neste computador</div></div><div class="sprite-frame small icon-right"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_info" /></div></div></div></label></div><button data-js-component-id="component4669563546775506548" type="submit" class="login-button button-primary">Enviar</button><div class="two-factor-need-help"><a href="" class="resend-two-factor-code two-factor-uses-sms">Não recebeu?</a><a href="/lost_phone"><span class="two-factor-uses-sms">Perdi meu celular</span><span class="two-factor-uses-authenticator">Não estou conseguindo usar meu aplicativo de autenticação.</span></a></div></form></div></div></div></div><div class="bright-modal-footer"><span class="register-form-component form-component"><a class="toggle-form-link">Já tem uma conta do Dropbox? Faça login.</a></span><span class="login-form-component form-component"><a class="toggle-form-link">Novo no Dropbox? Crie uma conta grátis!</a></span></div></div></div></div></div><div style="display: none;" id="db-modal-shared-link-default-signup-modal" class="db-modal-wrapper db-bright-modal-wrapper"><div class="db-modal-overlay"></div><div class="db-modal"><div class="db-modal-box"><a href="#" class="db-modal-x"></a><h2 class="db-modal-title"><div class="db-modal-title-text"></div></h2><div class="db-modal-content"><div class="bright-modal-logo"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_dropbox_39x36" /></div><div class="bright-modal-header"><span class="register-form-component">Novo no Dropbox? Registre-se gratuitamente para compartilhar documentos e fotos</span><span class="login-form-component">Acesse sua conta no Dropbox para compartilhar documentos e fotos</span></div><div class="bright-modal-content"><div class="register-form-component"><div class="compact-form compact-register-form"><div data-js-component-id="component4288698948800434739" class="login-form-container small form_shown register"><form action="/ajax_register" class="clearfix register-form"><input type="hidden" name="cont" /><input type="hidden" name="signup_sd" id="signup_sd" /><input type="hidden" name="signup_tag" value="shmodel_modal_register" /><input type="hidden" name="filename" value="UnityObject2.js" /><div data-js-component-id="component5253030202490059092" tabindex="-1" id="pyxl1996074963866464425" class="small first text-input input-fname"><div class="text-input-error-wrapper"><form:error name="fname" /><div data-error-field-name="fname"></div></div><div class="text-input-wrapper"><input name="fname" id="pyxl6593969522811115040" type="text" class="text-input-input autofocus" /><label for="pyxl6593969522811115040">Nome</label></div></div><div data-js-component-id="component6241967574272711382" tabindex="-1" id="pyxl7121293072927631577" class="input-lname second text-input small"><div class="text-input-error-wrapper"><form:error name="lname" /><div data-error-field-name="lname"></div></div><div class="text-input-wrapper"><input name="lname" id="pyxl5396820631937433449" type="text" class="text-input-input autofocus" /><label for="pyxl5396820631937433449">Sobrenome</label></div></div><div data-js-component-id="component3596401916934867478" tabindex="-1" id="pyxl583481505213988047" class="input-email small text-input"><div class="text-input-error-wrapper"><form:error name="email" /><div data-error-field-name="email"></div></div><div class="text-input-wrapper"><input type="email" name="email" id="pyxl6503678228921857629" class="text-input-input" /><label for="pyxl6503678228921857629">E-mail</label></div></div><div class="email-suggestion"></div><div data-js-component-id="component6412916331366570185" tabindex="-1" id="pyxl1639876804059234171" class="input-password small text-input"><div class="text-input-error-wrapper"><form:error name="password" /><div data-error-field-name="password"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="password" name="password" id="pyxl7168334501605817488" class="password-input text-input-input" /><label for="pyxl7168334501605817488">Senha</label><span data-js-component-id="component2812631804658982359" class="bubble-dropdown-container"><div class="password-input-meter bubble-dropdown-target bubble-dropdown-target"><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div></div><div class="bubble-dropdown left "><div class="password-bubble-title"></div><div class="password-bubble-desc">Boas senhas são difíceis de adivinhar. Use palavras incomuns ou piadas internas, maiÚsculas e minúSCulas fora do padrão, ortogrrrrafia criativa e números e símbolos não óbvios.</div><div class="bubble-arrow-border"></div><div class="bubble-arrow"></div></div></span></div></div><div id="react-signup-recaptcha-challenge-div"></div><div class="small checkbox checkbox-inline agree"><div class="text-input-error-wrapper"><form:error name="tos_agree" /><div data-error-field-name="tos_agree"></div></div><input type="checkbox" name="tos_agree" id="pyxl5462621547967306969" /><label for="pyxl5462621547967306969"><span>Concordo com os <a href="/terms" target="_blank">Termos do Dropbox</a>.</span></label></div><button disabled="True" data-js-component-id="component8506385665173738670" type="submit" class="login-button button-primary">Criar uma conta</button></form></div></div></div><div class="login-form-component"><div class="compact-form compact-login-form"><div data-js-component-id="component4992091671811817013" id="pyxl8297224901221309004" class="login-form-container  small"><form action="/ajax_login" novalidate="" method="POST" class="clearfix login-form"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="login_sd" id="login_sd_small" /><div data-js-component-id="component3158897958759673243" tabindex="-1" id="pyxl4808537285129396712" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="login_email" /><div data-error-field-name="login_email"></div></div><div class="text-input-wrapper"><input type="email" name="login_email" id="pyxl2291663922674745396" class="text-input-input autofocus" /><label for="pyxl2291663922674745396">E-mail</label></div></div><div data-js-component-id="component1075535866531726181" tabindex="-1" id="pyxl3381923619436963689" class="small text-input login-password login-text-input"><div class="text-input-error-wrapper"><form:error name="login_password" /><div data-error-field-name="login_password"></div></div><div class="text-input-wrapper"><input type="password" id="pyxl5265601371714304269" name="login_password" class="password-input text-input-input" /><label for="pyxl5265601371714304269">Senha</label></div></div><div id="react-login-recaptcha-challenge-div"></div><div class="clearfix"><div class="sso-description"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lock" /></div><div class="sprite-text"><div class="sprite-text-inner">SSO (logon único) habilitado</div></div></div></div><div class="small checkbox checkbox-inline remember-me"><div class="text-input-error-wrapper"><form:error name="remember_me" /><div data-error-field-name="remember_me"></div></div><input checked="checked" type="checkbox" name="remember_me" id="pyxl1592571296394549668" /><label for="pyxl1592571296394549668">Lembrar meus dados</label></div><button disabled="True" data-js-component-id="component7856103024962735494" type="submit" class="login-button button-primary"><div class="sign-in-text">Acessar conta</div><div class="sso-text">Continuar</div></button><span class="login-loading-indicator"><img data-js-component-id="component6231534986856448350" src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" data-hi-res="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small@2x-vflAxdZTP.gif" /></span></div><div class="sso-optout"><div>ou <a href="#">Acesse sua conta com as credenciais do Dropbox</a></div></div><div class="login-need-help"><a href="/forgot">Esqueceu a senha?</a></div></form> <form action="/ajax_verify_code" style="display:none;" method="POST" class="two-factor-form clearfix"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="remember_me" /><div class="login-info two-factor-uses-sms">Enviamos um código para seu número de telefone terminando em <span class="last-four-digits"></span>.</div><div class="login-info two-factor-uses-authenticator">Digite o código gerado pelo seu aplicativo autenticador.</div><div data-js-component-id="component4705784317971899210" tabindex="-1" id="pyxl712747708632748323" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="code" /><div data-error-field-name="code"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="text" name="code" id="pyxl4681377799548422002" class="text-input-input" /><label for="pyxl4681377799548422002">Código de 6 dígitos</label></div></div><div class="checkbox checkbox-inline standard remember-me"><div class="text-input-error-wrapper"><form:error name="trusted" /><div data-error-field-name="trusted"></div></div><input type="checkbox" name="trusted" id="pyxl2969204094868124849" /><label for="pyxl2969204094868124849"><div data-js-component-id="component3171476943992095333" class="tooltip-wrapper info-icon"><div class="tooltip-bubble tooltip-tooltip"><div class="tooltip-inner"><div class="two-factor-trusted-info">Computadores reconhecidos não vão solicitar um código de segurança novamente. Você só deve reconhecer este computador se confia em todos os que o utilizam.</div></div></div> <div class="tooltip-prompt sprite-div"><div class="sprite-text"><div class="sprite-text-inner">Confiar neste computador</div></div><div class="sprite-frame small icon-right"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_info" /></div></div></div></label></div><button data-js-component-id="component2504652968996448324" type="submit" class="login-button button-primary">Enviar</button><div class="two-factor-need-help"><a href="" class="resend-two-factor-code two-factor-uses-sms">Não recebeu?</a><a href="/lost_phone"><span class="two-factor-uses-sms">Perdi meu celular</span><span class="two-factor-uses-authenticator">Não estou conseguindo usar meu aplicativo de autenticação.</span></a></div></form></div></div></div></div><div class="bright-modal-footer"><span class="register-form-component"><a class="toggle-form-link">Acessar conta</a></span><span class="login-form-component"><a class="toggle-form-link">Registre-se</a></span></div></div></div></div></div><div style="display: none;" id="db-modal-shared-link-download-signup-modal" class="db-modal-wrapper db-bright-modal-wrapper"><div class="db-modal-overlay"></div><div class="db-modal"><div class="db-modal-box"><a href="#" class="db-modal-x"></a><h2 class="db-modal-title"><div class="db-modal-title-text"></div></h2><div class="db-modal-content"><div class="bright-modal-logo"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_dropbox_39x36" /></div><div class="bright-modal-header"><div class="direct-download-component"><span class="register-form-component">Crie um Dropbox gratuito para compartilhar arquivos e fotos ou <a class="toggle-form-link">acesse sua conta</a></span><span class="login-form-component">Acesse sua conta no Dropbox para compartilhar arquivos e fotos ou <a class="toggle-form-link">crie uma conta</a></span></div><div class="add-to-dropbox-component"><span class="register-form-component">Crie uma conta gratuita para salvar diretamente em seu Dropbox, ou <a class="toggle-form-link">acesse sua conta</a></span><span class="login-form-component">Acesse sua conta para salvar diretamente em seu Dropbox, ou <a class="toggle-form-link">crie uma conta</a></span></div></div><div class="bright-modal-content"><div class="register-form-component"><div class="compact-form compact-register-form"><div data-js-component-id="component6868208362709519173" class="login-form-container small form_shown register"><form action="/ajax_register" class="clearfix register-form"><input type="hidden" name="cont" /><input type="hidden" name="signup_sd" id="signup_sd" /><input type="hidden" name="signup_tag" value="shmodel_download_register" /><input type="hidden" name="filename" value="UnityObject2.js" /><div data-js-component-id="component1267006711278100560" tabindex="-1" id="pyxl2911466634131923243" class="small first text-input input-fname"><div class="text-input-error-wrapper"><form:error name="fname" /><div data-error-field-name="fname"></div></div><div class="text-input-wrapper"><input name="fname" id="pyxl3098778618645084370" type="text" class="text-input-input autofocus" /><label for="pyxl3098778618645084370">Nome</label></div></div><div data-js-component-id="component5681019039507295869" tabindex="-1" id="pyxl7432891508169167599" class="input-lname second text-input small"><div class="text-input-error-wrapper"><form:error name="lname" /><div data-error-field-name="lname"></div></div><div class="text-input-wrapper"><input name="lname" id="pyxl7348625335565852365" type="text" class="text-input-input autofocus" /><label for="pyxl7348625335565852365">Sobrenome</label></div></div><div data-js-component-id="component722774746175521028" tabindex="-1" id="pyxl4493454815777426859" class="input-email small text-input"><div class="text-input-error-wrapper"><form:error name="email" /><div data-error-field-name="email"></div></div><div class="text-input-wrapper"><input type="email" name="email" id="pyxl3190002219040120354" class="text-input-input" /><label for="pyxl3190002219040120354">E-mail</label></div></div><div class="email-suggestion"></div><div data-js-component-id="component8831171199001359728" tabindex="-1" id="pyxl9015349686330233664" class="input-password small text-input"><div class="text-input-error-wrapper"><form:error name="password" /><div data-error-field-name="password"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="password" name="password" id="pyxl67485422131482511" class="password-input text-input-input" /><label for="pyxl67485422131482511">Senha</label><span data-js-component-id="component2307114152377035741" class="bubble-dropdown-container"><div class="password-input-meter bubble-dropdown-target bubble-dropdown-target"><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div><div class="password-input-dot"></div></div><div class="bubble-dropdown left "><div class="password-bubble-title"></div><div class="password-bubble-desc">Boas senhas são difíceis de adivinhar. Use palavras incomuns ou piadas internas, maiÚsculas e minúSCulas fora do padrão, ortogrrrrafia criativa e números e símbolos não óbvios.</div><div class="bubble-arrow-border"></div><div class="bubble-arrow"></div></div></span></div></div><div id="react-signup-recaptcha-challenge-div"></div><div class="small checkbox checkbox-inline agree"><div class="text-input-error-wrapper"><form:error name="tos_agree" /><div data-error-field-name="tos_agree"></div></div><input type="checkbox" name="tos_agree" id="pyxl7830219169703030903" /><label for="pyxl7830219169703030903"><span>Concordo com os <a href="/terms" target="_blank">Termos do Dropbox</a>.</span></label></div><button disabled="True" data-js-component-id="component7991492276301943611" type="submit" class="login-button button-primary">Criar uma conta</button></form></div></div></div><div class="login-form-component"><div class="compact-form compact-login-form"><div data-js-component-id="component3600282490849742114" id="pyxl4399311993562909093" class="login-form-container  small"><form action="/ajax_login" novalidate="" method="POST" class="clearfix login-form"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="login_sd" id="login_sd_small" /><div data-js-component-id="component2737447635870681019" tabindex="-1" id="pyxl9130351231038699575" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="login_email" /><div data-error-field-name="login_email"></div></div><div class="text-input-wrapper"><input type="email" name="login_email" id="pyxl4555795423089358418" class="text-input-input autofocus" /><label for="pyxl4555795423089358418">E-mail</label></div></div><div data-js-component-id="component8408452611983036533" tabindex="-1" id="pyxl346435933990287369" class="small text-input login-password login-text-input"><div class="text-input-error-wrapper"><form:error name="login_password" /><div data-error-field-name="login_password"></div></div><div class="text-input-wrapper"><input type="password" id="pyxl7340959145031176043" name="login_password" class="password-input text-input-input" /><label for="pyxl7340959145031176043">Senha</label></div></div><div id="react-login-recaptcha-challenge-div"></div><div class="clearfix"><div class="sso-description"><div class="sprite-div"><div class="sprite-frame small icon-left"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_lock" /></div><div class="sprite-text"><div class="sprite-text-inner">SSO (logon único) habilitado</div></div></div></div><div class="small checkbox checkbox-inline remember-me"><div class="text-input-error-wrapper"><form:error name="remember_me" /><div data-error-field-name="remember_me"></div></div><input checked="checked" type="checkbox" name="remember_me" id="pyxl6184035992704417112" /><label for="pyxl6184035992704417112">Lembrar meus dados</label></div><button disabled="True" data-js-component-id="component8375207533004036278" type="submit" class="login-button button-primary"><div class="sign-in-text">Acessar conta</div><div class="sso-text">Continuar</div></button><span class="login-loading-indicator"><img data-js-component-id="component1662851133567338272" src="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small-vfl3Wt7C_.gif" data-hi-res="https://cf.dropboxstatic.com/static/images/icons/ajax-loading-small@2x-vflAxdZTP.gif" /></span></div><div class="sso-optout"><div>ou <a href="#">Acesse sua conta com as credenciais do Dropbox</a></div></div><div class="login-need-help"><a href="/forgot">Esqueceu a senha?</a></div></form> <form action="/ajax_verify_code" style="display:none;" method="POST" class="two-factor-form clearfix"><input type="hidden" name="cont" /><input type="hidden" name="require_role" /><input type="hidden" name="remember_me" /><div class="login-info two-factor-uses-sms">Enviamos um código para seu número de telefone terminando em <span class="last-four-digits"></span>.</div><div class="login-info two-factor-uses-authenticator">Digite o código gerado pelo seu aplicativo autenticador.</div><div data-js-component-id="component3288161605038560315" tabindex="-1" id="pyxl1283328286645230741" class="small text-input login-text-input"><div class="text-input-error-wrapper"><form:error name="code" /><div data-error-field-name="code"></div></div><div class="text-input-wrapper"><input autocomplete="off" type="text" name="code" id="pyxl8738689854738999240" class="text-input-input" /><label for="pyxl8738689854738999240">Código de 6 dígitos</label></div></div><div class="checkbox checkbox-inline standard remember-me"><div class="text-input-error-wrapper"><form:error name="trusted" /><div data-error-field-name="trusted"></div></div><input type="checkbox" name="trusted" id="pyxl3687476946637906784" /><label for="pyxl3687476946637906784"><div data-js-component-id="component2276233984385891520" class="tooltip-wrapper info-icon"><div class="tooltip-bubble tooltip-tooltip"><div class="tooltip-inner"><div class="two-factor-trusted-info">Computadores reconhecidos não vão solicitar um código de segurança novamente. Você só deve reconhecer este computador se confia em todos os que o utilizam.</div></div></div> <div class="tooltip-prompt sprite-div"><div class="sprite-text"><div class="sprite-text-inner">Confiar neste computador</div></div><div class="sprite-frame small icon-right"><img src="https://cf.dropboxstatic.com/static/images/icons/icon_spacer-vflN3BYt2.gif" class=" sprite sprite_web s_web_info" /></div></div></div></label></div><button data-js-component-id="component6174959588777498758" type="submit" class="login-button button-primary">Enviar</button><div class="two-factor-need-help"><a href="" class="resend-two-factor-code two-factor-uses-sms">Não recebeu?</a><a href="/lost_phone"><span class="two-factor-uses-sms">Perdi meu celular</span><span class="two-factor-uses-authenticator">Não estou conseguindo usar meu aplicativo de autenticação.</span></a></div></form></div></div></div></div><div class="bright-modal-footer"><div class="direct-download-component"><a href="https://www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js?dl=1" class="close-link">Não, obrigado. Continuar →</a></div><div class="add-to-dropbox-component"><a class="close-link">Não, obrigado →</a></div></div></div></div></div></div><div style="display: none;" id="db-modal-shared-link-welcome-modal" class="db-modal-wrapper db-bright-modal-wrapper hidden-x"><div class="db-modal-overlay"></div><div class="db-modal"><div class="db-modal-box"><a href="#" class="db-modal-x"></a><h2 class="db-modal-title"><div class="db-modal-title-text"></div></h2><div class="db-modal-content"><div class="bright-modal-header">Bem-vindo ao Dropbox!</div><div class="bright-modal-content"><div class="welcome-modal-illo"><img data-js-component-id="component2023785511475111151" src="https://cf.dropboxstatic.com/static/images/growth/dropbox_with_files-vflYCKclD.png" /></div><div class="welcome-modal-text">Agora é fácil armazenar seus arquivos e fotos com segurança, acessá-los a partir de qualquer dispositivo e compartilhá-los com outras pessoas.</div><a data-js-component-id="component5185204985601042286" href="/home" class="go-to-dropbox-button button-primary">Ir para meu Dropbox</a><div class="welcome-modal-no-thanks"><a href="#">Não, obrigado, fique nesta página</a></div></div></div></div></div></div><div style="display: none;" id="db-modal-shared-link-onboarding-download-modal" class="db-modal-wrapper db-bright-modal-wrapper"><div class="db-modal-overlay"></div><div class="db-modal"><div class="db-modal-box"><a href="#" class="db-modal-x"></a><h2 class="db-modal-title"><div class="db-modal-title-text"></div></h2><div class="db-modal-content"><div class="bright-modal-header"></div><div class="bright-modal-content"><iframe style="display: none" id="onboarding-download-modal__download_container"></iframe><div class="onboarding-download-modal__logo"><img data-js-component-id="component8788429092846296083" src="/static/images/growth/experiments/logo_blue.png" /></div><div class="onboarding-download-modal__header">“UnityObject2.js” e o Dropbox agora estão sendo baixados</div><div class="onboarding-download-modal__illo"><img data-js-component-id="component186693987274539541" src="/static/images/growth/experiments/shared_link_onboarding_dl.png" /></div><div class="onboarding-download-modal__subheader">Para ver e editar esse arquivo em seu computador, execute o instalador do Dropbox. Ou reinicie o download <a href="/download">aqui</a>.</div></div></div></div></div></div></div><div id="page-prefooter"></div><noscript><p class="center">O site do Dropbox requer JavaScript.</p></noscript></div><div style="position: absolute; top: 0; left: 0; font-family: Courier" id="ieconsole"></div><div style="position:absolute; top:-10000px;width:0px; height:0px; left: 0;" id="FB_HiddenContainer"></div><script nonce="gdiVXuDtntBIVhJ+eFQ+">requirejs(["modules/dirty/react/previews/preview_toolbar", "modules/core/controller_registry", "modules/clean/em_string", "modules/dirty/growth/shared_link_signup_modals", "modules/clean/hi_res", "modules/dirty/react/file_comments/file_feedback_ui", "modules/clean/components/tabbable", "modules/dirty/react/file_comments/shared_link_signup_modals", "modules/clean/components/login_or_register", "modules/dirty/print", "modules/clean/components/login_form", "dropbox", "modules/core/i18n", "modules/clean/components/tooltip", "jquery", "modules/clean/components/bubble_dropdown", "modules/clean/history", "modules/clean/components/input", "modules/dirty/register_form", "modules/clean/web_timing_logger", "modules/core/notify", "external/react", "modules/clean/marketing_tracker", "modules/core/cookies"], function(modules__dirty__react__previews__preview_toolbar, modules__core__controller_registry, modules__clean__em_string, modules__dirty__growth__shared_link_signup_modals, modules__clean__hi_res, modules__dirty__react__file_comments__file_feedback_ui, modules__clean__components__tabbable, modules__dirty__react__file_comments__shared_link_signup_modals, modules__clean__components__login_or_register, modules__dirty__print, modules__clean__components__login_form, dropbox, modules__core__i18n, modules__clean__components__tooltip, jquery, modules__clean__components__bubble_dropdown, modules__clean__history, modules__clean__components__input, modules__dirty__register_form, modules__clean__web_timing_logger, modules__core__notify, external__react, modules__clean__marketing_tracker, modules__core__cookies) { window.LoadedJsSuccessfully = true;
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component186693987274539541", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component8788429092846296083", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component5185204985601042286", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component2023785511475111151", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component6174959588777498758", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__tooltip, ControllerRegistry) { ControllerRegistry.register_controller("component2276233984385891520", modules__clean__components__tooltip.InfoTooltip, [null]); }(modules__clean__components__tooltip, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component3288161605038560315", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component1662851133567338272", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component8375207533004036278", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component8408452611983036533", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component2737447635870681019", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__login_form, ControllerRegistry) { ControllerRegistry.register_controller("component3600282490849742114", modules__clean__components__login_form, [false, "small"]); }(modules__clean__components__login_form, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component7991492276301943611", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__bubble_dropdown, ControllerRegistry) { ControllerRegistry.register_controller("component2307114152377035741", modules__clean__components__bubble_dropdown, ["left", true, null]); }(modules__clean__components__bubble_dropdown, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component8831171199001359728", modules__clean__components__input.PasswordWatchInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component722774746175521028", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component5681019039507295869", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component1267006711278100560", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__dirty__register_form, ControllerRegistry) { ControllerRegistry.register_controller("component6868208362709519173", modules__dirty__register_form, ["small", false, true, true]); }(modules__dirty__register_form, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component2504652968996448324", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__tooltip, ControllerRegistry) { ControllerRegistry.register_controller("component3171476943992095333", modules__clean__components__tooltip.InfoTooltip, [null]); }(modules__clean__components__tooltip, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component4705784317971899210", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component6231534986856448350", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component7856103024962735494", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component1075535866531726181", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component3158897958759673243", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__login_form, ControllerRegistry) { ControllerRegistry.register_controller("component4992091671811817013", modules__clean__components__login_form, [false, "small"]); }(modules__clean__components__login_form, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component8506385665173738670", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__bubble_dropdown, ControllerRegistry) { ControllerRegistry.register_controller("component2812631804658982359", modules__clean__components__bubble_dropdown, ["left", true, null]); }(modules__clean__components__bubble_dropdown, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component6412916331366570185", modules__clean__components__input.PasswordWatchInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component3596401916934867478", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component6241967574272711382", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component5253030202490059092", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__dirty__register_form, ControllerRegistry) { ControllerRegistry.register_controller("component4288698948800434739", modules__dirty__register_form, ["small", false, true, true]); }(modules__dirty__register_form, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component4669563546775506548", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__tooltip, ControllerRegistry) { ControllerRegistry.register_controller("component3604781582001522311", modules__clean__components__tooltip.InfoTooltip, [null]); }(modules__clean__components__tooltip, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component2793377264040732140", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component8119119659713339019", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component8014259322029214166", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component244435025952033303", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component4157918747982543360", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__login_form, ControllerRegistry) { ControllerRegistry.register_controller("component1116022250350641570", modules__clean__components__login_form, [false, "small"]); }(modules__clean__components__login_form, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component644460658101593381", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__bubble_dropdown, ControllerRegistry) { ControllerRegistry.register_controller("component813489313149505970", modules__clean__components__bubble_dropdown, ["left", true, null]); }(modules__clean__components__bubble_dropdown, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component7009497305382133436", modules__clean__components__input.PasswordWatchInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component7527733435522986167", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component686638583613483687", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component42775598548409608", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__dirty__register_form, ControllerRegistry) { ControllerRegistry.register_controller("component7643158471834378882", modules__dirty__register_form, ["small", false, true, true]); }(modules__dirty__register_form, modules__core__controller_registry));
+(function (React, modules__dirty__react__file_comments__file_feedback_ui) { 
+        (function () {
+           var elt = document.getElementById("component7752317109281242179");
+           var component = React.render(modules__dirty__react__file_comments__file_feedback_ui.LightboxFeedbackUI({"js-component-id": "component8018843547098410421"}, null), elt);
+           elt.reactComponent = component;
+        })()
+         }(external__react, modules__dirty__react__file_comments__file_feedback_ui));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component6150626622839296687", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__bubble_dropdown, ControllerRegistry) { ControllerRegistry.register_controller("component8716124844082950605", modules__clean__components__bubble_dropdown, ["left", true, null]); }(modules__clean__components__bubble_dropdown, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component7842069743689911285", modules__clean__components__input.PasswordWatchInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component3735424928146744116", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component8212897390538773189", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component2035941784460290845", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__dirty__register_form, ControllerRegistry) { ControllerRegistry.register_controller("component5984245811866033453", modules__dirty__register_form, ["standard", false, true, true]); }(modules__dirty__register_form, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component287092217480996569", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__tooltip, ControllerRegistry) { ControllerRegistry.register_controller("component3321846214582593919", modules__clean__components__tooltip.InfoTooltip, [null]); }(modules__clean__components__tooltip, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component374482268747325172", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component4339775696818053358", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component3088052562850688386", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component5334915482206376350", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component4754379282739145442", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__login_form, ControllerRegistry) { ControllerRegistry.register_controller("component3008577445346163051", modules__clean__components__login_form, [false, "standard"]); }(modules__clean__components__login_form, modules__core__controller_registry));
+(function (React, modules__dirty__react__file_comments__file_feedback_ui) { 
+        (function () {
+           var elt = document.getElementById("component5913210019218774298");
+           var component = React.render(modules__dirty__react__file_comments__file_feedback_ui.SharedLinkFeedbackUI({"js-component-id": "component335062393041429276", "preview-type": "text", "shared-link-url": "https://www.dropbox.com/s/goqv0qh041ruxcd/UnityObject2.js?dl=0"}, null), elt);
+           elt.reactComponent = component;
+        })()
+         }(external__react, modules__dirty__react__file_comments__file_feedback_ui));
+(function (React, modules__dirty__react__previews__preview_toolbar) { 
+        (function () {
+           var elt = document.getElementById("component1272840112710572585");
+           var component = React.render(modules__dirty__react__previews__preview_toolbar.PreviewToolbar({"js-component-id": "component4569288250048843264", "viewer-type": "FILE_PREVIEW"}, null), elt);
+           elt.reactComponent = component;
+        })()
+         }(external__react, modules__dirty__react__previews__preview_toolbar));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component7688432469362377178", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__tooltip, ControllerRegistry) { ControllerRegistry.register_controller("component5002184584969256370", modules__clean__components__tooltip.InfoTooltip, [null]); }(modules__clean__components__tooltip, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component4236853808947633767", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component3268885454665153783", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function (ControllerRegistry, modules__clean__components__tabbable) { ControllerRegistry.register_controller("component4096850544529758126", modules__clean__components__tabbable, []); }(modules__core__controller_registry, modules__clean__components__tabbable));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component2330226573910825713", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__input, ControllerRegistry) { ControllerRegistry.register_controller("component1494750574579294837", modules__clean__components__input.TextInput, []); }(modules__clean__components__input, modules__core__controller_registry));
+(function (modules__clean__components__login_form, ControllerRegistry) { ControllerRegistry.register_controller("component8178340898000730620", modules__clean__components__login_form, [false, "small"]); }(modules__clean__components__login_form, modules__core__controller_registry));
+(function (modules__clean__hi_res, ControllerRegistry) { ControllerRegistry.register_controller("component8952590043127844573", modules__clean__hi_res, []); }(modules__clean__hi_res, modules__core__controller_registry));
+(function ($j, LoginOrRegister) { new LoginOrRegister($j("#pyxl5632609729410452948")); }(jquery, modules__clean__components__login_or_register));
+(function (dropbox) { var SharingModel = dropbox.SharingModel;SharingModel.init("UnityObject2.js", {"secure_hash": "", "subpath": "", "tkey": "goqv0qh041ruxcd"}); SharingModel.set_team_only_shmodel(null, null); }(dropbox));
+(function ($j, print) { $j('#print-button').click(function() { print.print(); }); }(jquery, modules__dirty__print));
+(function (MarketingTracker) { MarketingTracker.push({src: "https://marketing.dropbox.com/s/%3Atkey/%2Apath?referrer=https%3A%2F%2Fwww.facebook.com%2F", dataLayer: {"owner": 1, "viewer_signed_in": false, "event": "dataReady"}}); }(modules__clean__marketing_tracker));
+(function (DBHistory) { DBHistory.remove_query_param("m"); }(modules__clean__history));
+(function (dropbox) { var SharingModel = dropbox.SharingModel;SharingModel.init_file() }(dropbox));
+(function ($j, modules__core__i18n, WebTimingLogger, Notify, dropbox, Cookies) { var _ = modules__core__i18n._;var Util = dropbox.Util;
+            $j(function() {
+                Util.focus("");
+                if (!Cookies.are_enabled()) {
+                    Notify.error(_("Please enable browser-cookies to use the Dropbox website."));
+                }
+                WebTimingLogger.init();
+            });
+             }(jquery, modules__core__i18n, modules__clean__web_timing_logger, modules__core__notify, dropbox, modules__core__cookies));
+(function ($j, Emstring) { $j("#pyxl6944557344121801428").text(Emstring.em_snippet("UnityObject2.js", 50, 0.750000)); }(jquery, modules__clean__em_string));
+(function ($j, Emstring) { $j("#pyxl3551478747079795884").text(Emstring.em_snippet("UnityObject2.js", 20, 0.750000)); }(jquery, modules__clean__em_string));
+(function ($j, Emstring) { $j("#pyxl599487057227345287").text(Emstring.em_snippet("UnityObject2.js", 20, 0.750000)); }(jquery, modules__clean__em_string));
+(function () { 
+            INLINE_JS.FilePreview.init_htmlified();
+             }());
+(function (React) { 
+            window.React = React
+         }(external__react));
+(function (React) { 
+            window.React = React
+         }(external__react));
+(function (React) { 
+            window.React = React
+         }(external__react));
+(function (CommentsSharedLinkSignupModals) {  }(modules__dirty__react__file_comments__shared_link_signup_modals));
+(function (GrowthSharedLinkSignupModals) { new GrowthSharedLinkSignupModals(false) }(modules__dirty__growth__shared_link_signup_modals));
+(function (MarketingTracker) { MarketingTracker.push({src: "https://marketing.dropbox.com/s/%3Atkey/%2Apath?referrer=https%3A%2F%2Fwww.facebook.com%2F", dataLayer: {"event": "dataReady", "session_id": "AABTU073jzqyTs3PPGELhGDnaTdHal1pdezQGtpiFreHuw"}}); }(modules__clean__marketing_tracker)); });</script><img src="https://dropbox.com/hstsping" style="display:none;" /></body></html>
