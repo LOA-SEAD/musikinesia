@@ -94,10 +94,10 @@ function Update () {
 
 	if(proximo == 0) //|| proximo == 2
 		{
-		if(personagem[0].GetComponent.<Renderer>().material.color.a != 1)
+		if(personagem[0].GetComponent.<Renderer>().material.color.a < 1)
 			personagem[0].GetComponent.<Renderer>().material.color.a += 0.03;
 		
-		if(cenario[4].GetComponent.<Renderer>().material.color.a != 1)
+		if(cenario[4].GetComponent.<Renderer>().material.color.a < 1)
 			cenario[4].GetComponent.<Renderer>().material.color.a += 0.03;
 		}
 /*	
@@ -111,11 +111,11 @@ function Update () {
 		}*/
 	
 	if(proximo == 10)
-		if(logo.GetComponent.<Renderer>().material.color.a != 1)
+		if(logo.GetComponent.<Renderer>().material.color.a < 1)
 			logo.GetComponent.<Renderer>().material.color.a += 0.5*Time.deltaTime;
 							
 	if(proximo == 11)
-		if(cenario[0].GetComponent.<Renderer>().material.color.a != 1)
+		if(cenario[0].GetComponent.<Renderer>().material.color.a < 1)
 			cenario[0].GetComponent.<Renderer>().material.color.a += 0.4*Time.deltaTime;
 	
 	if(proximo == 12)
@@ -123,7 +123,7 @@ function Update () {
 		if(cenario[0].GetComponent.<Renderer>().material.color.a > 0)
 			cenario[0].GetComponent.<Renderer>().material.color.a -= 0.4*Time.deltaTime;
 		
-		if(cenario[1].GetComponent.<Renderer>().material.color.a != 1)
+		if(cenario[1].GetComponent.<Renderer>().material.color.a < 1)
 			cenario[1].GetComponent.<Renderer>().material.color.a += 0.4*Time.deltaTime;	
 		}
 	
@@ -133,7 +133,7 @@ function Update () {
 			
 	if(proximo == 17)
 		{
-		if(cenario[3].GetComponent.<Renderer>().material.color.a != 1)
+		if(cenario[3].GetComponent.<Renderer>().material.color.a < 1)
 			cenario[3].GetComponent.<Renderer>().material.color.a += 0.6*Time.deltaTime;
 		
 		if(cenario[3].transform.position.y < 0.2)

@@ -16,7 +16,7 @@ GameObject:
   - 114: {fileID: 11400114}
   m_Layer: 0
   m_Name: Nota58
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +37,7 @@ GameObject:
   - 114: {fileID: 11400034}
   m_Layer: 0
   m_Name: Nota18
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - 114: {fileID: 11400032}
   m_Layer: 0
   m_Name: Nota17
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ GameObject:
   - 114: {fileID: 11400030}
   m_Layer: 0
   m_Name: Nota16
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,7 @@ GameObject:
   - 114: {fileID: 11400028}
   m_Layer: 0
   m_Name: Nota15
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ GameObject:
   - 114: {fileID: 11400026}
   m_Layer: 0
   m_Name: Nota14
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ GameObject:
   - 114: {fileID: 11400024}
   m_Layer: 0
   m_Name: Nota13
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,7 +163,7 @@ GameObject:
   - 114: {fileID: 11400022}
   m_Layer: 0
   m_Name: Nota12
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,7 +184,7 @@ GameObject:
   - 114: {fileID: 11400020}
   m_Layer: 0
   m_Name: Nota11
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,7 +205,7 @@ GameObject:
   - 114: {fileID: 11400018}
   m_Layer: 0
   m_Name: Nota10
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,7 +226,7 @@ GameObject:
   - 114: {fileID: 11400016}
   m_Layer: 0
   m_Name: Nota9
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,7 +247,7 @@ GameObject:
   - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: Nota8
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,7 +268,7 @@ GameObject:
   - 114: {fileID: 11400012}
   m_Layer: 0
   m_Name: Nota7
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,7 +289,7 @@ GameObject:
   - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: Nota6
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,7 +310,7 @@ GameObject:
   - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: Nota5
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -331,7 +331,7 @@ GameObject:
   - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: Nota4
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +352,7 @@ GameObject:
   - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: Nota3
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -373,7 +373,7 @@ GameObject:
   - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: Nota2
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -394,7 +394,7 @@ GameObject:
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: Nota1
-  m_TagString: NotaG
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -431,7 +431,7 @@ GameObject:
   - 114: {fileID: 11400062}
   m_Layer: 0
   m_Name: Nota32
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -452,7 +452,7 @@ GameObject:
   - 114: {fileID: 11400060}
   m_Layer: 0
   m_Name: Nota31
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,7 +473,7 @@ GameObject:
   - 114: {fileID: 11400058}
   m_Layer: 0
   m_Name: Nota30
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -494,7 +494,7 @@ GameObject:
   - 114: {fileID: 11400056}
   m_Layer: 0
   m_Name: Nota29
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -515,7 +515,7 @@ GameObject:
   - 114: {fileID: 11400054}
   m_Layer: 0
   m_Name: Nota28
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -536,7 +536,7 @@ GameObject:
   - 114: {fileID: 11400052}
   m_Layer: 0
   m_Name: Nota27
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -557,7 +557,7 @@ GameObject:
   - 114: {fileID: 11400050}
   m_Layer: 0
   m_Name: Nota26
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -578,7 +578,7 @@ GameObject:
   - 114: {fileID: 11400048}
   m_Layer: 0
   m_Name: Nota25
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -599,7 +599,7 @@ GameObject:
   - 114: {fileID: 11400046}
   m_Layer: 0
   m_Name: Nota24
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -620,7 +620,7 @@ GameObject:
   - 114: {fileID: 11400044}
   m_Layer: 0
   m_Name: Nota23
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -641,7 +641,7 @@ GameObject:
   - 114: {fileID: 11400042}
   m_Layer: 0
   m_Name: Nota22
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -662,7 +662,7 @@ GameObject:
   - 114: {fileID: 11400040}
   m_Layer: 0
   m_Name: Nota21
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -683,7 +683,7 @@ GameObject:
   - 114: {fileID: 11400038}
   m_Layer: 0
   m_Name: Nota20
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -704,7 +704,7 @@ GameObject:
   - 114: {fileID: 11400036}
   m_Layer: 0
   m_Name: Nota19
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -725,7 +725,7 @@ GameObject:
   - 114: {fileID: 11400064}
   m_Layer: 0
   m_Name: Nota33
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -746,7 +746,7 @@ GameObject:
   - 114: {fileID: 11400112}
   m_Layer: 0
   m_Name: Nota57
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -767,7 +767,7 @@ GameObject:
   - 114: {fileID: 11400110}
   m_Layer: 0
   m_Name: Nota56
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -788,7 +788,7 @@ GameObject:
   - 114: {fileID: 11400108}
   m_Layer: 0
   m_Name: Nota55
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -809,7 +809,7 @@ GameObject:
   - 114: {fileID: 11400106}
   m_Layer: 0
   m_Name: Nota54
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -830,7 +830,7 @@ GameObject:
   - 114: {fileID: 11400104}
   m_Layer: 0
   m_Name: Nota53
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -851,7 +851,7 @@ GameObject:
   - 114: {fileID: 11400102}
   m_Layer: 0
   m_Name: Nota52
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -872,7 +872,7 @@ GameObject:
   - 114: {fileID: 11400100}
   m_Layer: 0
   m_Name: Nota51
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -893,7 +893,7 @@ GameObject:
   - 114: {fileID: 11400098}
   m_Layer: 0
   m_Name: Nota50
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -914,7 +914,7 @@ GameObject:
   - 114: {fileID: 11400096}
   m_Layer: 0
   m_Name: Nota49
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -935,7 +935,7 @@ GameObject:
   - 114: {fileID: 11400094}
   m_Layer: 0
   m_Name: Nota48
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -956,7 +956,7 @@ GameObject:
   - 114: {fileID: 11400092}
   m_Layer: 0
   m_Name: Nota47
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -977,7 +977,7 @@ GameObject:
   - 114: {fileID: 11400090}
   m_Layer: 0
   m_Name: Nota46
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -998,7 +998,7 @@ GameObject:
   - 114: {fileID: 11400088}
   m_Layer: 0
   m_Name: Nota45
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1019,7 +1019,7 @@ GameObject:
   - 114: {fileID: 11400086}
   m_Layer: 0
   m_Name: Nota44
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1040,7 +1040,7 @@ GameObject:
   - 114: {fileID: 11400084}
   m_Layer: 0
   m_Name: Nota43
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1061,7 +1061,7 @@ GameObject:
   - 114: {fileID: 11400082}
   m_Layer: 0
   m_Name: Nota42
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1082,7 +1082,7 @@ GameObject:
   - 114: {fileID: 11400080}
   m_Layer: 0
   m_Name: Nota41
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1103,7 +1103,7 @@ GameObject:
   - 114: {fileID: 11400078}
   m_Layer: 0
   m_Name: Nota40
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1124,7 +1124,7 @@ GameObject:
   - 114: {fileID: 11400076}
   m_Layer: 0
   m_Name: Nota39
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1145,7 +1145,7 @@ GameObject:
   - 114: {fileID: 11400074}
   m_Layer: 0
   m_Name: Nota38
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1166,7 +1166,7 @@ GameObject:
   - 114: {fileID: 11400072}
   m_Layer: 0
   m_Name: Nota37
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1187,7 +1187,7 @@ GameObject:
   - 114: {fileID: 11400070}
   m_Layer: 0
   m_Name: Nota36
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1208,7 +1208,7 @@ GameObject:
   - 114: {fileID: 11400068}
   m_Layer: 0
   m_Name: Nota35
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1229,7 +1229,7 @@ GameObject:
   - 114: {fileID: 11400066}
   m_Layer: 0
   m_Name: Nota34
-  m_TagString: Untagged
+  m_TagString: notaTeclaComum
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1549,7 +1549,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.5263586, y: 2.53738737, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400036}

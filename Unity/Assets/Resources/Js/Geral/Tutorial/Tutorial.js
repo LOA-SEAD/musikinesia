@@ -159,29 +159,36 @@ function Update () {
 	
 	if(proximo == 18)
 		{
-		if(objeto[25].GetComponent.<Renderer>().material.color.a != 1)
+		/*if(objeto[25].GetComponent.<Renderer>().material.color.a != 1)
 			{
 			objeto[25].GetComponent.<Renderer>().enabled = true;
 			objeto[25].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
-			}
+			}*/
+	    objeto[25].GetComponent.<Renderer>().enabled = true;
+	    objeto[25].GetComponent.<Renderer>().material.color.a = 1;
 		
-		if(objeto[27].GetComponent.<Renderer>().material.color.a != 1)
+		/*if(objeto[27].GetComponent.<Renderer>().material.color.a != 1)
 			{
 			objeto[27].GetComponent.<Renderer>().enabled = true;
 			objeto[27].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
-			}
+			}*/
+
+	    objeto[27].GetComponent.<Renderer>().enabled = true;
+	    objeto[27].GetComponent.<Renderer>().material.color.a = 1;
 		
 		if(objeto[25].GetComponent.<Renderer>().material.color.a >= 0.9)
 			btProximo = true;
 		}
 	
 	//fade in da clave de sol
-	if(objeto[5].GetComponent.<Renderer>().enabled && objeto[5].GetComponent.<Renderer>().material.color.a != 1)
-		objeto[5].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
+	/*if(objeto[5].GetComponent.<Renderer>().enabled && objeto[5].GetComponent.<Renderer>().material.color.a != 1)
+		objeto[5].GetComponent.<Renderer>().material.color.a += Time.deltaTime;*/
+	objeto[5].GetComponent.<Renderer>().material.color.a = 1;
 	
 	//fade in das notas do teclado
-	if(objeto[17].GetComponent.<Renderer>().enabled && objeto[17].GetComponent.<Renderer>().material.color.a != 1)
-		objeto[17].GetComponent.<Renderer>().material.color.a += Time.deltaTime;
+	/*if(objeto[17].GetComponent.<Renderer>().enabled && objeto[17].GetComponent.<Renderer>().material.color.a != 1)
+		objeto[17].GetComponent.<Renderer>().material.color.a += Time.deltaTime;*/
+	objeto[17].GetComponent.<Renderer>().material.color.a = 1;
 		
 }
 

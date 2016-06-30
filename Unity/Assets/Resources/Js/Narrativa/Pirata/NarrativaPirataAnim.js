@@ -210,6 +210,9 @@ function CenarioBarcoSombrio() {
 
 function CenarioCasaTom() {
 	cenario.GetComponent(SpriteRenderer).sprite = cenarioSprites[4];
+	GetComponent.<AudioSource>().clip = musicas[2];
+	GetComponent.<AudioSource>().Play();
+	GetComponent.<AudioSource>().loop = true;
 }
 
 function BarcoBranco() {

@@ -1,4 +1,5 @@
 ﻿#pragma strict
+import UnityEngine.UI;
 //script principal
 
 
@@ -34,6 +35,7 @@ var velMus10 : float; //velocidade do prefab das notas
 var velMus11 : float; //velocidade do prefab das notas
 
 static var relog : float; //relogio para liberar a tela final; acessada em PorcentagemAcerto.js
+var soltaRelog : boolean; //libera o relogio
 
 static var multiplicador : int; //acessada em ChecarTrigger.js e ChecarTriggerFull.js; serve para multiplicar os pontos do jogador
 static var combo : int; //acessada em ChecarTrigger.js; serve para somar 1 a cada nota acertada consecutiva, aumentando o multiplicador em valores especificos
@@ -126,6 +128,10 @@ var templatePontosS : Sprite[];
 
 var sustenidosMus11 : GameObject;
 
+var posicaoMaoCanvas : GameObject;
+var posicaoMaoImage : Image;
+var posicaoMaoSprites : Sprite[];
+
 //para teste
 var relogTeste : float;
 
@@ -161,7 +167,7 @@ function Start () {
 	derrota = false;
 	
 	//animacao Inicial
-	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
+	objAni[1].GetComponent.<Renderer>().material.color.a = 1;
 	objAni[3].transform.position.y = -34;
 	objAni[4].transform.localScale = Vector2(12, 12);
 	objAni[2].GetComponent.<Renderer>().enabled = false;
@@ -185,9 +191,9 @@ function Start () {
 		if(numMusica == 0)		
 			numMusica = 4; //primeira musica = 4
 			//puzzle = 1;
-		}
+		}/*
 	else if(numMusica == 0) //para nao chamar os nomes quando o jogador pressionar recomeçar no treino
-		NomesMusicas(); //coloca o nome das musicas na tela de escolha - TREINO
+		NomesMusicas(); //coloca o nome das musicas na tela de escolha - TREINO*/
 
 		
 	//animacoes das fases
@@ -252,6 +258,58 @@ function Start () {
 	//sustenidos musica 11
 	sustenidosMus11.SetActive(false);
 	
+	//posicao Mao
+	posicaoMaoCanvas.SetActive(false);
+	
+	PosicaoMao();
+	
+}
+
+function PosicaoMao() {
+	escolhaOK = true;
+	
+	switch(numMusica) {
+		case 2:
+		case 10:
+		case 11:
+			posicaoMaoCanvas.SetActive(false);
+			ComecaMusica();
+			break;
+		
+		case 4:
+			posicaoMaoImage.sprite = posicaoMaoSprites[0];
+			posicaoMaoCanvas.SetActive(true);
+			break;
+			
+		case 3:
+			posicaoMaoImage.sprite = posicaoMaoSprites[1];
+			posicaoMaoCanvas.SetActive(true);
+			break;
+			
+		case 6:
+			posicaoMaoImage.sprite = posicaoMaoSprites[2];
+			posicaoMaoCanvas.SetActive(true);
+			break;
+			
+		case 5:
+			posicaoMaoImage.sprite = posicaoMaoSprites[3];
+			posicaoMaoCanvas.SetActive(true);
+			break;
+			
+		case 7:
+			posicaoMaoImage.sprite = posicaoMaoSprites[4];
+			posicaoMaoCanvas.SetActive(true);
+			break;
+			
+		case 8:
+			posicaoMaoImage.sprite = posicaoMaoSprites[5];
+			posicaoMaoCanvas.SetActive(true);
+			break;
+		}
+		
+		if(puzzle == 1) {
+			ComecaMusica();
+		}
 }
 
 function Update () {
@@ -297,9 +355,11 @@ function Update () {
 		
 		if(puzzle == 0) //soh funciona nas musicas
 			{		
-			//entrada em quadro dos elementos do jogo:		
-			if(objAni[1].GetComponent.<Renderer>().material.color.a < 1)
-				objAni[1].GetComponent.<Renderer>().material.color.a += 0.02; //pentagrama aparece
+		    //entrada em quadro dos elementos do jogo:
+		    objAni[1].GetComponent.<Renderer>().material.color.a = 1;
+
+			//if(objAni[1].GetComponent.<Renderer>().material.color.a < 1)
+				//objAni[1].GetComponent.<Renderer>().material.color.a += 0.02; //pentagrama aparece
 			
 			if(objAni[4].GetComponent.<Renderer>().material.color.a >= 0.61)
 				objAni[4].GetComponent.<Renderer>().material.color.a -= 0.02; //imagem de fundo (sotao) fica mais transparente
@@ -328,7 +388,7 @@ function Update () {
 		}
 
 
-	if(escolhaOK) //relog começa a contar depois que a escolha da musica foi feita
+	if(soltaRelog) //relog começa a contar depois que a escolha da musica foi feita
 		relog += Time.deltaTime; //tempo pra liberar a tela de final
 
 		
@@ -486,57 +546,6 @@ function Update () {
 			}
 		}
 	
-	//musicas sem escolha de dificuldade
-	//Suki - TERCEIRA
-	if(numMusica == 2)
-		if(!escolhaOK)
-			TerceiraMusica(); //chama a funcao que roda a musica do Suki 
-			
-	//Roger - SEGUNDA
-	if(numMusica == 3)
-		if(!escolhaOK)
-			SegundaMusica(); //chama a funcao que roda a musica do Roger 
-	
-	//Roger2 - PRIMEIRA
-	if(numMusica == 4)
-		if(!escolhaOK)
-			PrimeiraMusica(); //chama a funcao que roda a musica do Roger 
-	
-	//SukiRock - QUINTA
-	if(numMusica == 5)
-		if(!escolhaOK)
-			QuintaMusica(); //chama a funcao que roda a musica SukiRock 
-	
-	//RogerRock - QUARTA
-	if(numMusica == 6)
-		if(!escolhaOK)
-			QuartaMusica(); //chama a funcao que roda a musica RogerRock
-	
-	//Primeira Musica Mafia - SEXTA
-	if(numMusica == 7)
-		if(!escolhaOK)
-			SextaMusica(); //chama a funcao que roda a primeira musica da mafia
-	
-	//Segunda Musica Mafia - SETIMA
-	if(numMusica == 8)
-		if(!escolhaOK)
-			SetimaMusica(); //chama a funcao que roda a segunda musica da mafia
-			
-	//Primeira Musica Pirata - DECIMA
-	if(numMusica == 10)
-		if(!escolhaOK)
-			DecimaMusica(); //chama a funcao que roda a primeira musica dos piratas
-	
-	//Segunda Musica Pirata - DECIMA PRIMEIRA
-	if(numMusica == 11)
-		if(!escolhaOK)
-			DecimaPrimeiraMusica(); //chama a funcao que roda a segunda musica dos piratas
-		
-	//puzzle
-	if(puzzle == 1)
-		if(!escolhaOK)
-			puzzleSub(); //chama a funcao que roda o puzzle do suburbio
-
 
 	//animacao das fases
 	if(numMusica == 3 && relog > 70)
@@ -554,62 +563,131 @@ function Update () {
 
 }
 
+function ComecaMusica() {
+
+	posicaoMaoCanvas.SetActive(false);
+
+	//Suki - TERCEIRA
+	if(numMusica == 2)
+		TerceiraMusica(); //chama a funcao que roda a musica do Suki 
+			
+	//Roger - SEGUNDA
+	if(numMusica == 3)
+		SegundaMusica(); //chama a funcao que roda a musica do Roger 
+	
+	//Roger2 - PRIMEIRA
+	if(numMusica == 4)
+		PrimeiraMusica(); //chama a funcao que roda a musica do Roger 
+	
+	//SukiRock - QUINTA
+	if(numMusica == 5)
+		QuintaMusica(); //chama a funcao que roda a musica SukiRock 
+	
+	//RogerRock - QUARTA
+	if(numMusica == 6)
+		QuartaMusica(); //chama a funcao que roda a musica RogerRock
+	
+	//Primeira Musica Mafia - SEXTA
+	if(numMusica == 7)
+		SextaMusica(); //chama a funcao que roda a primeira musica da mafia
+	
+	//Segunda Musica Mafia - SETIMA
+	if(numMusica == 8)
+		SetimaMusica(); //chama a funcao que roda a segunda musica da mafia
+			
+	//Primeira Musica Pirata - DECIMA
+	if(numMusica == 10)
+		DecimaMusica(); //chama a funcao que roda a primeira musica dos piratas
+	
+	//Segunda Musica Pirata - DECIMA PRIMEIRA
+	if(numMusica == 11)
+		DecimaPrimeiraMusica(); //chama a funcao que roda a segunda musica dos piratas
+		
+	//puzzle
+	if(puzzle == 1)
+		puzzleSub(); //chama a funcao que roda o puzzle do suburbio
+
+}
+
 function OnGUI() {
 
 //botoes de escolha da musica para o treino
 if(!isPause && !derrota && animacaoIn > 0)
-	{	
+	{	/*
 	if(numMusica == 0 && puzzle == 0 && treino)
 		{		
 		GUI.skin = btMusicas; //PRIMEIRA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 4;
+			PosicaoMao();
+		}
 		
 		//SEGUNDA - PUZZLE 1
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.16, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.16, Screen.width*0.05, Screen.height*0.1), "")) {
 			puzzle = 1;
+			PosicaoMao();
+		}			
 								
 		//TERCEIRA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.31, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.31, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 3;
+			PosicaoMao();
+		}
 		
 		//QUARTA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.46, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.46, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 6;
+			PosicaoMao();
+		}
 			
 		//QUINTA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 5;
+			PosicaoMao();
+		}			
 		
 		//SEXTA
-		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.76, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.15, Screen.height*0.76, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 7;
+			PosicaoMao();
+		}
 		
 		//SETIMA - PUZZLE 2
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.01, Screen.width*0.05, Screen.height*0.1), "")) {
 			Application.LoadLevel("PuzzleMafia");
+		}
 		
 		//OITAVA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.16, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.16, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 8;
+			PosicaoMao();
+		}
 		
 		// PUZZLE 3
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.31, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.31, Screen.width*0.05, Screen.height*0.1), "")) {
 			Application.LoadLevel("PuzzlePirata");
+		}
+			
 		
 		//DECIMA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.46, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.46, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 10;
+			PosicaoMao();
+		}			
 		
 		//DECIMA PRIMEIRA
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), ""))
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.61, Screen.width*0.05, Screen.height*0.1), "")) {
 			numMusica = 11;
+			PosicaoMao();
+		}
 		
 		//musica do Suki - BONUS
-		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.76, Screen.width*0.05, Screen.height*0.1), ""))
-			numMusica = 2;	
+		if(GUI.Button(Rect(Screen.width*0.50, Screen.height*0.76, Screen.width*0.05, Screen.height*0.1), "")) {
+			numMusica = 2;
+			PosicaoMao();
+		}	
 		
-		}
+		}*/
 	
 	
 	//fim
@@ -748,7 +826,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 				else
 					{
 					numMusica = 0;
-					Application.LoadLevel("Jogo");
+					Application.LoadLevel("Treino");
 					}
 					
 				travaTeclas = false;
@@ -798,6 +876,7 @@ if(!isPause && !derrota && animacaoIn > 0)
 function PrimeiraMusica() {
 
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
 	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
@@ -828,6 +907,7 @@ function PrimeiraMusica() {
 function SegundaMusica() {
 
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
@@ -867,6 +947,7 @@ function SegundaMusica() {
 function TerceiraMusica() {
 	
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[4];
 	objAni[1].GetComponent.<Renderer>().material.color.a = 0;
@@ -897,6 +978,7 @@ function TerceiraMusica() {
 function QuartaMusica() {
 	
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
@@ -941,6 +1023,7 @@ function QuartaMusica() {
 function QuintaMusica() {
 	
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
@@ -985,6 +1068,7 @@ function QuintaMusica() {
 function SextaMusica() {
 
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;	
@@ -1032,6 +1116,7 @@ function SextaMusica() {
 function SetimaMusica() {
 
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;
@@ -1066,6 +1151,7 @@ function SetimaMusica() {
 function DecimaMusica() {
 
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	GetComponent.<Camera>().backgroundColor = bgCamera;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
@@ -1107,6 +1193,7 @@ function DecimaMusica() {
 function DecimaPrimeiraMusica() {
 
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	objAni[1].GetComponent(SpriteRenderer).sprite = spritesC[3];
 	objAni[1].transform.position.y = -7.34;	
@@ -1149,15 +1236,16 @@ function DecimaPrimeiraMusica() {
 function puzzleSub() {
 	
 	escolhaOK = true;
+	soltaRelog = true;
 	animacaoIn = 2;
 	
 	position = Vector3 (15.48, -1.17, -3);
 	Instantiate(regressiva, position, Quaternion.identity);
 	puzzleSuburbio[2].SetActive(true); //escrito "tempo"
 	
-	if(!treino) {
+	//if(!treino) {
 		puzzleSuburbio[2].transform.localPosition.x = -1.081; //escrito "tempo"
-	}
+	//}
 
 	GetComponent.<AudioSource>().Stop();
 	

@@ -20,7 +20,7 @@ function Update () {
 
 function DesativaCanhao () {
 
-	GetComponent.<Animation>().Rewind();
+	//GetComponent.<Animation>().Rewind();
 	gameObject.GetComponent(Animator).enabled = false;
 	
 	yield WaitForSeconds (0.1);

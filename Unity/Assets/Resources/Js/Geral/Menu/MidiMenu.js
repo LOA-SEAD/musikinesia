@@ -1,49 +1,43 @@
 ﻿#pragma strict
+import UnityEngine.UI;
 
 static var midiValor : int = 60;
-var midiTexto : GameObject;
+var midiSlider : Slider;	
+var midiSliderText : Text;
 
-function Awake () {
-	if(PlayerPrefs.HasKey("midiValor")) {
-		midiValor = PlayerPrefs.GetInt("midiValor");
-		midiTexto.GetComponent(TextMesh).text = "" + midiValor;
-		Teclas.noteNumberFirst = midiValor;
-		PuzzleMafiaTeclas.noteNumberFirst = midiValor;
-		PuzzlePirataTeclas.noteNumberFirst = midiValor;
-		teclasTutorial.noteNumberFirst = midiValor;
+	function Awake () {
+		if(PlayerPrefs.HasKey("midiValor")) {
+			midiValor = PlayerPrefs.GetInt("midiValor");
+			midiSlider.value = midiValor;
+			Teclas.noteNumberFirst = midiValor;
+			PuzzleMafiaTeclas.noteNumberFirst = midiValor;
+			PuzzlePirataTeclas.noteNumberFirst = midiValor;
+			teclasTutorial.noteNumberFirst = midiValor;
+		}
+		else {
+			midiValor = 60;
+			midiSlider.value = midiValor;
+			Teclas.noteNumberFirst = midiValor;
+			PuzzleMafiaTeclas.noteNumberFirst = midiValor;
+			PuzzlePirataTeclas.noteNumberFirst = midiValor;
+			teclasTutorial.noteNumberFirst = midiValor;
+			PlayerPrefs.SetInt("midiValor", midiValor);
+		}
+
 	}
-	else {
-		midiValor = 60;
-		midiTexto.GetComponent(TextMesh).text = "" + midiValor;
+
+	function Update () {
+
+	}
+	
+	function MidiSlider() {
+		midiValor = midiSlider.value;
+		midiSliderText.text = midiSlider.value.ToString();
+		
 		Teclas.noteNumberFirst = midiValor;
 		PuzzleMafiaTeclas.noteNumberFirst = midiValor;
 		PuzzlePirataTeclas.noteNumberFirst = midiValor;
 		teclasTutorial.noteNumberFirst = midiValor;
+		
 		PlayerPrefs.SetInt("midiValor", midiValor);
 	}
-
-}
-
-function Update () {
-
-}
-
-function OnMouseUp() {
-	switch (gameObject.name) {
-		case "MidiMenos":
-			midiValor--;
-			break;
-			
-		case "MidiMais":
-			midiValor++;
-			break;
-	}
-	
-	midiTexto.GetComponent(TextMesh).text = "" + midiValor;
-	Teclas.noteNumberFirst = midiValor;
-	PuzzleMafiaTeclas.noteNumberFirst = midiValor;
-	PuzzlePirataTeclas.noteNumberFirst = midiValor;
-	teclasTutorial.noteNumberFirst = midiValor;
-	
-	PlayerPrefs.SetInt("midiValor", midiValor);
-}

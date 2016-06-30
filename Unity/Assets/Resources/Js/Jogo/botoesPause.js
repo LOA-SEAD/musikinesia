@@ -7,8 +7,7 @@ function Start () {
 
 	if(!Pontuacao.treino)
 		{
-		GameObject.FindWithTag("bt5").GetComponent(BoxCollider).enabled = false;
-		GameObject.FindWithTag("bt5").GetComponent(SpriteRenderer).enabled = false;
+		//GameObject.FindWithTag("bt5").SetActive(false);
 		}
 
 }
@@ -68,10 +67,7 @@ function Escolha () {
 	
 	if(gameObject.tag == "bt5") //botao Treino
 		{
-		Pontuacao.treino = true;
-		Pontuacao.numMusica = 0;
-		Pontuacao.puzzle = 0;
-		Application.LoadLevel("Jogo");
+		Application.LoadLevel("Treino");
 		}
 
 }
