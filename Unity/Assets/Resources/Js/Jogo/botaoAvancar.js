@@ -65,7 +65,7 @@ function Acao() {
 				{
 				Pontuacao.numMusica = 0;
 				Pontuacao.puzzle = 0;
-				Application.LoadLevel("Treino");
+				Application.LoadLevel("Jogo");
 				}
 			}
 		
@@ -74,7 +74,7 @@ function Acao() {
 			Pontuacao.numMusica2 = 4;
 			Pontuacao.puzzle = 0;
 			Pontuacao.escolhaOK = false;
-			Application.LoadLevel("Treino");
+			Application.LoadLevel("Jogo");
 			}
 		}
 

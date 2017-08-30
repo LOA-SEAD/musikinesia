@@ -59,7 +59,7 @@ function OnMouseUp() {
 }
 
 function TeclaApertada() {
-print (numTecla);
+print (noteNumber);
 
 	animator.SetTrigger ("DoPress");
 	GetComponent.<AudioSource>().PlayOneShot(notas);
@@ -67,7 +67,7 @@ print (numTecla);
 	if(PuzzlePirata.etapa == 0)
 		{
 		if(PuzzlePirataTexto.pausaAcao)
-			if((numTecla == 15 && PuzzlePirataTexto.i == 6) || (numTecla == 16 && PuzzlePirataTexto.i == 8) || (numTecla == 14 && PuzzlePirataTexto.i == 10))
+			if((numTecla == 15 && PuzzlePirataTexto.i == 7) || (numTecla == 16 && PuzzlePirataTexto.i == 9) || (numTecla == 14 && PuzzlePirataTexto.i == 11))
 				{
 				PuzzlePirataTexto.liberaAcao = true;
 				PuzzlePirataTexto.passaTexto = true;
@@ -75,7 +75,7 @@ print (numTecla);
 				}
 		}
 	
-	if(PuzzlePirataTexto.i == 16)
+	if(PuzzlePirataTexto.i == 17)
 		{
 		if(numTecla == 2)
 			bemol = true;
@@ -91,7 +91,7 @@ print (numTecla);
 			sustenido = true;
 		}
 	
-	else if(PuzzlePirataTexto.i == 21)
+	else if(PuzzlePirataTexto.i == 22)
 		{
 		if(numTecla == 11)
 			bemol = true;
@@ -107,7 +107,7 @@ print (numTecla);
 			sustenido = true;
 		}
 	
-	else if(PuzzlePirataTexto.i == 26)
+	else if(PuzzlePirataTexto.i == 27)
 		{
 		if(numTecla == 17)
 			bemol = true;

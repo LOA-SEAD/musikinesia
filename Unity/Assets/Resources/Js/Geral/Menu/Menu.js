@@ -8,10 +8,9 @@ var loading : GameObject; //texto de loading (TextMesh)
 
 var positionIns : Vector3; //define a posicao de instantiate
 
-var canvasMenu : Canvas;
+var efeito : GameObject; //particulas atras do logo
 
-var efeitoFundo : GameObject;
-var fundo : GameObject;
+var canvasMenu : Canvas;
 
 function Start () {
 
@@ -95,11 +94,11 @@ function Start () {
 	//desativa o modo treino
 	Pontuacao.treino = false;
 	
-	fundo.SetActive(true);
 	
-	yield WaitForSeconds (3);
 	
-	efeitoFundo.SetActive(true);
+	yield WaitForSeconds(0.9);
+	positionIns = Vector3(0, 0.5, 0);
+	Instantiate(efeito, positionIns, Quaternion.identity);
 
 }
 

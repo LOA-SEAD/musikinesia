@@ -8,7 +8,7 @@ static var porcentagem : int; //porcentagem final de acerto; acessada em Pontuac
 
 function Start () {
 
-	totalNotas = 1;
+	totalNotas = 0;
 	acertos = 0;
 	porcentagem = 0;
 
@@ -16,8 +16,7 @@ function Start () {
 
 function Update () {
 
-	if(Pontuacao.relog > 69 && Pontuacao.puzzle == 0) { //&& !Pontuacao.treino
+	if(Pontuacao.relog > 69 && Pontuacao.puzzle == 0) //&& !Pontuacao.treino
 		porcentagem = acertos * 100 / totalNotas;
-	}
 
 }

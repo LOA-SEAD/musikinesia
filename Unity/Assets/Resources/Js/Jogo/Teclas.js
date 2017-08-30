@@ -64,7 +64,7 @@ function Start () {
 	GetComponent.<Renderer>().material.color = Color(1, 1, 1, 1);
 	etapaPuzzle = 0;
 	
-	if(Pontuacao.numMusica < 10 && sustenido) { //musicas que nao usam sustenido
+	if(Pontuacao.numMusica2 < 10 && sustenido) { //musicas que nao usam sustenido
 			trigger = triggerVazio;
 			trigger50 = triggerVazio;
 			trigger2 = triggerVazio;

@@ -153,8 +153,6 @@ function Verificacao() {
 		if(!Pontuacao.treino)
 			{
 			MafiaNarrativa.proximo = 33;
-			PlayerPrefs.SetInt("SaveGame", MafiaNarrativa.proximo);
-			PlayerPrefs.SetInt("Continua", 2); //botao Continua do Menu ativo
 			Application.LoadLevel("NarrativaMafia");
 			}
 		

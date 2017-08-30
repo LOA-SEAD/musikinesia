@@ -11,10 +11,6 @@ static var chances : int; //define quantas vezes o jogador vai poder acertar o a
 static var atiraBala : boolean; //permite que o jogador atire a bala do canhao
 var audios : AudioClip[];
 
-var tirosTexto : GameObject;
-private var tirosTextoText : TextMesh;
-var tirosQuantidade : int;
-
 //Pause
 static var isPause : boolean;
 var pauseMenu : GameObject;
@@ -38,9 +34,6 @@ function Start () {
 	canhao[1].SetActive(false);
 	canhao[2].SetActive(false);
 
-	tirosTextoText = tirosTexto.GetComponent(TextMesh);
-	tirosTextoText.text = "";
-	tirosQuantidade = 6;
 }
 
 function Update() {
@@ -64,12 +57,9 @@ function Update() {
 	if(etapa == 1) {
 		if(PuzzlePirataBala.novaBola && chances <= 5 && pontos < 30)
 			novosObjetos();
-			tirosTextoText.text = tirosQuantidade.ToString();
 		
 		if(chances > 5 || pontos >= 30) {
 			etapa = 0;
-			tirosTextoText.text = "";
-			tirosQuantidade = 6;
 			
 			PuzzlePirataTexto.liberaAcao = true;
 			PuzzlePirataTexto.pausaAcao = false;
@@ -93,6 +83,7 @@ function Update() {
 			GetComponent.<AudioSource>().PlayOneShot(audios[1]);
 			PuzzlePirataBala.somImpacto = false;
 		}
+		
 	}
 		
 }
@@ -100,12 +91,6 @@ function Update() {
 function novosObjetos() {
 	
 	PuzzlePirataBala.novaBola = false;
-	
-	//desliga objetos para nao serem instanciados duas vezes	
-	alvo.SetActive(false);
-	canhao[0].SetActive(false);
-	canhao[1].SetActive(false);
-	canhao[2].SetActive(false);
 	
 	yield WaitForSeconds(0.2);
 	
@@ -143,7 +128,14 @@ function Canhao() {
 	
 	print("canhao " + val2);
 	
-	canhao[val2].SetActive(true);
+	if(val2 == 0)
+		canhao[0].SetActive(true);
+		
+	else if(val2 == 1)
+		canhao[1].SetActive(true);
+	
+	else if(val2 == 2)
+		canhao[2].SetActive(true);
 		
 	PuzzlePirataTeclas.liberaTiro = true;
 
@@ -154,8 +146,7 @@ function Bala() {
 	bala.transform.position = GameObject.FindGameObjectWithTag("Respawn").transform.position;
 	bala.SetActive(true);
 	GetComponent.<AudioSource>().PlayOneShot(audios[0]);
-	//tirosTextoText.text = tirosQuantidade.ToString();
-	tirosQuantidade--;
 	
+
 }
 
